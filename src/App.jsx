@@ -539,7 +539,7 @@ ${data.get('mensagem')}`;
         }
       );
     };
-  }, []);
+  }, [regionalAccess.status]);
 
   const requestDeviceLocation = () => {
     if (!('geolocation' in navigator)) {
@@ -632,17 +632,6 @@ ${data.get('mensagem')}`;
     },
   }[regionalAccess.status] || {};
 
-  useEffect(() => {
-    document.body.classList.toggle(
-      'regional-access-locked',
-      regionalGateVisible
-    );
-
-    return () => {
-      document.body.classList.remove('regional-access-locked');
-    };
-  }, [regionalGateVisible]);
-
   return (
     <>
       <div
@@ -700,10 +689,7 @@ ${data.get('mensagem')}`;
         </div>
       </div>
 
-      <div
-        aria-hidden={regionalGateVisible}
-        className={regionalGateVisible ? 'regional-site is-locked' : 'regional-site'}
-      >
+      {regionalAccess.status === 'allowed' && (
       <div dangerouslySetInnerHTML={{ __html: `
         <div aria-hidden="true" class="loader" id="loader">
          <img alt="Felipe Ribeiro Advogado" src="assets/logo-felipe-ribeiro-dark.png"/>
@@ -1450,7 +1436,7 @@ ${data.get('mensagem')}`;
          </p>
         </footer>
       ` }} />
-      </div>
+      )}
     </>
   );
 }
