@@ -8,35 +8,56 @@ Configuração importante:
 - Build: `node node_modules/vite/bin/vite.js build`
 - Output: `dist`
 - SPA fallback: qualquer rota de página volta para `index.html`
-- `assets`, favicon, robots e sitemap continuam como arquivos estáticos
-- O `middleware.js` fica na raiz para a restrição regional
+- `assets`, favicon, robots, sitemap e `/api/` continuam fora do fallback da SPA
+- O projeto usa `/api/region` para consultar a geolocalização aproximada do IP no Vercel
 
 ### Passos
 
 1. Extraia este ZIP.
 2. Substitua o conteúdo do repositório pelo conteúdo desta pasta.
 3. Faça commit e push para a branch `main`.
-4. No Vercel, confirme que o Root Directory é a raiz do projeto, onde estão `package.json`, `vite.config.js`, `vercel.json` e `middleware.js`.
-5. Faça um novo deploy.
+4. No Vercel, confirme que o Root Directory é a raiz do projeto, onde estão `package.json`, `vite.config.js` e `vercel.json`.
+5. Aguarde o deploy aparecer como `Ready`.
 
-## Restrição regional
+## Restrição regional inteligente
 
-O middleware permite as 10 cidades tradicionais do Alto Tietê:
+O projeto mantém o atendimento direcionado às 10 cidades tradicionais usadas para este site:
+
 Arujá, Biritiba-Mirim, Ferraz de Vasconcelos, Guararema, Itaquaquecetuba, Mogi das Cruzes, Poá, Salesópolis, Santa Isabel e Suzano.
 
-Quando o Vercel informa uma cidade fora da lista, o middleware retorna a página 403 diretamente, sem redirecionar para `/403`.
+A lógica não bloqueia mais o visitante somente porque o IP foi geolocalizado em outra cidade. Isso evita falsos bloqueios, como o caso diagnosticado em que uma conexão do Alto Tietê foi identificada pela Vercel como São Paulo.
 
-Quando a geolocalização não estiver disponível, o acesso é liberado para evitar falso bloqueio.
+Fluxo:
 
-## Hostinger
+1. `/api/region` consulta a cidade aproximada fornecida pelo Vercel.
+2. Se o IP estiver claramente em uma das cidades permitidas, o site é liberado imediatamente.
+3. Se o IP estiver fora ou impreciso, o visitante vê uma tela de confirmação regional.
+4. Ao clicar em `Confirmar minha localização`, o navegador solicita a localização do dispositivo.
+5. A coordenada é comparada com zonas aproximadas das 10 cidades.
+6. Se estiver na região, o site é liberado.
+7. Se estiver fora da região ou a localização for recusada, o conteúdo do site permanece bloqueado.
 
-Para Hostinger, o front-end pode ser publicado como site estático. O `.htaccess` incluído mantém o fallback do React. A restrição por cidade no Hostinger deve ser feita na camada Cloudflare, usando o `worker.js` incluído.
+A Geolocation API exige HTTPS e permissão explícita do visitante. Por isso, a produção usa `Permissions-Policy: geolocation=(self)` no `vercel.json`.
 
+### SEO
 
-## Diagnóstico temporário de geolocalização
+Bots de mecanismos e plataformas conhecidos são liberados pelo endpoint regional para não transformar a restrição local em um bloqueio indiscriminado de indexadores e prévias.
 
-Depois do deploy, abra:
+A proteção é de acesso/experiência regional, não uma barreira criptográfica. Como o projeto é um site público, não há dados privados ou área autenticada sendo protegidos por essa regra.
 
-`https://SEU-DOMINIO/?geo-debug=1`
+## Diagnóstico anterior
 
-A página retorna em JSON a cidade, região, CEP e coordenadas que a Vercel está associando à conexão. Esse modo é temporário e deve ser removido após o diagnóstico.
+O diagnóstico temporário `?geo-debug=1` foi removido desta versão. A causa encontrada foi:
+
+- cidade informada pela Vercel: `São Paulo`
+- CEP informado: `08441`
+- latitude: `-23.5475`
+- longitude: `-46.6361`
+
+Por isso o bloqueio exclusivamente baseado em IP foi abandonado.
+
+## Hostinger / Cloudflare
+
+Para Hostinger, o front-end pode ser publicado como site estático. O `.htaccess` incluído mantém o fallback do React.
+
+O `worker.js` foi mantido sem bloqueio rígido por cidade para não repetir o falso 403 baseado somente em IP. A confirmação regional principal desta versão acontece no front-end usando IP + localização do dispositivo.

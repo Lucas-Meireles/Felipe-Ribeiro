@@ -1,9 +1,102 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './style.css';
 
 const WA_PHONE = '5511944548048';
 
+
+const ALTO_TIETE_ZONES = [
+  { name: 'Arujá', lat: -23.3968, lon: -46.3206, radiusKm: 16 },
+  { name: 'Biritiba-Mirim', lat: -23.5726, lon: -46.0408, radiusKm: 14 },
+  { name: 'Ferraz de Vasconcelos', lat: -23.5414, lon: -46.3680, radiusKm: 8 },
+  { name: 'Guararema', lat: -23.4153, lon: -46.0351, radiusKm: 17 },
+  { name: 'Itaquaquecetuba', lat: -23.4861, lon: -46.3486, radiusKm: 9 },
+  { name: 'Mogi das Cruzes', lat: -23.5228, lon: -46.1883, radiusKm: 22 },
+  { name: 'Poá', lat: -23.5281, lon: -46.3448, radiusKm: 6 },
+  { name: 'Salesópolis', lat: -23.5287, lon: -45.8460, radiusKm: 20 },
+  { name: 'Santa Isabel', lat: -23.3156, lon: -46.2214, radiusKm: 17 },
+  { name: 'Suzano', lat: -23.5425, lon: -46.3116, radiusKm: 10 },
+];
+
+const distanceInKm = (lat1, lon1, lat2, lon2) => {
+  const toRadians = (value) => (value * Math.PI) / 180;
+  const earthRadius = 6371;
+  const dLat = toRadians(lat2 - lat1);
+  const dLon = toRadians(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRadians(lat1)) *
+      Math.cos(toRadians(lat2)) *
+      Math.sin(dLon / 2) ** 2;
+
+  return 2 * earthRadius * Math.asin(Math.sqrt(a));
+};
+
+const locateAltoTietê = ({ latitude, longitude, accuracy = 0 }) => {
+  const accuracyKm = Math.min(Math.max(Number(accuracy) / 1000 || 0, 0), 8);
+
+  return (
+    ALTO_TIETE_ZONES.find((zone) =>
+      distanceInKm(latitude, longitude, zone.lat, zone.lon) <=
+      zone.radiusKm + accuracyKm
+    ) || null
+  );
+};
+
 export default function App() {
+  const [regionalAccess, setRegionalAccess] = useState({
+    status: 'checking',
+    city: '',
+    error: '',
+  });
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const checkServerRegion = async () => {
+      try {
+        const response = await fetch('/api/region', {
+          headers: { Accept: 'application/json' },
+          cache: 'no-store',
+        });
+
+        if (!response.ok) throw new Error('region-request-failed');
+
+        const data = await response.json();
+
+        if (cancelled) return;
+
+        if (data.isBot || data.ipAllowed) {
+          setRegionalAccess({
+            status: 'allowed',
+            city: data.city || '',
+            error: '',
+          });
+          return;
+        }
+
+        setRegionalAccess({
+          status: 'needs-location',
+          city: data.city || '',
+          error: '',
+        });
+      } catch {
+        if (cancelled) return;
+
+        setRegionalAccess({
+          status: 'needs-location',
+          city: '',
+          error: '',
+        });
+      }
+    };
+
+    checkServerRegion();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   useEffect(() => {
     const body = document.body;
     const loader = document.getElementById('loader');
@@ -448,8 +541,169 @@ ${data.get('mensagem')}`;
     };
   }, []);
 
+  const requestDeviceLocation = () => {
+    if (!('geolocation' in navigator)) {
+      setRegionalAccess({
+        status: 'error',
+        city: '',
+        error: 'Seu navegador não disponibilizou a localização do dispositivo.',
+      });
+      return;
+    }
+
+    setRegionalAccess((current) => ({
+      ...current,
+      status: 'locating',
+      error: '',
+    }));
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude, accuracy } = position.coords;
+        const zone = locateAltoTietê({ latitude, longitude, accuracy });
+
+        if (zone) {
+          setRegionalAccess({
+            status: 'allowed',
+            city: zone.name,
+            error: '',
+          });
+          return;
+        }
+
+        setRegionalAccess({
+          status: 'denied',
+          city: '',
+          error: 'A localização informada não está dentro da região de atendimento.',
+        });
+      },
+      (error) => {
+        let message =
+          'Não foi possível confirmar sua localização. Permita o acesso à localização e tente novamente.';
+
+        if (error?.code === error.PERMISSION_DENIED) {
+          message =
+            'A localização foi bloqueada pelo navegador. Libere a permissão para este site e tente novamente.';
+        } else if (error?.code === error.TIMEOUT) {
+          message =
+            'A localização demorou mais que o esperado. Tente novamente em alguns segundos.';
+        }
+
+        setRegionalAccess({
+          status: 'error',
+          city: '',
+          error: message,
+        });
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 300000,
+        timeout: 12000,
+      }
+    );
+  };
+
+  const regionalGateVisible = regionalAccess.status !== 'allowed';
+  const regionalGateCopy = {
+    checking: {
+      eyebrow: 'VERIFICAÇÃO REGIONAL',
+      title: 'Confirmando o atendimento.',
+      body: 'Estamos verificando a região de acesso antes de abrir o site.',
+    },
+    'needs-location': {
+      eyebrow: 'ATENDIMENTO ALTO TIETÊ',
+      title: 'Confirme sua localização.',
+      body: 'O atendimento é direcionado ao Alto Tietê. Como a localização por IP pode ser imprecisa, podemos confirmar a região usando a localização do seu dispositivo.',
+    },
+    locating: {
+      eyebrow: 'LOCALIZAÇÃO',
+      title: 'Só um instante.',
+      body: 'Estamos confirmando sua localização para liberar o atendimento regional.',
+    },
+    denied: {
+      eyebrow: 'ACESSO REGIONAL',
+      title: 'Atendimento direcionado ao Alto Tietê.',
+      body: 'A localização informada não corresponde à região de atendimento deste escritório.',
+    },
+    error: {
+      eyebrow: 'NÃO FOI POSSÍVEL CONFIRMAR',
+      title: 'Precisamos confirmar sua região.',
+      body: 'A confirmação automática não foi concluída. Você pode tentar novamente para verificar a localização do dispositivo.',
+    },
+  }[regionalAccess.status] || {};
+
+  useEffect(() => {
+    document.body.classList.toggle(
+      'regional-access-locked',
+      regionalGateVisible
+    );
+
+    return () => {
+      document.body.classList.remove('regional-access-locked');
+    };
+  }, [regionalGateVisible]);
+
   return (
     <>
+      <div
+        aria-hidden={!regionalGateVisible}
+        className={`regional-gate ${regionalGateVisible ? 'is-visible' : ''}`}
+        role={regionalGateVisible ? 'dialog' : undefined}
+        aria-modal={regionalGateVisible ? 'true' : undefined}
+      >
+        <div className="regional-gate-glow" aria-hidden="true" />
+        <div className="regional-gate-inner">
+          <p className="regional-gate-eyebrow">
+            {regionalGateCopy.eyebrow}
+          </p>
+          <span className="regional-gate-rule" aria-hidden="true" />
+          <h1>{regionalGateCopy.title}</h1>
+          <p className="regional-gate-body">
+            {regionalGateCopy.body}
+          </p>
+
+          {regionalAccess.city && regionalAccess.status === 'needs-location' && (
+            <p className="regional-gate-detected">
+              Localização de rede identificada como <strong>{regionalAccess.city}</strong>.
+            </p>
+          )}
+
+          {regionalAccess.error && (
+            <p className="regional-gate-error">
+              {regionalAccess.error}
+            </p>
+          )}
+
+          {(regionalAccess.status === 'needs-location' ||
+            regionalAccess.status === 'error' ||
+            regionalAccess.status === 'denied') && (
+            <button
+              className="regional-gate-button"
+              type="button"
+              onClick={requestDeviceLocation}
+            >
+              Confirmar minha localização
+              <span aria-hidden="true">↗</span>
+            </button>
+          )}
+
+          {regionalAccess.status === 'locating' && (
+            <div className="regional-gate-loading" aria-live="polite">
+              <span />
+              Verificando localização…
+            </div>
+          )}
+
+          <footer className="regional-gate-footer">
+            Felipe Ribeiro · Advogado
+          </footer>
+        </div>
+      </div>
+
+      <div
+        aria-hidden={regionalGateVisible}
+        className={regionalGateVisible ? 'regional-site is-locked' : 'regional-site'}
+      >
       <div dangerouslySetInnerHTML={{ __html: `
         <div aria-hidden="true" class="loader" id="loader">
          <img alt="Felipe Ribeiro Advogado" src="assets/logo-felipe-ribeiro-dark.png"/>
@@ -1196,6 +1450,7 @@ ${data.get('mensagem')}`;
          </p>
         </footer>
       ` }} />
+      </div>
     </>
   );
 }
