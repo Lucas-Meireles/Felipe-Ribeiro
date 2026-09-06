@@ -109,12 +109,23 @@ img {
   place-items: center;
   align-content: center;
   gap: 26px;
-  transition: opacity .8s,visibility .8s
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+  transition: opacity .8s ease, visibility .8s ease;
+  animation: loader-auto-hide .8s ease 2.05s forwards;
 }
 
 .loader.hide {
   opacity: 0;
   visibility: hidden
+}
+
+@keyframes loader-auto-hide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .loader img {

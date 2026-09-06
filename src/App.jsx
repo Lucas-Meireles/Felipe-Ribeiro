@@ -128,7 +128,7 @@ export default function App() {
 
     const loaderTimer = window.setTimeout(() => {
       loader?.classList.add('hide');
-    }, 1900);
+    }, 2700);
 
     const onScroll = () => {
       header?.classList.toggle('scrolled', window.scrollY > 30);
