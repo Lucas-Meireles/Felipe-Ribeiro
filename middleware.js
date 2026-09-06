@@ -160,7 +160,7 @@ export default function middleware(request) {
     });
   }
 
-  return;
+  return undefined;
 }
 
 export const config = {

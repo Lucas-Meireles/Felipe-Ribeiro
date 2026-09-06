@@ -1,32 +1,33 @@
-# Felipe Ribeiro | Advocacia Criminal
+# Felipe Ribeiro Advocacia
 
-Landing page em React + Vite para apresentação institucional de Felipe Ribeiro.
+## Deploy Vercel
 
-## Desenvolvimento
+Este projeto é React + Vite e está configurado para o Vercel.
 
-```bash
-npm install
-npm run dev
-```
+Configuração importante:
+- Build: `node node_modules/vite/bin/vite.js build`
+- Output: `dist`
+- SPA fallback: qualquer rota de página volta para `index.html`
+- `assets`, favicon, robots e sitemap continuam como arquivos estáticos
+- O `middleware.js` fica na raiz para a restrição regional
 
-## Build de produção
+### Passos
 
-```bash
-npm run build
-npm run preview
-```
+1. Extraia este ZIP.
+2. Substitua o conteúdo do repositório pelo conteúdo desta pasta.
+3. Faça commit e push para a branch `main`.
+4. No Vercel, confirme que o Root Directory é a raiz do projeto, onde estão `package.json`, `vite.config.js`, `vercel.json` e `middleware.js`.
+5. Faça um novo deploy.
 
-## Estrutura
+## Restrição regional
 
-- `src/App.jsx`: interface e interações da landing page.
-- `src/style.css`: identidade visual, temas, responsividade e animações.
-- `public/assets/`: imagens, logos e favicon.
-- `middleware.js`: regra regional para Vercel.
-- `worker.js`: regra regional para Cloudflare Workers + Static Assets.
-- `.htaccess`: fallback para hospedagem estática Apache/Hostinger.
+O middleware permite as 10 cidades tradicionais do Alto Tietê:
+Arujá, Biritiba-Mirim, Ferraz de Vasconcelos, Guararema, Itaquaquecetuba, Mogi das Cruzes, Poá, Salesópolis, Santa Isabel e Suzano.
 
-## Tema
+Quando o Vercel informa uma cidade fora da lista, o middleware retorna a página 403 diretamente, sem redirecionar para `/403`.
 
-O tema é persistido em `localStorage` pela chave `felipe-theme` e alterna entre `dark` e `light`.
+Quando a geolocalização não estiver disponível, o acesso é liberado para evitar falso bloqueio.
 
-O listener do botão é registrado por uma referência estável e removido no cleanup do React, evitando o problema de dupla alternância em desenvolvimento com `React.StrictMode`.
+## Hostinger
+
+Para Hostinger, o front-end pode ser publicado como site estático. O `.htaccess` incluído mantém o fallback do React. A restrição por cidade no Hostinger deve ser feita na camada Cloudflare, usando o `worker.js` incluído.

@@ -1,4 +1,14 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "node node_modules/vite/bin/vite.js build",
+  "outputDirectory": "dist",
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/((?!assets/|favicon\\.ico$|robots\\.txt$|sitemap\\.xml$).*)",
+      "destination": "/index.html"
+    }
+  ]
 }
