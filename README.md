@@ -31,3 +31,12 @@ Quando a geolocalização não estiver disponível, o acesso é liberado para ev
 ## Hostinger
 
 Para Hostinger, o front-end pode ser publicado como site estático. O `.htaccess` incluído mantém o fallback do React. A restrição por cidade no Hostinger deve ser feita na camada Cloudflare, usando o `worker.js` incluído.
+
+
+## Diagnóstico temporário de geolocalização
+
+Depois do deploy, abra:
+
+`https://SEU-DOMINIO/?geo-debug=1`
+
+A página retorna em JSON a cidade, região, CEP e coordenadas que a Vercel está associando à conexão. Esse modo é temporário e deve ser removido após o diagnóstico.

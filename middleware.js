@@ -80,6 +80,34 @@ export default function middleware(request) {
   const rawCity = request.headers.get('x-vercel-ip-city') || '';
   const city = normalize(rawCity);
 
+  // Diagnóstico temporário: acesse /?geo-debug=1 para ver exatamente o que a Vercel
+  // está identificando para a conexão. Remover após identificar a cidade correta.
+  if (url.searchParams.get('geo-debug') === '1') {
+    const geo = {
+      cityRaw: rawCity || null,
+      cityNormalized: city || null,
+      country: request.headers.get('x-vercel-ip-country') || null,
+      countryRegion: request.headers.get('x-vercel-ip-country-region') || null,
+      postalCode: request.headers.get('x-vercel-ip-postal-code') || null,
+      latitude: request.headers.get('x-vercel-ip-latitude') || null,
+      longitude: request.headers.get('x-vercel-ip-longitude') || null,
+      timezone: request.headers.get('x-vercel-ip-timezone') || null,
+      allowed: Boolean(city && ALTO_TIETE.has(city)),
+    };
+
+    return new Response(
+      JSON.stringify(geo, null, 2),
+      {
+        status: 200,
+        headers: {
+          'content-type': 'application/json; charset=utf-8',
+          'cache-control': 'no-store, private',
+          'x-robots-tag': 'noindex, nofollow, noarchive',
+        },
+      },
+    );
+  }
+
   // Vercel documenta x-vercel-ip-city para geolocalização por IP, inclusive no Routing Middleware.
   // Aceitamos valores com espaços normais e também percent-encoded, que alguns caminhos/proxies podem fornecer.
   if (city && !ALTO_TIETE.has(city)) {
