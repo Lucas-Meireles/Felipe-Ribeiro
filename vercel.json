@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/((?!assets/|403\\.html$|404\\.html$).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
