@@ -1057,6 +1057,9 @@ ${data.get('mensagem')}`;
              </em>
             </h2>
            </div>
+           <p>
+            Espaço reservado para inserir imagens de avaliações reais de clientes, mantendo a apresentação visual discreta e alinhada à identidade do escritório.
+           </p>
           </div>
           <div
            aria-label="Galeria de avaliações de clientes"
