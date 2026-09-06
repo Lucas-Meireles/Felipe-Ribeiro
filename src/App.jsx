@@ -47,6 +47,7 @@ export default function App() {
     status: 'checking',
     city: '',
     error: '',
+    permission: 'unknown',
   });
 
   useEffect(() => {
@@ -70,6 +71,7 @@ export default function App() {
             status: 'allowed',
             city: data.city || '',
             error: '',
+            permission: 'unknown',
           });
           return;
         }
@@ -78,6 +80,7 @@ export default function App() {
           status: 'needs-location',
           city: data.city || '',
           error: '',
+          permission: 'unknown',
         });
       } catch {
         if (cancelled) return;
@@ -86,6 +89,7 @@ export default function App() {
           status: 'needs-location',
           city: '',
           error: '',
+          permission: 'unknown',
         });
       }
     };
@@ -541,19 +545,39 @@ ${data.get('mensagem')}`;
     };
   }, [regionalAccess.status]);
 
-  const requestDeviceLocation = () => {
+  const requestDeviceLocation = async () => {
     if (!('geolocation' in navigator)) {
-      setRegionalAccess({
+      setRegionalAccess((current) => ({
+        ...current,
         status: 'error',
-        city: '',
+        permission: 'unsupported',
         error: 'Seu navegador não disponibilizou a localização do dispositivo.',
-      });
+      }));
       return;
+    }
+
+    try {
+      if (navigator.permissions?.query) {
+        const permission = await navigator.permissions.query({ name: 'geolocation' });
+
+        if (permission.state === 'denied') {
+          setRegionalAccess((current) => ({
+            ...current,
+            status: 'permission-blocked',
+            permission: 'denied',
+            error: 'A localização está bloqueada para este site. O navegador não mostrará uma nova solicitação até que você altere a permissão nas configurações do site.',
+          }));
+          return;
+        }
+      }
+    } catch {
+      // Alguns navegadores não expõem Permissions API para geolocation.
     }
 
     setRegionalAccess((current) => ({
       ...current,
       status: 'locating',
+      permission: 'prompt',
       error: '',
     }));
 
@@ -567,6 +591,7 @@ ${data.get('mensagem')}`;
             status: 'allowed',
             city: zone.name,
             error: '',
+            permission: 'granted',
           });
           return;
         }
@@ -575,31 +600,44 @@ ${data.get('mensagem')}`;
           status: 'denied',
           city: '',
           error: 'A localização informada não está dentro da região de atendimento.',
+          permission: 'granted',
         });
       },
       (error) => {
         let message =
-          'Não foi possível confirmar sua localização. Permita o acesso à localização e tente novamente.';
+          'Não foi possível confirmar sua localização. Verifique a permissão do navegador e tente novamente.';
+        let permission = 'unknown';
+        let status = 'error';
 
         if (error?.code === error.PERMISSION_DENIED) {
+          permission = 'denied';
+          status = 'permission-blocked';
           message =
-            'A localização foi bloqueada pelo navegador. Libere a permissão para este site e tente novamente.';
+            'A localização está bloqueada para este site. Altere a permissão de Localização para “Permitir” nas configurações do site e depois tente novamente.';
         } else if (error?.code === error.TIMEOUT) {
           message =
             'A localização demorou mais que o esperado. Tente novamente em alguns segundos.';
         }
 
-        setRegionalAccess({
-          status: 'error',
+        setRegionalAccess((current) => ({
+          ...current,
+          status,
           city: '',
           error: message,
-        });
+          permission,
+        }));
       },
       {
         enableHighAccuracy: true,
         maximumAge: 300000,
         timeout: 12000,
       }
+    );
+  };
+
+  const openLocationHelp = () => {
+    window.alert(
+      'Para liberar a localização no Chrome: clique no ícone de controles à esquerda do endereço do site → Configurações do site → Localização → Permitir. Depois volte para esta página e clique em “Já liberei, tentar novamente”.'
     );
   };
 
@@ -628,7 +666,12 @@ ${data.get('mensagem')}`;
     error: {
       eyebrow: 'NÃO FOI POSSÍVEL CONFIRMAR',
       title: 'Precisamos confirmar sua região.',
-      body: 'A confirmação automática não foi concluída. Você pode tentar novamente para verificar a localização do dispositivo.',
+      body: 'A confirmação automática não foi concluída. Verifique a permissão de localização e tente novamente.',
+    },
+    'permission-blocked': {
+      eyebrow: 'LOCALIZAÇÃO BLOQUEADA',
+      title: 'Libere a localização deste site.',
+      body: 'O navegador está configurado para nunca permitir a localização. Por segurança, o navegador não pode abrir a solicitação novamente sozinho. Altere a permissão nas configurações deste site e volte para tentar novamente.',
     },
   }[regionalAccess.status] || {};
 
@@ -674,6 +717,26 @@ ${data.get('mensagem')}`;
               Confirmar minha localização
               <span aria-hidden="true">↗</span>
             </button>
+          )}
+
+          {regionalAccess.status === 'permission-blocked' && (
+            <div className="regional-gate-actions">
+              <button
+                className="regional-gate-button"
+                type="button"
+                onClick={openLocationHelp}
+              >
+                Como liberar a localização
+                <span aria-hidden="true">?</span>
+              </button>
+              <button
+                className="regional-gate-secondary"
+                type="button"
+                onClick={requestDeviceLocation}
+              >
+                Já liberei, tentar novamente
+              </button>
+            </div>
           )}
 
           {regionalAccess.status === 'locating' && (

@@ -3793,3 +3793,43 @@ body.regional-access-locked {
     margin-top: 36px;
   }
 }
+
+/* Regional gate: estados de permissão e ações de recuperação */
+.regional-gate-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.regional-gate-secondary {
+  appearance: none;
+  border: 1px solid rgba(210, 195, 180, 0.22);
+  background: transparent;
+  color: var(--cream, #eee9e1);
+  min-height: 48px;
+  padding: 12px 20px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.regional-gate-secondary:hover,
+.regional-gate-secondary:focus-visible {
+  border-color: rgba(183, 100, 75, 0.75);
+  color: #fff;
+  background: rgba(183, 100, 75, 0.08);
+}
+
+@media (max-width: 760px) {
+  .regional-gate-actions {
+    width: 100%;
+  }
+
+  .regional-gate-actions .regional-gate-button,
+  .regional-gate-secondary {
+    width: min(100%, 330px);
+  }
+}
