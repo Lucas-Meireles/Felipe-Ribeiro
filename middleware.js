@@ -25,7 +25,9 @@ export default function middleware(request) {
     pathname.startsWith('/assets/') ||
     pathname === '/favicon.ico' ||
     pathname === '/403.html' ||
-    pathname === '/404.html'
+    pathname === '/404.html' ||
+    pathname === '/403' ||
+    pathname === '/404'
   ) {
     return;
   }
@@ -36,7 +38,7 @@ export default function middleware(request) {
 
   if (city && !ALTO_TIETE.has(city)) {
     return Response.redirect(
-      new URL('/403.html', request.url),
+      new URL('/403', request.url),
       307
     );
   }
