@@ -61,3 +61,10 @@ Por isso o bloqueio exclusivamente baseado em IP foi abandonado.
 Para Hostinger, o front-end pode ser publicado como site estático. O `.htaccess` incluído mantém o fallback do React.
 
 O `worker.js` foi mantido sem bloqueio rígido por cidade para não repetir o falso 403 baseado somente em IP. A confirmação regional principal desta versão acontece no front-end usando IP + localização do dispositivo.
+
+## Atualização Felipe-25
+
+- Transição das Áreas de atuação usa duas camadas e crossfade real.
+- As seis imagens de atuação são pré-carregadas localmente.
+- Service Worker adiciona cache local para as imagens e shell do site, permitindo que recursos já visitados continuem disponíveis offline.
+- Alternância de tema agora usa ícones SVG, sem os textos "Claro / Escuro".

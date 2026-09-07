@@ -334,8 +334,11 @@ export default function App() {
 
     steps.forEach((step) => timelineObserver.observe(step));
 
-    const practiceImage = document.getElementById('practiceImage');
     const practiceStage = document.getElementById('practiceStage');
+    const practiceImageCurrent = document.getElementById('practiceImageCurrent');
+    const practiceImageNext = document.getElementById('practiceImageNext');
+    const practiceImage = document.getElementById('practiceImage');
+    const practiceImageNextImg = document.getElementById('practiceImageNextImg');
     const practiceTitle = document.getElementById('practiceTitle');
     const practiceDescription = document.getElementById('practiceDescription');
     const practiceDetail = document.querySelector('.practice-detail span');
@@ -343,12 +346,27 @@ export default function App() {
       ...document.querySelectorAll('.practice-item')
     ];
 
+    const practiceSources = practiceItems
+      .map((item) => item.dataset.image)
+      .filter(Boolean);
+
+    // Todas as imagens ficam pré-carregadas localmente. A troca nunca depende
+    // de uma nova requisição no momento do clique.
+    practiceSources.forEach((src) => {
+      const image = new Image();
+      image.decoding = 'async';
+      image.src = src;
+    });
+
     let practiceBusy = false;
 
     const activatePractice = (item) => {
       if (
-        !practiceImage ||
         !practiceStage ||
+        !practiceImageCurrent ||
+        !practiceImageNext ||
+        !practiceImage ||
+        !practiceImageNextImg ||
         practiceBusy ||
         item.classList.contains('is-active')
       ) {
@@ -361,39 +379,54 @@ export default function App() {
       const currentIndex = Number(current?.dataset.index || 0);
       const nextIndex = Number(item.dataset.index || 0);
       const direction = nextIndex >= currentIndex ? 1 : -1;
+      const nextSrc = item.dataset.image;
 
+      practiceStage.classList.remove('change-next', 'change-prev');
       practiceStage.classList.add(
         'is-changing',
         direction > 0 ? 'change-next' : 'change-prev'
       );
-      practiceImage.classList.remove('practice-image-enter');
-      practiceImage.classList.add('practice-image-exit');
 
-      window.setTimeout(() => {
-        practiceItems.forEach((practiceItem) => {
-          practiceItem.classList.remove('is-active');
-        });
+      // A próxima camada é preparada antes de qualquer mudança visual.
+      practiceImageNextImg.alt = item.dataset.alt || '';
+      practiceImageNextImg.src = nextSrc;
 
-        item.classList.add('is-active');
-        practiceTitle.textContent = item.dataset.title;
-        practiceDescription.textContent = item.dataset.description;
-        practiceDetail.textContent = `${String(nextIndex + 1).padStart(2, '0')} / 06`;
-        practiceImage.alt = item.dataset.alt;
-        practiceImage.src = item.dataset.image;
-
-        practiceImage.classList.remove('practice-image-exit');
-        practiceImage.classList.add('practice-image-enter');
+      const revealNext = () => {
+        practiceImageNext.classList.add('is-visible');
+        practiceImageCurrent.classList.add('is-exiting');
 
         window.setTimeout(() => {
-          practiceImage.classList.remove('practice-image-enter');
+          practiceItems.forEach((practiceItem) => {
+            practiceItem.classList.remove('is-active');
+          });
+
+          item.classList.add('is-active');
+          practiceTitle.textContent = item.dataset.title;
+          practiceDescription.textContent = item.dataset.description;
+          practiceDetail.textContent = `${String(nextIndex + 1).padStart(2, '0')} / 06`;
+
+          // A camada que entrou passa a ser a atual.
+          practiceImage.src = nextSrc;
+          practiceImage.alt = item.dataset.alt || '';
+          practiceImageCurrent.classList.remove('is-exiting');
+          practiceImageNext.classList.remove('is-visible');
+
           practiceStage.classList.remove(
             'is-changing',
             'change-next',
             'change-prev'
           );
           practiceBusy = false;
-        }, 700);
-      }, 300);
+        }, 720);
+      };
+
+      // decode() evita revelar uma imagem que ainda esteja rasterizando.
+      // Como as imagens já foram pré-carregadas, normalmente é imediato.
+      if (practiceImageNextImg.decode) {
+        practiceImageNextImg.decode().catch(() => {}).finally(revealNext);
+      } else {
+        revealNext();
+      }
     };
 
     practiceItems.forEach((item) => {
@@ -790,20 +823,14 @@ ${data.get('mensagem')}`;
           </a>
          </nav>
          <div class="header-actions">
-          <button aria-label="Mudar para modo claro" aria-pressed="false" class="theme-toggle" id="themeToggle" type="button">
-           <span>
-            ☼
-           </span>
-           <span>
-            Claro
-           </span>
-           <i>
-           </i>
-           <span>
-            Escuro
-           </span>
-           <span>
-           </span>
+          <button aria-label="Mudar para modo claro" aria-pressed="false" class="theme-toggle" id="themeToggle" title="Alternar tema" type="button">
+           <svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path>
+           </svg>
+           <svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none">
+            <path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path>
+           </svg>
           </button>
           <a class="header-cta" href="https://wa.me/5511944548048?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." rel="noopener noreferrer" target="_blank">
            Falar com o advogado
@@ -845,11 +872,15 @@ ${data.get('mensagem')}`;
             </b>
            </a>
           </nav>
-          <button class="mobile-theme" id="mobileTheme" type="button">
-           Alternar tema
-           <span>
-            ◐
-           </span>
+          <button aria-label="Mudar para modo claro" class="mobile-theme" id="mobileTheme" title="Alternar tema" type="button">
+           <span>Alternar tema</span>
+           <svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path>
+           </svg>
+           <svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none">
+            <path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path>
+           </svg>
           </button>
           <a class="header-cta" href="https://wa.me/5511944548048?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." rel="noopener noreferrer" target="_blank">
            Falar com o advogado
@@ -1114,7 +1145,12 @@ ${data.get('mensagem')}`;
           </div>
           <div class="practice-stage" id="practiceStage">
            <div class="practice-image-wrap">
-            <img alt="Ambiente relacionado à atuação criminal" id="practiceImage" src="assets/flagrante.png"/>
+            <div class="practice-image-layer practice-image-layer-current" id="practiceImageCurrent">
+             <img alt="Ambiente relacionado à atuação criminal" id="practiceImage" src="assets/flagrante.png"/>
+            </div>
+            <div class="practice-image-layer practice-image-layer-next" id="practiceImageNext">
+             <img alt="" id="practiceImageNextImg" src="assets/audiencia.png"/>
+            </div>
             <div class="practice-shade">
             </div>
             <div class="practice-detail">
