@@ -317,7 +317,7 @@ body[data-theme="light"] .theme-toggle i:after {
 .hero-image {
   position: absolute;
   inset: 0;
-  background-image: url("assets/felipe-corpo.jpg");
+  background-image: url("/assets/felipe-corpo.jpg");
   background-size: cover;
   background-position: 62% 20%;
   opacity: .48;
@@ -2012,7 +2012,7 @@ body[data-theme="dark"] .footer-links a, body[data-theme="dark"] .footer > p {
 }
 
 body[data-theme="dark"] .footer-brand img {
-  content: url("assets/logo-felipe-ribeiro-dark.png");
+  content: url("/assets/logo-felipe-ribeiro-dark.png");
 }
 
 body[data-theme="dark"] .section-dark .practice-intro, body[data-theme="dark"] .section-dark .principle p, body[data-theme="dark"] .section-dark .testimonial-author span {
@@ -3469,7 +3469,7 @@ body[data-theme="light"] .footer-links a, body[data-theme="light"] .footer > p {
 }
 
 body[data-theme="light"] .footer-brand img {
-  content: url("assets/logo-felipe-ribeiro-clean.png");
+  content: url("/assets/logo-felipe-ribeiro-clean.png");
 }
 
 body[data-theme="light"] .button-dark {
