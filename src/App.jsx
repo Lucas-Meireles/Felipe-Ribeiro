@@ -913,6 +913,10 @@ ${data.get('mensagem')}`;
            <p class="hero-text hero-reveal delay-2">
             Atuação técnica, personalizada e comprometida com cada etapa da defesa criminal.
            </p>
+           <div class="availability-badge hero-reveal delay-2" aria-label="Atendimento 24 horas">
+            <span aria-hidden="true"></span>
+            ATENDIMENTO 24 HORAS · TODOS OS DIAS
+           </div>
            <div class="hero-actions hero-reveal delay-3">
             <a class="header-cta" href="https://wa.me/5511944548048?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." rel="noopener noreferrer" target="_blank">
              Falar com o advogado
@@ -976,6 +980,148 @@ ${data.get('mensagem')}`;
            <p>
             com cada etapa
            </p>
+          </div>
+         </section>
+         <section class="practice section-dark" id="atuacao">
+          <div class="practice-top">
+           <div>
+            <p class="eyebrow reveal">
+             ÁREAS DE ATUAÇÃO
+            </p>
+            <h2 class="reveal">
+             Defesa em momentos
+             <br/>
+             <em>
+              que exigem resposta.
+             </em>
+            </h2>
+           </div>
+           <p class="practice-intro reveal">
+            Conheça algumas das frentes de atuação criminal. O atendimento é direcionado conforme as particularidades de cada situação.
+           </p>
+          </div>
+          <div class="practice-stage" id="practiceStage">
+           <div class="practice-image-wrap">
+            <div class="practice-image-layer practice-image-layer-current" id="practiceImageCurrent">
+             <img alt="Ambiente relacionado à atuação criminal" id="practiceImage" src="assets/flagrante.png"/>
+            </div>
+            <div class="practice-image-layer practice-image-layer-next" id="practiceImageNext">
+             <img alt="" id="practiceImageNextImg" src="assets/audiencia.png"/>
+            </div>
+            <div class="practice-shade">
+            </div>
+            <div class="practice-detail">
+             <span>
+              01 / 06
+             </span>
+             <p>
+              ATUAÇÃO CRIMINAL
+             </p>
+            </div>
+           </div>
+           <div class="practice-current">
+            <span class="practice-current-label">
+             ÁREA EM FOCO
+            </span>
+            <h3 id="practiceTitle">
+             Prisão em flagrante
+            </h3>
+            <p id="practiceDescription">
+             Atuação desde os primeiros momentos da ocorrência e acompanhamento das medidas cabíveis.
+            </p>
+           </div>
+           <div aria-label="Áreas de atuação" class="practice-list" role="list">
+            <button
+             class="practice-item is-active"
+             data-alt="Ambiente relacionado à prisão em flagrante"
+             data-description="Atuação desde os primeiros momentos da ocorrência e acompanhamento das medidas cabíveis."
+             data-image="assets/flagrante.png"
+             data-index="0"
+             data-title="Prisão em flagrante"
+            >
+             <span>
+              01
+             </span>
+             <strong>
+              Prisão em flagrante
+             </strong>
+            </button>
+            <button
+             class="practice-item"
+             data-alt="Delegacia de Polícia"
+             data-description="Acompanhamento jurídico e análise da situação para definição da estratégia de defesa."
+             data-image="assets/audiencia.png"
+             data-index="1"
+             data-title="Audiência de custódia"
+            >
+             <span>
+              02
+             </span>
+             <strong>
+              Audiência de custódia
+             </strong>
+            </button>
+            <button
+             class="practice-item"
+             data-alt="Felipe no escritório"
+             data-description="Análise das circunstâncias e das medidas processuais aplicáveis ao caso concreto."
+             data-image="assets/habeas-corpus.png"
+             data-index="2"
+             data-title="Habeas Corpus"
+            >
+             <span>
+              03
+             </span>
+             <strong>
+              Habeas Corpus
+             </strong>
+            </button>
+            <button
+             class="practice-item"
+             data-alt="Ambiente de delegacia"
+             data-description="Orientação e defesa técnica durante a fase de investigação e seus desdobramentos."
+             data-image="assets/inquerito.png"
+             data-index="3"
+             data-title="Inquérito policial"
+            >
+             <span>
+              04
+             </span>
+             <strong>
+              Inquérito policial
+             </strong>
+            </button>
+            <button
+             class="practice-item"
+             data-alt="Escritório de Felipe Ribeiro"
+             data-description="Acompanhamento estratégico do processo e atuação nos atos necessários à defesa."
+             data-image="assets/acao-penal.png"
+             data-index="4"
+             data-title="Ação penal"
+            >
+             <span>
+              05
+             </span>
+             <strong>
+              Ação penal
+             </strong>
+            </button>
+            <button
+             class="practice-item"
+             data-alt="Ambiente institucional"
+             data-description="Preparação e atuação técnica em casos submetidos ao julgamento pelo Tribunal do Júri."
+             data-image="assets/tribunal.png"
+             data-index="5"
+             data-title="Tribunal do Júri"
+            >
+             <span>
+              06
+             </span>
+             <strong>
+              Tribunal do Júri
+             </strong>
+            </button>
+           </div>
           </div>
          </section>
          <section class="about section-light" id="sobre">
@@ -1125,148 +1271,6 @@ ${data.get('mensagem')}`;
            </article>
           </div>
          </section>
-         <section class="practice section-dark" id="atuacao">
-          <div class="practice-top">
-           <div>
-            <p class="eyebrow reveal">
-             ÁREAS DE ATUAÇÃO
-            </p>
-            <h2 class="reveal">
-             Defesa em momentos
-             <br/>
-             <em>
-              que exigem resposta.
-             </em>
-            </h2>
-           </div>
-           <p class="practice-intro reveal">
-            Conheça algumas das frentes de atuação criminal. O atendimento é direcionado conforme as particularidades de cada situação.
-           </p>
-          </div>
-          <div class="practice-stage" id="practiceStage">
-           <div class="practice-image-wrap">
-            <div class="practice-image-layer practice-image-layer-current" id="practiceImageCurrent">
-             <img alt="Ambiente relacionado à atuação criminal" id="practiceImage" src="assets/flagrante.png"/>
-            </div>
-            <div class="practice-image-layer practice-image-layer-next" id="practiceImageNext">
-             <img alt="" id="practiceImageNextImg" src="assets/audiencia.png"/>
-            </div>
-            <div class="practice-shade">
-            </div>
-            <div class="practice-detail">
-             <span>
-              01 / 06
-             </span>
-             <p>
-              ATUAÇÃO CRIMINAL
-             </p>
-            </div>
-           </div>
-           <div class="practice-current">
-            <span class="practice-current-label">
-             ÁREA EM FOCO
-            </span>
-            <h3 id="practiceTitle">
-             Prisão em flagrante
-            </h3>
-            <p id="practiceDescription">
-             Atuação desde os primeiros momentos da ocorrência e acompanhamento das medidas cabíveis.
-            </p>
-           </div>
-           <div aria-label="Áreas de atuação" class="practice-list" role="list">
-            <button
-             class="practice-item is-active"
-             data-alt="Ambiente relacionado à prisão em flagrante"
-             data-description="Atuação desde os primeiros momentos da ocorrência e acompanhamento das medidas cabíveis."
-             data-image="assets/flagrante.png"
-             data-index="0"
-             data-title="Prisão em flagrante"
-            >
-             <span>
-              01
-             </span>
-             <strong>
-              Prisão em flagrante
-             </strong>
-            </button>
-            <button
-             class="practice-item"
-             data-alt="Delegacia de Polícia"
-             data-description="Acompanhamento jurídico e análise da situação para definição da estratégia de defesa."
-             data-image="assets/audiencia.png"
-             data-index="1"
-             data-title="Audiência de custódia"
-            >
-             <span>
-              02
-             </span>
-             <strong>
-              Audiência de custódia
-             </strong>
-            </button>
-            <button
-             class="practice-item"
-             data-alt="Felipe no escritório"
-             data-description="Análise das circunstâncias e das medidas processuais aplicáveis ao caso concreto."
-             data-image="assets/habeas-corpus.png"
-             data-index="2"
-             data-title="Habeas Corpus"
-            >
-             <span>
-              03
-             </span>
-             <strong>
-              Habeas Corpus
-             </strong>
-            </button>
-            <button
-             class="practice-item"
-             data-alt="Ambiente de delegacia"
-             data-description="Orientação e defesa técnica durante a fase de investigação e seus desdobramentos."
-             data-image="assets/inquerito.png"
-             data-index="3"
-             data-title="Inquérito policial"
-            >
-             <span>
-              04
-             </span>
-             <strong>
-              Inquérito policial
-             </strong>
-            </button>
-            <button
-             class="practice-item"
-             data-alt="Escritório de Felipe Ribeiro"
-             data-description="Acompanhamento estratégico do processo e atuação nos atos necessários à defesa."
-             data-image="assets/acao-penal.png"
-             data-index="4"
-             data-title="Ação penal"
-            >
-             <span>
-              05
-             </span>
-             <strong>
-              Ação penal
-             </strong>
-            </button>
-            <button
-             class="practice-item"
-             data-alt="Ambiente institucional"
-             data-description="Preparação e atuação técnica em casos submetidos ao julgamento pelo Tribunal do Júri."
-             data-image="assets/tribunal.png"
-             data-index="5"
-             data-title="Tribunal do Júri"
-            >
-             <span>
-              06
-             </span>
-             <strong>
-              Tribunal do Júri
-             </strong>
-            </button>
-           </div>
-          </div>
-         </section>
          <section class="presence section-dark" id="presenca">
           <div class="presence-copy">
            <p class="eyebrow reveal">
@@ -1287,7 +1291,7 @@ ${data.get('mensagem')}`;
             </span>
             <div>
              <h3>
-              Escuta
+              Escutar
              </h3>
              <p>
               Antes de definir qualquer caminho, é preciso compreender o contexto e os fatos que envolvem cada situação.
@@ -1469,6 +1473,9 @@ ${data.get('mensagem')}`;
             <a href="tel:+5511944548048">
              Telefone / WhatsApp
             </a>
+            <span>
+             Atendimento 24 horas · todos os dias
+            </span>
             <span>
              Atendimento presencial e online
             </span>

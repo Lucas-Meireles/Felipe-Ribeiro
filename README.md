@@ -68,3 +68,10 @@ O `worker.js` foi mantido sem bloqueio rígido por cidade para não repetir o fa
 - As seis imagens de atuação são pré-carregadas localmente.
 - Service Worker adiciona cache local para as imagens e shell do site, permitindo que recursos já visitados continuem disponíveis offline.
 - Alternância de tema agora usa ícones SVG, sem os textos "Claro / Escuro".
+
+
+## Atualização Felipe-26
+
+- Áreas de atuação movida para imediatamente após os compromissos e antes de O Advogado.
+- Transição de fotos refinada com duas camadas, crossfade, clip-path e movimento sutil.
+- Mantido o cache offline e o pré-carregamento das imagens.

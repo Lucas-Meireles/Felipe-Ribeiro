@@ -379,6 +379,27 @@ body[data-theme="light"] .header-cta {
   color: #c5c0b8
 }
 
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #eee8df;
+}
+
+.availability-badge span {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: var(--rust);
+  box-shadow: 0 0 0 5px rgba(166,83,60,.11);
+}
+
 .hero-actions {
   display: flex;
   align-items: center;
@@ -808,64 +829,77 @@ body[data-theme="light"] .header-cta {
   inset: 0;
   overflow: hidden;
   opacity: 0;
-  transform: translate3d(0,0,0);
-  will-change: opacity, transform;
-  transition: opacity .72s cubic-bezier(.22,.61,.36,1),
-              transform .9s cubic-bezier(.2,.7,.2,1)
+  transform: translate3d(0,0,0) scale(1.025);
+  will-change: opacity, transform, clip-path;
+  transition: opacity .78s cubic-bezier(.22,.61,.36,1),
+              transform 1.05s cubic-bezier(.16,1,.3,1),
+              clip-path .88s cubic-bezier(.16,1,.3,1);
 }
 
 .practice-image-layer img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: brightness(.58) saturate(.72);
+  transform: scale(1.01);
+  transition: transform 1.2s cubic-bezier(.16,1,.3,1);
 }
 
 .practice-image-layer-current {
   z-index: 1;
   opacity: 1;
+  transform: translate3d(0,0,0) scale(1);
 }
 
 .practice-image-layer-next {
   z-index: 2;
+  clip-path: inset(0 100% 0 0);
 }
 
 .practice-image-layer-next.is-visible {
   opacity: 1;
+  transform: translate3d(0,0,0) scale(1);
+  clip-path: inset(0 0 0 0);
 }
 
-.practice-stage.change-next .practice-image-layer-current.is-exiting {
-  transform: translate3d(-4%,0,0);
-}
-
-.practice-stage.change-next .practice-image-layer-next.is-visible {
-  transform: translate3d(0,0,0);
-}
-
-.practice-stage.change-prev .practice-image-layer-current.is-exiting {
-  transform: translate3d(4%,0,0);
+.practice-stage.change-prev .practice-image-layer-next {
+  clip-path: inset(0 0 0 100%);
 }
 
 .practice-stage.change-prev .practice-image-layer-next.is-visible {
-  transform: translate3d(0,0,0);
+  clip-path: inset(0 0 0 0);
 }
 
-.practice-image-layer-current.is-exiting {
-  opacity: 0;
+.practice-stage.change-next .practice-image-layer-current.is-exiting {
+  opacity: .22;
+  transform: translate3d(-2.5%,0,0) scale(.985);
 }
 
-.practice-image-layer-next {
-  transform: translate3d(0,0,0);
+.practice-stage.change-prev .practice-image-layer-current.is-exiting {
+  opacity: .22;
+  transform: translate3d(2.5%,0,0) scale(.985);
+}
+
+.practice-image-layer-current.is-exiting img {
+  transform: scale(1.025);
+}
+
+.practice-image-layer-next.is-visible img {
+  transform: scale(1);
 }
 
 .practice-shade {
   position: absolute;
   inset: 0;
+  z-index: 3;
   background: linear-gradient(90deg,transparent 45%,rgba(17,17,17,.85) 100%),linear-gradient(0deg,rgba(17,17,17,.7),transparent 45%)
 }
 
 .practice-detail {
   position: absolute;
+  z-index: 4;
   left: 32px;
   bottom: 30px
 }
@@ -1582,6 +1616,11 @@ body[data-theme="light"] .header-cta {
     line-height: 1.7;
     max-width: 330px
   }
+  .availability-badge {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+  }
+
   .hero-actions {
     align-items: flex-start;
     flex-direction: column;
@@ -2200,52 +2239,6 @@ Nothing gets inserted into normal flow during item changes.
   min-height: 0;
   overflow: hidden;
   position: relative;
-}
-
-.practice-image-wrap img {
-  position: absolute;
-  inset: -1.5%;
-  width: 103%;
-  height: 103%;
-  object-fit: cover;
-  transform: translate3d(0,0,0) scale(1.01);
-  opacity: 1;
-  will-change: transform, opacity;
-  transition: transform .72s cubic-bezier(.16,1,.3,1), opacity .32s ease;
-}
-
-.practice-image-wrap img.practice-image-exit {
-  opacity: 0;
-}
-
-.practice-image-wrap img.practice-image-enter {
-  animation: practiceImageEnter .72s cubic-bezier(.16,1,.3,1) both;
-}
-
-@keyframes practiceImageEnter {
-  from {
-    opacity: 0;
-    transform: translate3d(5%,0,0) scale(1.035);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0,0,0) scale(1.01);
-  }
-}
-
-.practice-stage.change-prev .practice-image-wrap img.practice-image-enter {
-  animation-name: practiceImageEnterPrev;
-}
-
-@keyframes practiceImageEnterPrev {
-  from {
-    opacity: 0;
-    transform: translate3d(-5%,0,0) scale(1.035);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0,0,0) scale(1.01);
-  }
 }
 
 .practice-current {
