@@ -684,12 +684,12 @@ ${data.get('mensagem')}`;
     'needs-location': {
       eyebrow: 'ATENDIMENTO ALTO TIETÊ',
       title: 'Confirme sua localização.',
-      body: 'O atendimento é direcionado ao Alto Tietê. Como a localização por IP pode ser imprecisa, podemos confirmar a região usando a localização do seu dispositivo.',
+      body: 'O atendimento é direcionado ao território nacional. podemos confirmar a região usando a localização do seu dispositivo.',
     },
     locating: {
       eyebrow: 'LOCALIZAÇÃO',
       title: 'Só um instante.',
-      body: 'Estamos confirmando sua localização para liberar o atendimento regional.',
+      body: 'Estamos confirmando sua localização para liberar o atendimento nacional.',
     },
     denied: {
       eyebrow: 'ACESSO REGIONAL',
