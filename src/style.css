@@ -3889,49 +3889,49 @@ body.regional-access-locked {
 }
 
 /* =========================================================
-INTERMEDIATE PRACTICE LAYOUT · 901–1050px
-A navbar compacta não deve obrigar a seção de atuação a
-usar a composição de desktop. Nesta faixa, a imagem ocupa
-uma linha estável, o conteúdo fica ancorado dentro dela e a
-lista passa para uma faixa independente abaixo.
-========================================================= */
+   ÁREAS DE ATUAÇÃO · AJUSTE LOCAL 901–1050px
+   Mantém a composição geral da página. Nesta faixa, somente
+   a área de atuação reorganiza seu palco para evitar sobreposição.
+   A imagem fica mais compacta, o conteúdo permanece sobre ela
+   e a lista desce para uma faixa própria logo abaixo.
+   ========================================================= */
 
 @media (min-width: 901px) and (max-width: 1050px) {
   .practice-stage {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto auto;
+    grid-template-rows: 500px auto;
     min-height: 0;
   }
 
   .practice-image-wrap {
     grid-column: 1;
     grid-row: 1;
-    width: 100%;
-    height: clamp(460px, 55vw, 560px);
     min-height: 0;
+    height: 500px;
   }
 
   .practice-current {
     position: absolute;
     left: 5%;
     right: auto;
-    bottom: 36px;
-    width: min(620px, 72%);
-    min-height: 0;
+    bottom: 34px;
+    width: min(650px, 72%);
     margin: 0;
     padding: 0;
+    z-index: 4;
   }
 
   .practice-current h3 {
-    font-size: clamp(46px, 5.5vw, 58px);
-    line-height: .95;
+    font-size: clamp(44px, 5vw, 56px);
+    line-height: .96;
+    margin: 14px 0;
   }
 
   .practice-current p {
-    max-width: 560px;
+    max-width: 600px;
     font-size: 18px;
-    line-height: 1.7;
+    line-height: 1.65;
   }
 
   .practice-list {
@@ -3939,9 +3939,8 @@ lista passa para uma faixa independente abaixo.
     grid-row: 2;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
     width: 100%;
-    padding: 22px 0 0;
+    padding: 0;
     border-left: 0;
     border-top: 1px solid var(--line-dark);
   }
@@ -3952,6 +3951,7 @@ lista passa para uma faixa independente abaixo.
 
   .practice-item {
     min-width: 0;
+    min-height: 82px;
     padding: 18px 20px;
     border-bottom: 1px solid var(--line-dark);
   }
@@ -3979,118 +3979,8 @@ lista passa para uma faixa independente abaixo.
   }
 
   .practice-item strong {
-    font-size: clamp(20px, 2.15vw, 24px);
-    line-height: 1.15;
+    font-size: clamp(19px, 2vw, 23px);
+    line-height: 1.2;
     overflow-wrap: anywhere;
   }
 }
-/* =========================================================
-INTERMEDIATE PRACTICE LAYOUT · 901–1050px · FINAL OVERRIDE
-Em telas intermediárias, a área de atuação vira uma composição
-vertical deliberada: imagem, conteúdo e lista. Isso elimina
-sobreposição mesmo quando o navegador está em ~1024px.
-========================================================= */
-
-@media (min-width: 901px) and (max-width: 1050px) {
-  .practice-stage {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) !important;
-    grid-template-rows: auto auto auto !important;
-    min-height: 0 !important;
-    height: auto !important;
-    gap: 0 !important;
-  }
-
-  .practice-image-wrap {
-    grid-column: 1 !important;
-    grid-row: 1 !important;
-    width: 100% !important;
-    height: clamp(440px, 52vw, 540px) !important;
-    min-height: 0 !important;
-  }
-
-  .practice-current {
-    grid-column: 1 !important;
-    grid-row: 2 !important;
-    position: relative !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    top: auto !important;
-    width: min(760px, 100%) !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 34px 0 38px !important;
-    pointer-events: none;
-  }
-
-  .practice-current-label {
-    margin-bottom: 10px !important;
-  }
-
-  .practice-current h3 {
-    margin: 0 !important;
-    font-size: clamp(42px, 5vw, 58px) !important;
-    line-height: .98 !important;
-  }
-
-  .practice-current p {
-    max-width: 700px !important;
-    margin-top: 14px !important;
-    font-size: 18px !important;
-    line-height: 1.65 !important;
-  }
-
-  .practice-list {
-    grid-column: 1 !important;
-    grid-row: 3 !important;
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    width: 100% !important;
-    padding: 0 !important;
-    border-left: 0 !important;
-    border-top: 1px solid var(--line-dark) !important;
-    justify-content: stretch !important;
-  }
-
-  body[data-theme="light"] .practice-list {
-    border-top-color: var(--line-light) !important;
-  }
-
-  .practice-item {
-    min-width: 0 !important;
-    min-height: 84px !important;
-    padding: 18px 18px !important;
-    border-bottom: 1px solid var(--line-dark) !important;
-  }
-
-  body[data-theme="light"] .practice-item {
-    border-bottom-color: var(--line-light) !important;
-  }
-
-  .practice-item:nth-last-child(-n+3) {
-    border-bottom: 0 !important;
-  }
-
-  .practice-item:before {
-    left: 0 !important;
-    right: 0 !important;
-    top: -1px !important;
-    bottom: auto !important;
-    width: auto !important;
-    height: 2px !important;
-    transform: scaleX(0) !important;
-  }
-
-  .practice-item.is-active:before {
-    transform: scaleX(1) !important;
-  }
-
-  .practice-item strong {
-    display: block !important;
-    font-size: clamp(19px, 2vw, 23px) !important;
-    line-height: 1.2 !important;
-    overflow-wrap: anywhere !important;
-  }
-}
-
