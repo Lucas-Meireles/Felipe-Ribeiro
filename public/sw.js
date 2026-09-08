@@ -1,4 +1,4 @@
-const CACHE_NAME = 'felipe-ribeiro-v1';
+const CACHE_NAME = 'felipe-ribeiro-v2';
 const PRACTICE_ASSETS = [
   '/assets/flagrante.png',
   '/assets/audiencia.png',

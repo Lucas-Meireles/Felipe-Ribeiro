@@ -1,7 +1,6 @@
-// Esta versão usa a mesma estratégia regional inteligente do deploy Vercel:
-// o IP não deve bloquear sozinho porque provedores e operadoras podem
-// geolocalizar uma conexão do Alto Tietê em São Paulo capital.
-// A confirmação regional é feita pela interface usando a localização do dispositivo.
+// O acesso é nacional. A única área restrita é o Tatuapé, confirmada pela
+// localização do dispositivo quando necessário. Falhas de localização não bloqueiam
+// o restante do território nacional.
 
 export default {
   async fetch(request, env) {

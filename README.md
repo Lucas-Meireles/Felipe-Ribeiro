@@ -19,31 +19,18 @@ Configuração importante:
 4. No Vercel, confirme que o Root Directory é a raiz do projeto, onde estão `package.json`, `vite.config.js` e `vercel.json`.
 5. Aguarde o deploy aparecer como `Ready`.
 
-## Restrição regional inteligente
+## Acesso nacional com área restrita
 
-O projeto mantém o atendimento direcionado às 10 cidades tradicionais usadas para este site:
+O site possui atendimento em todo o Brasil. A única área geográfica restrita é o Tatuapé, em São Paulo.
 
-Arujá, Biritiba-Mirim, Ferraz de Vasconcelos, Guararema, Itaquaquecetuba, Mogi das Cruzes, Poá, Salesópolis, Santa Isabel e Suzano.
+A lógica de acesso funciona de forma conservadora:
 
-A lógica não bloqueia mais o visitante somente porque o IP foi geolocalizado em outra cidade. Isso evita falsos bloqueios, como o caso diagnosticado em que uma conexão do Alto Tietê foi identificada pela Vercel como São Paulo.
+1. O território nacional permanece liberado por padrão.
+2. Quando necessário, o front-end solicita a localização do dispositivo apenas para confirmar se ele está dentro da área restrita do Tatuapé.
+3. Se a localização não puder ser obtida ou tiver precisão insuficiente, o acesso nacional permanece liberado para evitar falsos bloqueios.
+4. Bots de mecanismos de busca e plataformas conhecidas não ficam presos na verificação de localização.
 
-Fluxo:
-
-1. `/api/region` consulta a cidade aproximada fornecida pelo Vercel.
-2. Se o IP estiver claramente em uma das cidades permitidas, o site é liberado imediatamente.
-3. Se o IP estiver fora ou impreciso, o visitante vê uma tela de confirmação regional.
-4. Ao clicar em `Confirmar minha localização`, o navegador solicita a localização do dispositivo.
-5. A coordenada é comparada com zonas aproximadas das 10 cidades.
-6. Se estiver na região, o site é liberado.
-7. Se estiver fora da região ou a localização for recusada, o conteúdo do site permanece bloqueado.
-
-A Geolocation API exige HTTPS e permissão explícita do visitante. Por isso, a produção usa `Permissions-Policy: geolocation=(self)` no `vercel.json`.
-
-### SEO
-
-Bots de mecanismos e plataformas conhecidos são liberados pelo endpoint regional para não transformar a restrição local em um bloqueio indiscriminado de indexadores e prévias.
-
-A proteção é de acesso/experiência regional, não uma barreira criptográfica. Como o projeto é um site público, não há dados privados ou área autenticada sendo protegidos por essa regra.
+A proteção é de acesso/experiência territorial, não uma barreira criptográfica. Como o projeto é um site público, não há dados privados ou área autenticada sendo protegidos por essa regra.
 
 ## Diagnóstico anterior
 
@@ -60,7 +47,7 @@ Por isso o bloqueio exclusivamente baseado em IP foi abandonado.
 
 Para Hostinger, o front-end pode ser publicado como site estático. O `.htaccess` incluído mantém o fallback do React.
 
-O `worker.js` foi mantido sem bloqueio rígido por cidade para não repetir o falso 403 baseado somente em IP. A confirmação regional principal desta versão acontece no front-end usando IP + localização do dispositivo.
+O `worker.js` permanece sem bloqueio rígido por cidade. A única área restrita é o Tatuapé, e a confirmação é feita no front-end usando localização do dispositivo quando necessário.
 
 ## Atualização Felipe-25
 

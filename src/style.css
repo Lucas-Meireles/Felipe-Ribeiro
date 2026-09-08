@@ -3616,7 +3616,7 @@ body[data-theme="light"]::-webkit-scrollbar-thumb:hover {
 }
 
 /* =========================================================
-   REGIONAL ACCESS · ALTO TIETÊ
+   ACESSO NACIONAL · ÁREA RESTRITA: TATUAPÉ
    ========================================================= */
 body.regional-access-locked {
   overflow: hidden;
@@ -3848,7 +3848,7 @@ body.regional-access-locked {
   }
 }
 
-/* Regional gate: estados de permissão e ações de recuperação */
+/* Gate de acesso: estados de permissão e ações de recuperação */
 .regional-gate-actions {
   display: flex;
   flex-direction: column;

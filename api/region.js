@@ -1,16 +1,3 @@
-const ALTO_TIETE = new Set([
-  'aruja',
-  'biritiba-mirim',
-  'ferraz de vasconcelos',
-  'guararema',
-  'itaquaquecetuba',
-  'mogi das cruzes',
-  'poa',
-  'salesopolis',
-  'santa isabel',
-  'suzano',
-]);
-
 function normalize(value = '') {
   let decoded = String(value);
 
@@ -42,11 +29,21 @@ export default function handler(request, response) {
   response.setHeader('Cache-Control', 'no-store, private');
   response.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
 
+  // O Brasil inteiro é liberado. Quando a rede aponta para o estado de
+  // São Paulo, o front-end pode pedir a localização precisa apenas para
+  // confirmar a única área restrita: Tatuapé.
+  const needsDeviceLocation =
+    !isBot &&
+    (countryRegion === 'SP' || city === 'sao paulo');
+
+  const ipAllowed = Boolean(!isBot && country === 'BR' && !needsDeviceLocation);
+
   response.status(200).json({
     city: city || null,
     country: country || null,
     countryRegion: countryRegion || null,
-    ipAllowed: Boolean(city && country === 'BR' && ALTO_TIETE.has(city)),
+    ipAllowed,
+    needsDeviceLocation,
     isBot,
   });
 }

@@ -4,18 +4,12 @@ import './style.css';
 const WA_PHONE = '5511944548048';
 
 
-const ALTO_TIETE_ZONES = [
-  { name: 'Arujá', lat: -23.3968, lon: -46.3206, radiusKm: 16 },
-  { name: 'Biritiba-Mirim', lat: -23.5726, lon: -46.0408, radiusKm: 14 },
-  { name: 'Ferraz de Vasconcelos', lat: -23.5414, lon: -46.3680, radiusKm: 8 },
-  { name: 'Guararema', lat: -23.4153, lon: -46.0351, radiusKm: 17 },
-  { name: 'Itaquaquecetuba', lat: -23.4861, lon: -46.3486, radiusKm: 9 },
-  { name: 'Mogi das Cruzes', lat: -23.5228, lon: -46.1883, radiusKm: 22 },
-  { name: 'Poá', lat: -23.5281, lon: -46.3448, radiusKm: 6 },
-  { name: 'Salesópolis', lat: -23.5287, lon: -45.8460, radiusKm: 20 },
-  { name: 'Santa Isabel', lat: -23.3156, lon: -46.2214, radiusKm: 17 },
-  { name: 'Suzano', lat: -23.5425, lon: -46.3116, radiusKm: 10 },
-];
+const TATUAPE_ZONE = {
+  name: 'Tatuapé',
+  lat: -23.5407,
+  lon: -46.5764,
+  radiusKm: 1.8,
+};
 
 const distanceInKm = (lat1, lon1, lat2, lon2) => {
   const toRadians = (value) => (value * Math.PI) / 180;
@@ -31,14 +25,15 @@ const distanceInKm = (lat1, lon1, lat2, lon2) => {
   return 2 * earthRadius * Math.asin(Math.sqrt(a));
 };
 
-const locateAltoTietê = ({ latitude, longitude, accuracy = 0 }) => {
-  const accuracyKm = Math.min(Math.max(Number(accuracy) / 1000 || 0, 0), 8);
+const isTatuapeLocation = ({ latitude, longitude, accuracy = 0 }) => {
+  const numericAccuracy = Number(accuracy);
+  // Só bloqueamos quando a posição é suficientemente precisa.
+  // Em caso de baixa precisão, liberamos para evitar falso positivo.
+  if (!Number.isFinite(numericAccuracy) || numericAccuracy > 250) return false;
 
   return (
-    ALTO_TIETE_ZONES.find((zone) =>
-      distanceInKm(latitude, longitude, zone.lat, zone.lon) <=
-      zone.radiusKm + accuracyKm
-    ) || null
+    distanceInKm(latitude, longitude, TATUAPE_ZONE.lat, TATUAPE_ZONE.lon) <=
+    TATUAPE_ZONE.radiusKm
   );
 };
 
@@ -76,8 +71,20 @@ export default function App() {
           return;
         }
 
+        if (data.needsDeviceLocation) {
+          setRegionalAccess({
+            status: 'needs-location',
+            city: data.city || '',
+            error: '',
+            permission: 'unknown',
+          });
+          return;
+        }
+
+        // Em qualquer falha/indefinição, priorizamos a disponibilidade
+        // nacional. O bloqueio só acontece após confirmação precisa do Tatuapé.
         setRegionalAccess({
-          status: 'needs-location',
+          status: 'allowed',
           city: data.city || '',
           error: '',
           permission: 'unknown',
@@ -86,7 +93,7 @@ export default function App() {
         if (cancelled) return;
 
         setRegionalAccess({
-          status: 'needs-location',
+          status: 'allowed',
           city: '',
           error: '',
           permission: 'unknown',
@@ -580,12 +587,14 @@ ${data.get('mensagem')}`;
 
   const requestDeviceLocation = async () => {
     if (!('geolocation' in navigator)) {
-      setRegionalAccess((current) => ({
-        ...current,
-        status: 'error',
+      // A localização é um reforço para confirmar o Tatuapé, nunca um
+      // requisito para o restante do território nacional.
+      setRegionalAccess({
+        status: 'allowed',
+        city: '',
+        error: '',
         permission: 'unsupported',
-        error: 'Seu navegador não disponibilizou a localização do dispositivo.',
-      }));
+      });
       return;
     }
 
@@ -594,12 +603,13 @@ ${data.get('mensagem')}`;
         const permission = await navigator.permissions.query({ name: 'geolocation' });
 
         if (permission.state === 'denied') {
-          setRegionalAccess((current) => ({
-            ...current,
-            status: 'permission-blocked',
+          // Sem confirmação do Tatuapé, não bloqueamos um visitante brasileiro.
+          setRegionalAccess({
+            status: 'allowed',
+            city: '',
+            error: '',
             permission: 'denied',
-            error: 'A localização está bloqueada para este site. O navegador não mostrará uma nova solicitação até que você altere a permissão nas configurações do site.',
-          }));
+          });
           return;
         }
       }
@@ -617,48 +627,32 @@ ${data.get('mensagem')}`;
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude, accuracy } = position.coords;
-        const zone = locateAltoTietê({ latitude, longitude, accuracy });
 
-        if (zone) {
+        if (isTatuapeLocation({ latitude, longitude, accuracy })) {
           setRegionalAccess({
-            status: 'allowed',
-            city: zone.name,
-            error: '',
+            status: 'denied',
+            city: 'Tatuapé',
+            error: 'O acesso não está disponível nesta área.',
             permission: 'granted',
           });
           return;
         }
 
         setRegionalAccess({
-          status: 'denied',
+          status: 'allowed',
           city: '',
-          error: 'A localização informada não está dentro da região de atendimento.',
+          error: '',
           permission: 'granted',
         });
       },
       (error) => {
-        let message =
-          'Não foi possível confirmar sua localização. Verifique a permissão do navegador e tente novamente.';
-        let permission = 'unknown';
-        let status = 'error';
-
-        if (error?.code === error.PERMISSION_DENIED) {
-          permission = 'denied';
-          status = 'permission-blocked';
-          message =
-            'A localização está bloqueada para este site. Altere a permissão de Localização para “Permitir” nas configurações do site e depois tente novamente.';
-        } else if (error?.code === error.TIMEOUT) {
-          message =
-            'A localização demorou mais que o esperado. Tente novamente em alguns segundos.';
-        }
-
-        setRegionalAccess((current) => ({
-          ...current,
-          status,
+        // Falha de localização não deve impedir o acesso nacional.
+        setRegionalAccess({
+          status: 'allowed',
           city: '',
-          error: message,
-          permission,
-        }));
+          error: '',
+          permission: error?.code === error.PERMISSION_DENIED ? 'denied' : 'unknown',
+        });
       },
       {
         enableHighAccuracy: true,
@@ -670,41 +664,41 @@ ${data.get('mensagem')}`;
 
   const openLocationHelp = () => {
     window.alert(
-      'Para liberar a localização no Chrome: clique no ícone de controles à esquerda do endereço do site → Configurações do site → Localização → Permitir. Depois volte para esta página e clique em “Já liberei, tentar novamente”.'
+      'A localização é usada apenas para confirmar se o dispositivo está dentro da área restrita do Tatuapé. Se o navegador não puder informar a posição, o acesso nacional continua liberado.'
     );
   };
 
   const regionalGateVisible = regionalAccess.status !== 'allowed';
   const regionalGateCopy = {
     checking: {
-      eyebrow: 'VERIFICAÇÃO REGIONAL',
-      title: 'Confirmando o atendimento.',
-      body: 'Estamos verificando a região de acesso antes de abrir o site.',
+      eyebrow: 'VERIFICAÇÃO DE ACESSO',
+      title: 'Confirmando o acesso.',
+      body: 'Estamos verificando rapidamente a região de acesso.',
     },
     'needs-location': {
-      eyebrow: 'ATENDIMENTO ALTO TIETÊ',
-      title: 'Confirme sua localização.',
-      body: 'O atendimento é direcionado ao território nacional. podemos confirmar a região usando a localização do seu dispositivo.',
+      eyebrow: 'VERIFICAÇÃO DE ÁREA',
+      title: 'Só precisamos confirmar uma coisa.',
+      body: 'O atendimento está disponível em todo o Brasil. A localização é solicitada apenas para confirmar se o dispositivo está dentro da área restrita do Tatuapé.',
     },
     locating: {
-      eyebrow: 'LOCALIZAÇÃO',
+      eyebrow: 'VERIFICAÇÃO DE ÁREA',
       title: 'Só um instante.',
-      body: 'Estamos confirmando sua localização para liberar o atendimento nacional.',
+      body: 'Estamos confirmando sua localização com precisão. Isso leva apenas alguns segundos.',
     },
     denied: {
-      eyebrow: 'ACESSO REGIONAL',
-      title: 'Atendimento direcionado ao Alto Tietê.',
-      body: 'A localização informada não corresponde à região de atendimento deste escritório.',
+      eyebrow: 'ACESSO RESTRITO',
+      title: 'Esta área não está disponível.',
+      body: 'O acesso não está disponível para dispositivos identificados dentro da área restrita do Tatuapé.',
     },
     error: {
-      eyebrow: 'NÃO FOI POSSÍVEL CONFIRMAR',
-      title: 'Precisamos confirmar sua região.',
-      body: 'A confirmação automática não foi concluída. Verifique a permissão de localização e tente novamente.',
+      eyebrow: 'VERIFICAÇÃO DE ÁREA',
+      title: 'Não foi possível confirmar a localização.',
+      body: 'Sem uma confirmação precisa do Tatuapé, o acesso nacional permanece liberado.',
     },
     'permission-blocked': {
-      eyebrow: 'LOCALIZAÇÃO BLOQUEADA',
-      title: 'Libere a localização deste site.',
-      body: 'O navegador está configurado para nunca permitir a localização. Por segurança, o navegador não pode abrir a solicitação novamente sozinho. Altere a permissão nas configurações deste site e volte para tentar novamente.',
+      eyebrow: 'VERIFICAÇÃO DE ÁREA',
+      title: 'Localização indisponível.',
+      body: 'Não foi possível confirmar a área restrita. O acesso nacional permanece liberado.',
     },
   }[regionalAccess.status] || {};
 
@@ -913,9 +907,9 @@ ${data.get('mensagem')}`;
            <p class="hero-text hero-reveal delay-2">
             Atuação técnica, personalizada e comprometida com cada etapa da defesa criminal.
            </p>
-           <div class="availability-badge hero-reveal delay-2" aria-label="Atendimento 24 horas">
+           <div class="availability-badge hero-reveal delay-2" aria-label="Atendimento nacional 24 horas">
             <span aria-hidden="true"></span>
-            ATENDIMENTO 24 HORAS · TODOS OS DIAS
+            ATENDIMENTO NACIONAL · 24 HORAS · TODOS OS DIAS
            </div>
            <div class="hero-actions hero-reveal delay-3">
             <a class="header-cta" href="https://wa.me/5511944548048?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." rel="noopener noreferrer" target="_blank">
@@ -1474,7 +1468,7 @@ ${data.get('mensagem')}`;
              Telefone / WhatsApp
             </a>
             <span>
-             Atendimento 24 horas · todos os dias
+             Atendimento nacional · 24 horas · todos os dias
             </span>
             <span>
              Atendimento presencial e online
