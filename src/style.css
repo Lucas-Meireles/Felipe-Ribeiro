@@ -604,7 +604,7 @@ body[data-theme="light"] .header-cta {
   color: var(--rust)
 }
 
-.about h2,.process h2,.practice h2,.presence h2,.authority h2,.final-cta h2,.contact h2 {
+.about h2, .process h2, .presence h2, .authority h2, .final-cta h2, .contact h2{
   font: 500 clamp(48px,4.2vw,72px)/.93 var(--serif);
   letter-spacing: -1.5px;
   margin: 28px 0 38px
@@ -787,224 +787,73 @@ body[data-theme="light"] .header-cta {
   opacity: .42
 }
 
-.practice {
-  padding: 170px 7vw 150px;
-  overflow: hidden
-}
 
-.practice-top {
-  display: grid;
-  grid-template-columns: 1.2fr .6fr;
-  gap: 8vw;
-  align-items: end;
-  margin-bottom: 70px
-}
 
-.practice h2 {
-  color: #f4f0e9
-}
 
-.practice-intro {
-  font-size: 18px;
-  line-height: 1.9;
-  color: #a9a39a;
-  max-width: 430px
-}
 
-.practice-stage {
-  display: grid;
-  grid-template-columns: 1.5fr .65fr .75fr;
-  min-height: 720px;
-  position: relative
-}
 
-.practice-image-wrap {
-  position: relative;
-  min-height: 680px;
-  overflow: hidden
-}
 
-.practice-image-layer {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  opacity: 0;
-  transform: translate3d(0,0,0) scale(1.025);
-  will-change: opacity, transform, clip-path;
-  transition: opacity .78s cubic-bezier(.22,.61,.36,1),
-              transform 1.05s cubic-bezier(.16,1,.3,1),
-              clip-path .88s cubic-bezier(.16,1,.3,1);
-}
 
-.practice-image-layer img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(.58) saturate(.72);
-  transform: scale(1.01);
-  transition: transform 1.2s cubic-bezier(.16,1,.3,1);
-}
 
-.practice-image-layer-current {
-  z-index: 1;
-  opacity: 1;
-  transform: translate3d(0,0,0) scale(1);
-}
 
-.practice-image-layer-next {
-  z-index: 2;
-  clip-path: inset(0 100% 0 0);
-}
 
-.practice-image-layer-next.is-visible {
-  opacity: 1;
-  transform: translate3d(0,0,0) scale(1);
-  clip-path: inset(0 0 0 0);
-}
 
-.practice-stage.change-prev .practice-image-layer-next {
-  clip-path: inset(0 0 0 100%);
-}
 
-.practice-stage.change-prev .practice-image-layer-next.is-visible {
-  clip-path: inset(0 0 0 0);
-}
 
-.practice-stage.change-next .practice-image-layer-current.is-exiting {
-  opacity: .22;
-  transform: translate3d(-2.5%,0,0) scale(.985);
-}
 
-.practice-stage.change-prev .practice-image-layer-current.is-exiting {
-  opacity: .22;
-  transform: translate3d(2.5%,0,0) scale(.985);
-}
 
-.practice-image-layer-current.is-exiting img {
-  transform: scale(1.025);
-}
 
-.practice-image-layer-next.is-visible img {
-  transform: scale(1);
-}
 
-.practice-shade {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background: linear-gradient(90deg,transparent 45%,rgba(17,17,17,.85) 100%),linear-gradient(0deg,rgba(17,17,17,.7),transparent 45%)
-}
 
-.practice-detail {
-  position: absolute;
-  z-index: 4;
-  left: 32px;
-  bottom: 30px
-}
 
-.practice-detail span {
-  display: block;
-  font-size: 18px;
-  color: #ddd5cc;
-  line-height: 1.25;
-  margin-bottom: 12px
-}
 
-.practice-detail p {
-  font-size: 16px;
-  letter-spacing: 2px;
-  color: var(--rust);
-  margin-top: 0;
-  line-height: 1.35
-}
 
-.practice-current {
-  align-self: end;
-  margin-left: -150px;
-  margin-bottom: 38px;
-  z-index: 2;
-  max-width: 520px
-}
 
-.practice-current-label {
-  font-size: 16px;
-  letter-spacing: 2px;
-  color: var(--rust)
-}
 
-.practice-current h3 {
-  font: 500 50px/.95 var(--serif);
-  margin: 16px 0;
-  color: #fff
-}
 
-.practice-current p {
-  font-size: 18px;
-  line-height: 1.8;
-  color: #d0cac2
-}
 
-.practice-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-left: 55px;
-  border-left: 1px solid var(--line-dark)
-}
 
-.practice-item {
-  position: relative;
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 12px;
-  text-align: left;
-  padding: 18px 0;
-  background: none;
-  border: 0;
-  border-bottom: 1px solid var(--line-dark);
-  color: #8e8982;
-  transition: .35s
-}
 
-.practice-item:last-child {
-  border-bottom: 0
-}
 
-.practice-item:before {
-  content: "";
-  position: absolute;
-  left: -56px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--rust);
-  transform: scaleY(0);
-  transform-origin: center;
-  transition: .35s
-}
 
-.practice-item span {
-  font-size: 16px
-}
 
-.practice-item strong {
-  font: 500 22px var(--serif);
-  color: #aaa49c
-}
 
-.practice-item:hover strong,.practice-item.is-active strong {
-  color: #fff
-}
 
-.practice-item.is-active {
-  color: var(--rust)
-}
 
-.practice-item.is-active:before {
-  transform: scaleY(1)
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .presence {
   padding: 170px 7vw
@@ -1346,7 +1195,7 @@ body[data-theme="light"] .header-cta {
   .cursor-ring,.cursor-dot {
     display: block
   }
-  .desktop-nav a,.header-cta,.button,.under-link,.practice-item,.testimonial-arrow {
+  .desktop-nav a, .header-cta, .button, .under-link, .testimonial-arrow{
     cursor: none
   }
 }
@@ -1379,33 +1228,11 @@ body[data-theme="light"] .header-cta {
     right: 5vw;
     width: 43vw
   }
-  .practice-stage {
-    grid-template-columns: 1.3fr .75fr
-  }
-  .practice-list {
-    grid-column: 1/-1;
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    padding: 25px 0 0;
-    border-left: 0;
-    border-top: 1px solid var(--line-dark);
-    gap: 0
-  }
-  .practice-item {
-    padding: 18px 20px
-  }
-  .practice-item:before {
-    left: 0;
-    right: 0;
-    top: -1px;
-    bottom: auto;
-    width: auto;
-    height: 2px;
-    transform: scaleX(0)
-  }
-  .practice-item.is-active:before {
-    transform: scaleX(1)
-  }
+  
+  
+  
+  
+  
 }
 
 @media(max-width:1050px) {
@@ -1545,24 +1372,11 @@ body[data-theme="light"] .header-cta {
   .timeline {
     margin-top: 65px
   }
-  .practice-top {
-    grid-template-columns: 1fr;
-    gap: 25px
-  }
-  .practice-stage {
-    grid-template-columns: 1fr
-  }
-  .practice-image-wrap {
-    min-height: 580px
-  }
-  .practice-current {
-    margin: -125px 35px 45px;
-    max-width: 620px
-  }
-  .practice-list {
-    grid-template-columns: repeat(2,1fr);
-    padding-top: 0
-  }
+  
+  
+  
+  
+  
   .principles {
     margin-top: 65px
   }
@@ -1658,7 +1472,7 @@ body[data-theme="light"] .header-cta {
   .commitments>div:last-child {
     border-bottom: 0
   }
-  .about,.process,.practice,.presence,.authority,.testimonials,.final-cta,.contact {
+  .about, .process, .presence, .authority, .testimonials, .final-cta, .contact{
     padding-left: 6vw;
     padding-right: 6vw
   }
@@ -1672,11 +1486,11 @@ body[data-theme="light"] .header-cta {
   .about-media:before {
     inset: 15px -15px -15px 15px
   }
-  .about h2,.process h2,.practice h2,.presence h2,.authority h2,.contact h2 {
+  .about h2, .process h2, .presence h2, .authority h2, .contact h2{
     font-size: 50px;
     line-height: .95
   }
-  .about-copy>p:not(.eyebrow),.practice-intro,.principle p,.authority-lead,.final-cta p:not(.eyebrow),.contact-intro>p:not(.eyebrow) {
+  .about-copy>p:not(.eyebrow), .principle p, .authority-lead, .final-cta p:not(.eyebrow), .contact-intro>p:not(.eyebrow){
     font-size: 18px
   }
   .about-copy .lead {
@@ -1734,43 +1548,17 @@ body[data-theme="light"] .header-cta {
     font-size: 18px;
     margin: 0!important
   }
-  .practice {
-    padding-top: 105px;
-    padding-bottom: 110px
-  }
-  .practice-top {
-    margin-bottom: 48px
-  }
-  .practice-stage {
-    min-height: 0
-  }
-  .practice-image-wrap {
-    min-height: 480px
-  }
-  .practice-current {
-    margin: -90px 18px 35px;
-    max-width: none
-  }
-  .practice-current h3 {
-    font-size: 42px
-  }
-  .practice-current p {
-    font-size: 18px
-  }
-  .practice-list {
-    display: block
-  }
-  .practice-item {
-    grid-template-columns: 40px 1fr;
-    padding: 20px 0
-  }
-  .practice-item strong {
-    font-size: 24px
-  }
-  .practice-item:before {
-    left: -6vw;
-    right: -6vw
-  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   .presence {
     padding-top: 105px;
     padding-bottom: 110px
@@ -1862,12 +1650,10 @@ body[data-theme="light"] .header-cta {
   .under-link {
     font-size: 16px
   }
-  .about h2,.process h2,.practice h2,.presence h2,.authority h2,.contact h2 {
+  .about h2, .process h2, .presence h2, .authority h2, .contact h2{
     font-size: 44px
   }
-  .practice-current h3 {
-    font-size: 36px
-  }
+  
   .timeline-step {
     padding-left: 42px
   }
@@ -1878,9 +1664,7 @@ body[data-theme="light"] .header-cta {
     width: 40px;
     height: 40px
   }
-  .practice-item strong {
-    font-size: 22px
-  }
+  
 }
 
 /* Scroll reveal cinematográfico */
@@ -1965,21 +1749,13 @@ html {
   }
 }
 
-.practice-stage.scroll-reveal {
-  transform: translate3d(0,34px,0) scale(.985)
-}
 
-.practice-stage.scroll-reveal.visible {
-  transform: none
-}
 
-.practice-image {
-  transition: transform 1.2s cubic-bezier(.16,1,.3,1),opacity .8s ease
-}
 
-.practice-stage.visible .practice-image {
-  transform: scale(1.035)
-}
+
+
+
+
 
 .principle.scroll-reveal {
   transform: translate3d(0,38px,0)
@@ -2007,9 +1783,7 @@ html {
   .timeline-axis.active {
     animation: none!important
   }
-  .practice-image {
-    transform: none!important
-  }
+  
 }
 
 .hero-portrait {
@@ -2115,20 +1889,17 @@ body[data-theme="dark"] .footer-brand img {
   content: url("/assets/logo-felipe-ribeiro-dark.png");
 }
 
-body[data-theme="dark"] .section-dark .practice-intro, body[data-theme="dark"] .section-dark .principle p, body[data-theme="dark"] .section-dark .testimonial-author span {
+body[data-theme="dark"] .section-dark .principle p, body[data-theme="dark"] .section-dark .testimonial-author span{
   color: #aaa49b;
 }
 
 /* Light theme equivalents for sections that are dark by default. */
 
-body[data-theme="light"] .section-dark .practice-intro, body[data-theme="light"] .section-dark .principle p, body[data-theme="light"] .section-dark .testimonial-author span {
+body[data-theme="light"] .section-dark .principle p, body[data-theme="light"] .section-dark .testimonial-author span{
   color: var(--ink-muted);
 }
 
-body[data-theme="light"] .section-dark .practice h2,
-body[data-theme="light"] .section-dark .presence h2,
-body[data-theme="light"] .section-dark .final-cta h2,
-body[data-theme="light"] .section-dark .testimonial-stage blockquote {
+body[data-theme="light"] .section-dark .presence h2, body[data-theme="light"] .section-dark .final-cta h2, body[data-theme="light"] .section-dark .testimonial-stage blockquote{
   color: var(--ink);
 }
 
@@ -2222,80 +1993,29 @@ Stable practice stage. Content changes INSIDE a fixed stage.
 Nothing gets inserted into normal flow during item changes.
 --------------------------------------------------------- */
 
-.practice-stage {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 350px;
-  gap: 0;
-  min-height: 720px;
-  isolation: isolate;
-}
 
-.practice-image-wrap {
-  grid-column: 1;
-  grid-row: 1;
-  width: 100%;
-  height: 720px;
-  min-height: 0;
-  overflow: hidden;
-  position: relative;
-}
 
-.practice-current {
-  position: absolute;
-  z-index: 5;
-  left: 6%;
-  bottom: 48px;
-  width: min(520px, 55%);
-  min-height: 205px;
-  margin: 0;
-  padding: 0;
-  pointer-events: none;
-}
 
-.practice-current h3, .practice-current p {
-  transition: opacity .25s ease, transform .35s cubic-bezier(.16,1,.3,1);
-}
 
-.practice-stage.is-changing .practice-current h3, .practice-stage.is-changing .practice-current p {
-  opacity: .15;
-  transform: translateY(8px);
-}
 
-.practice-current-label {
-  display: block;
-  margin-bottom: 10px;
-}
 
-.practice-current h3 {
-  margin-top: 0;
-}
 
-.practice-list {
-  grid-column: 2;
-  grid-row: 1;
-  padding: 0 0 0 55px;
-  border-left: 1px solid var(--line-dark);
-  justify-content: center;
-  z-index: 6;
-}
 
-body[data-theme="light"] .practice-list {
-  border-color: var(--line-light);
-}
 
-body[data-theme="light"] .practice-item {
-  color: #777168;
-  border-color: var(--line-light);
-}
 
-body[data-theme="light"] .practice-item strong {
-  color: #69635b;
-}
 
-body[data-theme="light"] .practice-item:hover strong, body[data-theme="light"] .practice-item.is-active strong {
-  color: var(--ink);
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ---------------------------------------------------------
 Real scroll reveal. It is deliberately not applied to the
@@ -2368,105 +2088,33 @@ entire DOM at once, so the page keeps an editorial rhythm.
 }
 
 @media (max-width: 1200px) and (min-width: 901px) {
-  .practice-stage {
-    grid-template-columns: minmax(0,1fr) 310px;
-    min-height: 680px;
-  }
-  .practice-image-wrap {
-    height: 680px;
-  }
-  .practice-current {
-    width: min(500px, 68%);
-    bottom: 42px;
-  }
-  .practice-list {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 25px 0 0;
-    border-left: 0;
-    border-top: 1px solid var(--line-dark);
-  }
-  body[data-theme="light"] .practice-list {
-    border-top-color: var(--line-light);
-  }
-  .practice-item {
-    padding: 18px 20px;
-  }
-  .practice-item:before {
-    left: 0;
-    right: 0;
-    top: -1px;
-    bottom: auto;
-    width: auto;
-    height: 2px;
-    transform: scaleX(0);
-  }
-  .practice-item.is-active:before {
-    transform: scaleX(1);
-  }
+  
+  
+  
+  
+  
+  
+  
+  
 }
 
 @media (max-width: 900px) {
-  .practice-stage {
-    display: grid;
-    grid-template-columns: 1fr;
-    min-height: 0;
-  }
-  .practice-image-wrap {
-    grid-column: 1;
-    grid-row: 1;
-    height: 580px;
-    min-height: 0;
-  }
-  .practice-current {
-    grid-column: 1;
-    grid-row: 2;
-    position: relative;
-    left: auto;
-    bottom: auto;
-    width: auto;
-    min-height: 220px;
-    height: 220px;
-    margin: -90px 35px 35px;
-    padding: 0;
-  }
-  .practice-list {
-    grid-column: 1;
-    grid-row: 3;
-    border-left: 0;
-    padding-left: 0;
-  }
+  
+  
+  
+  
 }
 
 @media (max-width: 600px) {
-  .practice-image-wrap {
-    height: 480px;
-  }
-  .practice-current {
-    min-height: 225px;
-    height: 225px;
-    margin: -90px 18px 35px;
-  }
-  .practice-current h3 {
-    font-size: 42px;
-  }
-  .practice-current p {
-    font-size: 18px;
-  }
+  
+  
+  
+  
 }
 
 @media (max-width: 320px) {
-  .practice-current {
-    min-height: 245px;
-    height: 245px;
-    margin-left: 12px;
-    margin-right: 12px;
-  }
-  .practice-current h3 {
-    font-size: 36px;
-  }
+  
+  
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2476,10 +2124,7 @@ entire DOM at once, so the page keeps an editorial rhythm.
     filter: none !important;
     transition: none !important;
   }
-  .practice-image-wrap img,   .practice-current h3,   .practice-current p {
-    animation: none !important;
-    transition: none !important;
-  }
+  
 }
 
 /* Final theme legibility pass */
@@ -2515,21 +2160,13 @@ body[data-theme="light"] .header-cta b {
   color: #fff;
 }
 
-body[data-theme="light"] .practice-current h3 {
-  color: #fff;
-}
 
-body[data-theme="light"] .practice-current p {
-  color: #eee8df;
-}
 
-body[data-theme="light"] .practice-current {
-  text-shadow: 0 2px 16px rgba(0,0,0,.35);
-}
 
-body[data-theme="light"] .practice-shade {
-  background: linear-gradient(90deg, transparent 40%, rgba(21,21,21,.76) 100%), linear-gradient(0deg, rgba(21,21,21,.74), transparent 52%);
-}
+
+
+
+
 
 /* =========================================================
 RESPONSIVE MASTER PASS
@@ -2603,7 +2240,7 @@ button, a, input, textarea {
     padding-left: clamp(24px, 4vw, 56px);
     padding-right: clamp(24px, 4vw, 56px);
   }
-  .about,   .process,   .practice,   .presence,   .authority,   .testimonials,   .final-cta,   .contact {
+  .about, .process, .presence, .authority, .testimonials, .final-cta, .contact{
     padding-left: clamp(24px, 7vw, 100px);
     padding-right: clamp(24px, 7vw, 100px);
   }
@@ -2616,9 +2253,7 @@ button, a, input, textarea {
   .process-heading {
     width: min(70%, 760px);
   }
-  .practice-stage {
-    min-height: 680px;
-  }
+  
 }
 
 /* Tablet: recomposição sem perder a linguagem editorial. */
@@ -2661,47 +2296,13 @@ button, a, input, textarea {
   .process-heading {
     width: 82%;
   }
-  .practice-stage {
-    grid-template-columns: 1fr;
-    min-height: 0;
-  }
-  .practice-image-wrap {
-    height: 560px;
-    min-height: 0;
-  }
-  .practice-current {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    width: auto;
-    min-height: 205px;
-    height: auto;
-    margin: -92px 34px 34px;
-    padding: 0;
-  }
-  .practice-list {
-    grid-column: 1;
-    grid-row: auto;
-    border-left: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .practice-item {
-    padding: 19px 18px;
-  }
-  .practice-item:before {
-    left: 0;
-    right: 0;
-    top: -1px;
-    bottom: auto;
-    width: auto;
-    height: 2px;
-    transform: scaleX(0);
-  }
-  .practice-item.is-active:before {
-    transform: scaleX(1);
-  }
+  
+  
+  
+  
+  
+  
+  
   .principle {
     grid-template-columns: 90px 1fr;
   }
@@ -2772,7 +2373,7 @@ button, a, input, textarea {
     grid-template-columns: 34px minmax(0, 1fr);
     padding: 23px max(18px, 7vw);
   }
-  .about,   .process,   .practice,   .presence,   .authority,   .testimonials,   .final-cta,   .contact {
+  .about, .process, .presence, .authority, .testimonials, .final-cta, .contact{
     padding-left: max(18px, 6vw);
     padding-right: max(18px, 6vw);
   }
@@ -2791,7 +2392,7 @@ button, a, input, textarea {
     right: -9px;
     top: 22px;
   }
-  .about h2,   .process h2,   .practice h2,   .presence h2,   .authority h2,   .contact h2 {
+  .about h2, .process h2, .presence h2, .authority h2, .contact h2{
     max-width: 100%;
     font-size: clamp(42px, 12.8vw, 56px);
     overflow-wrap: anywhere;
@@ -2844,73 +2445,18 @@ button, a, input, textarea {
     font-size: 18px;
     line-height: 1.72;
   }
-  .practice {
-    padding-top: 92px;
-    padding-bottom: 102px;
-  }
-  .practice-top {
-    margin-bottom: 42px;
-  }
-  .practice-stage {
-    display: grid;
-    grid-template-columns: 1fr;
-    min-height: 0;
-  }
-  .practice-image-wrap {
-    grid-column: 1;
-    grid-row: 1;
-    width: 100%;
-    height: clamp(360px, 118vw, 480px);
-    min-height: 0;
-  }
-  .practice-current {
-    position: relative;
-    grid-column: 1;
-    grid-row: 2;
-    left: auto;
-    bottom: auto;
-    width: auto;
-    min-height: 0;
-    height: auto;
-    margin: -34px max(12px, 5vw) 34px;
-    padding: 0;
-  }
-  .practice-current h3 {
-    font-size: clamp(36px, 10.8vw, 48px);
-    overflow-wrap: anywhere;
-  }
-  .practice-current p {
-    font-size: 18px;
-    line-height: 1.7;
-  }
-  .practice-list {
-    grid-column: 1;
-    grid-row: 3;
-    display: block;
-    border-left: 0;
-    padding: 0;
-  }
-  .practice-item {
-    grid-template-columns: 38px minmax(0, 1fr);
-    padding: 19px 0;
-    gap: 10px;
-  }
-  .practice-item strong {
-    font-size: clamp(21px, 6.2vw, 25px);
-    overflow-wrap: anywhere;
-  }
-  .practice-item:before {
-    left: 0;
-    right: 0;
-    top: -1px;
-    bottom: auto;
-    width: auto;
-    height: 2px;
-    transform: scaleX(0);
-  }
-  .practice-item.is-active:before {
-    transform: scaleX(1);
-  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   .presence {
     padding-top: 92px;
     padding-bottom: 100px;
@@ -3065,14 +2611,14 @@ button, a, input, textarea {
   .commitments strong {
     font-size: 25px;
   }
-  .about,   .process,   .practice,   .presence,   .authority,   .testimonials,   .final-cta,   .contact {
+  .about, .process, .presence, .authority, .testimonials, .final-cta, .contact{
     padding-left: 18px;
     padding-right: 18px;
   }
   .about-media {
     height: 315px;
   }
-  .about h2,   .process h2,   .practice h2,   .presence h2,   .authority h2,   .contact h2 {
+  .about h2, .process h2, .presence h2, .authority h2, .contact h2{
     font-size: 43px;
   }
   .timeline {
@@ -3089,23 +2635,11 @@ button, a, input, textarea {
     width: 36px;
     height: 36px;
   }
-  .practice-image-wrap {
-    height: 350px;
-  }
-  .practice-current {
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: -54px;
-  }
-  .practice-current h3 {
-    font-size: 34px;
-  }
-  .practice-item {
-    grid-template-columns: 34px minmax(0,1fr);
-  }
-  .practice-item strong {
-    font-size: 21px;
-  }
+  
+  
+  
+  
+  
   .principle {
     grid-template-columns: 34px minmax(0,1fr);
   }
@@ -3148,19 +2682,15 @@ button, a, input, textarea {
     right: -48%;
     width: 115vw;
   }
-  .about,   .process,   .practice,   .presence,   .authority,   .testimonials,   .final-cta,   .contact {
+  .about, .process, .presence, .authority, .testimonials, .final-cta, .contact{
     padding-left: 14px;
     padding-right: 14px;
   }
-  .about h2,   .process h2,   .practice h2,   .presence h2,   .authority h2,   .contact h2 {
+  .about h2, .process h2, .presence h2, .authority h2, .contact h2{
     font-size: 39px;
   }
-  .practice-image-wrap {
-    height: 320px;
-  }
-  .practice-current h3 {
-    font-size: 31px;
-  }
+  
+  
   .mobile-panel {
     padding-left: 14px;
     padding-right: 14px;
@@ -3208,13 +2738,13 @@ button, a, input, textarea {
 /* Focus/overflow safety for tiny screens. */
 
 @media (max-width: 1050px) {
-  .mobile-panel a,   .mobile-panel button,   .practice-item,   .testimonial-arrow {
+  .mobile-panel a, .mobile-panel button, .testimonial-arrow{
     -webkit-tap-highlight-color: transparent;
   }
   .mobile-panel nav a,   .mobile-cta {
     overflow-wrap: anywhere;
   }
-  .practice-item strong,   .practice-current h3,   .testimonial-stage blockquote,   .contact-details a {
+  .testimonial-stage blockquote, .contact-details a{
     word-break: normal;
     overflow-wrap: anywhere;
   }
@@ -3471,11 +3001,11 @@ body[data-theme="light"] .commitments p {
   color: var(--ink-muted);
 }
 
-body[data-theme="light"] .practice h2, body[data-theme="light"] .presence h2, body[data-theme="light"] .final-cta h2 {
+body[data-theme="light"] .presence h2, body[data-theme="light"] .final-cta h2{
   color: var(--ink);
 }
 
-body[data-theme="light"] .practice-intro, body[data-theme="light"] .principle p, body[data-theme="light"] .final-cta p:not(.eyebrow) {
+body[data-theme="light"] .principle p, body[data-theme="light"] .final-cta p:not(.eyebrow){
   color: var(--ink-muted);
 }
 
@@ -3889,57 +3419,420 @@ body.regional-access-locked {
 }
 
 /* =========================================================
-   ÁREAS DE ATUAÇÃO · AJUSTE LOCAL 901–1050px
-   Mantém a composição geral da página. Nesta faixa, somente
-   a área de atuação reorganiza seu palco para evitar sobreposição.
-   A imagem fica mais compacta, o conteúdo permanece sobre ela
-   e a lista desce para uma faixa própria logo abaixo.
+   ÁREAS DE ATUAÇÃO
+   Layout único e previsível. A imagem permanece fixa.
+   O conteúdo textual e a lista ocupam o fluxo abaixo dela
+   em telas intermediárias, evitando qualquer sobreposição.
    ========================================================= */
 
+.practice {
+  padding: 170px 7vw 150px;
+  overflow: hidden;
+}
+
+.practice-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, .6fr);
+  gap: 8vw;
+  align-items: end;
+  margin-bottom: 70px;
+}
+
+.practice h2 {
+  color: #f4f0e9;
+}
+
+.practice-intro {
+  font-size: 18px;
+  line-height: 1.9;
+  color: #a9a39a;
+  max-width: 430px;
+}
+
+.practice-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 0;
+  min-height: 720px;
+  isolation: isolate;
+}
+
+.practice-image-wrap {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 720px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.practice-image-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translate3d(0, 0, 0) scale(1.025);
+  will-change: opacity, transform, clip-path;
+  transition:
+    opacity .78s cubic-bezier(.22,.61,.36,1),
+    transform 1.05s cubic-bezier(.16,1,.3,1),
+    clip-path .88s cubic-bezier(.16,1,.3,1);
+}
+
+.practice-image-layer img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.58) saturate(.72);
+  transform: scale(1.01);
+  transition: transform 1.2s cubic-bezier(.16,1,.3,1);
+}
+
+.practice-image-layer-current {
+  z-index: 1;
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.practice-image-layer-next {
+  z-index: 2;
+  clip-path: inset(0 100% 0 0);
+}
+
+.practice-image-layer-next.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  clip-path: inset(0 0 0 0);
+}
+
+.practice-stage.change-prev .practice-image-layer-next {
+  clip-path: inset(0 0 0 100%);
+}
+
+.practice-stage.change-prev .practice-image-layer-next.is-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+.practice-stage.change-next .practice-image-layer-current.is-exiting {
+  opacity: .22;
+  transform: translate3d(-2.5%, 0, 0) scale(.985);
+}
+
+.practice-stage.change-prev .practice-image-layer-current.is-exiting {
+  opacity: .22;
+  transform: translate3d(2.5%, 0, 0) scale(.985);
+}
+
+.practice-image-layer-current.is-exiting img {
+  transform: scale(1.025);
+}
+
+.practice-image-layer-next.is-visible img {
+  transform: scale(1);
+}
+
+.practice-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background:
+    linear-gradient(90deg, transparent 45%, rgba(17,17,17,.85) 100%),
+    linear-gradient(0deg, rgba(17,17,17,.7), transparent 45%);
+}
+
+.practice-detail {
+  position: absolute;
+  left: 32px;
+  bottom: 30px;
+  z-index: 4;
+}
+
+.practice-detail span {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 18px;
+  line-height: 1.25;
+  color: #ddd5cc;
+}
+
+.practice-detail p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.35;
+  letter-spacing: 2px;
+  color: var(--rust);
+}
+
+.practice-current {
+  position: absolute;
+  left: 6%;
+  bottom: 48px;
+  z-index: 5;
+  width: min(520px, 55%);
+  min-height: 205px;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+.practice-current-label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.3;
+  letter-spacing: 2px;
+  color: var(--rust);
+}
+
+.practice-current h3 {
+  margin: 0;
+  font: 500 50px/.95 var(--serif);
+  color: #fff;
+}
+
+.practice-current p {
+  margin-top: 16px;
+  font-size: 18px;
+  line-height: 1.8;
+  color: #d0cac2;
+}
+
+.practice-current h3,
+.practice-current p {
+  transition:
+    opacity .25s ease,
+    transform .35s cubic-bezier(.16,1,.3,1);
+}
+
+.practice-stage.is-changing .practice-current h3,
+.practice-stage.is-changing .practice-current p {
+  opacity: .15;
+  transform: translateY(8px);
+}
+
+.practice-list {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 0 0 0 55px;
+  border-left: 1px solid var(--line-dark);
+  z-index: 6;
+}
+
+.practice-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  min-width: 0;
+  padding: 18px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line-dark);
+  background: none;
+  color: #8e8982;
+  text-align: left;
+  transition: color .35s ease;
+}
+
+.practice-item:last-child {
+  border-bottom: 0;
+}
+
+.practice-item::before {
+  content: "";
+  position: absolute;
+  left: -56px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--rust);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform .35s ease;
+}
+
+.practice-item.is-active::before {
+  transform: scaleY(1);
+}
+
+.practice-item span {
+  font-size: 16px;
+}
+
+.practice-item strong {
+  min-width: 0;
+  font: 500 22px/1.2 var(--serif);
+  color: #aaa49c;
+  overflow-wrap: anywhere;
+}
+
+.practice-item:hover strong,
+.practice-item.is-active strong {
+  color: #fff;
+}
+
+.practice-item.is-active {
+  color: var(--rust);
+}
+
+body[data-theme="light"] .practice h2 {
+  color: var(--ink);
+}
+
+body[data-theme="light"] .practice-intro {
+  color: var(--ink-muted);
+}
+
+body[data-theme="light"] .practice-list {
+  border-color: var(--line-light);
+}
+
+body[data-theme="light"] .practice-item {
+  color: #777168;
+  border-color: var(--line-light);
+}
+
+body[data-theme="light"] .practice-item strong {
+  color: #69635b;
+}
+
+body[data-theme="light"] .practice-item:hover strong,
+body[data-theme="light"] .practice-item.is-active strong {
+  color: var(--ink);
+}
+
+body[data-theme="light"] .practice-current {
+  text-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+
+body[data-theme="light"] .practice-current h3 {
+  color: #fff;
+}
+
+body[data-theme="light"] .practice-current p {
+  color: #eee8df;
+}
+
+body[data-theme="light"] .practice-shade {
+  background:
+    linear-gradient(90deg, transparent 40%, rgba(21,21,21,.76) 100%),
+    linear-gradient(0deg, rgba(21,21,21,.74), transparent 52%);
+}
+
+/* 1051px+ */
+@media (min-width: 1051px) and (max-width: 1200px) {
+  .practice-stage {
+    grid-template-columns: minmax(0, 1fr) 310px;
+    min-height: 680px;
+  }
+
+  .practice-image-wrap {
+    height: 680px;
+  }
+
+  .practice-current {
+    width: min(500px, 68%);
+    bottom: 42px;
+  }
+
+  .practice-list {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 25px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  body[data-theme="light"] .practice-list {
+    border-top-color: var(--line-light);
+  }
+
+  .practice-item {
+    padding: 18px 20px;
+  }
+
+  .practice-item::before {
+    left: 0;
+    right: 0;
+    top: -1px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    transform: scaleX(0);
+  }
+
+  .practice-item.is-active::before {
+    transform: scaleX(1);
+  }
+}
+
+/* 901px–1050px
+   A imagem não muda de posição. Somente o conteúdo que antes
+   flutuava sobre ela passa para o fluxo abaixo da fotografia. */
 @media (min-width: 901px) and (max-width: 1050px) {
   .practice-stage {
-    display: grid;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: 500px auto;
+    grid-template-rows: auto auto auto;
     min-height: 0;
   }
 
   .practice-image-wrap {
     grid-column: 1;
     grid-row: 1;
-    min-height: 0;
     height: 500px;
+    min-height: 0;
+  }
+
+  .practice-detail {
+    left: 28px;
+    bottom: 28px;
   }
 
   .practice-current {
-    position: absolute;
-    left: 5%;
-    right: auto;
-    bottom: 34px;
-    width: min(650px, 72%);
-    margin: 0;
-    padding: 0;
-    z-index: 4;
+    position: relative;
+    left: auto;
+    bottom: auto;
+    grid-column: 1;
+    grid-row: 2;
+    width: min(650px, 100%);
+    min-height: 0;
+    margin: 34px 0 34px;
+    padding: 0 4%;
+    pointer-events: none;
+  }
+
+  .practice-current-label {
+    margin-bottom: 10px;
   }
 
   .practice-current h3 {
     font-size: clamp(44px, 5vw, 56px);
     line-height: .96;
-    margin: 14px 0;
   }
 
   .practice-current p {
     max-width: 600px;
+    margin-top: 16px;
     font-size: 18px;
     line-height: 1.65;
   }
 
   .practice-list {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 3;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     width: 100%;
+    min-width: 0;
     padding: 0;
     border-left: 0;
     border-top: 1px solid var(--line-dark);
@@ -3951,20 +3844,10 @@ body.regional-access-locked {
 
   .practice-item {
     min-width: 0;
-    min-height: 82px;
     padding: 18px 20px;
-    border-bottom: 1px solid var(--line-dark);
   }
 
-  body[data-theme="light"] .practice-item {
-    border-bottom-color: var(--line-light);
-  }
-
-  .practice-item:nth-last-child(-n+3) {
-    border-bottom: 0;
-  }
-
-  .practice-item:before {
+  .practice-item::before {
     left: 0;
     right: 0;
     top: -1px;
@@ -3974,13 +3857,189 @@ body.regional-access-locked {
     transform: scaleX(0);
   }
 
-  .practice-item.is-active:before {
+  .practice-item.is-active::before {
     transform: scaleX(1);
   }
 
   .practice-item strong {
     font-size: clamp(19px, 2vw, 23px);
-    line-height: 1.2;
-    overflow-wrap: anywhere;
+  }
+}
+
+/* Até 900px: recomposição mobile/tablet já sem posicionamento absoluto. */
+@media (max-width: 900px) {
+  .practice-stage {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .practice-image-wrap {
+    grid-column: 1;
+    grid-row: 1;
+    height: 580px;
+  }
+
+  .practice-current {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    grid-column: 1;
+    grid-row: 2;
+    width: auto;
+    min-height: 0;
+    margin: -90px 35px 35px;
+    padding: 0;
+  }
+
+  .practice-list {
+    grid-column: 1;
+    grid-row: 3;
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .practice {
+    padding-top: 92px;
+    padding-bottom: 102px;
+  }
+
+  .practice-top {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-bottom: 42px;
+  }
+
+  .practice-image-wrap {
+    height: clamp(360px, 118vw, 480px);
+  }
+
+  .practice-current {
+    margin: -34px max(12px, 5vw) 34px;
+  }
+
+  .practice-current h3 {
+    font-size: clamp(36px, 10.8vw, 48px);
+  }
+
+  .practice-current p {
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .practice-list {
+    display: block;
+  }
+
+  .practice-item {
+    grid-template-columns: 38px minmax(0, 1fr);
+    padding: 19px 0;
+    gap: 10px;
+  }
+
+  .practice-item strong {
+    font-size: clamp(21px, 6.2vw, 25px);
+  }
+
+  .practice-item::before {
+    left: 0;
+    right: 0;
+    top: -1px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    transform: scaleX(0);
+  }
+
+  .practice-item.is-active::before {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 320px) {
+  .practice-current {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .practice-current h3 {
+    font-size: 36px;
+  }
+
+  .practice-item strong {
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .practice-image-layer,
+  .practice-image-layer img,
+  .practice-current h3,
+  .practice-current p,
+  .practice-item::before {
+    transition: none !important;
+  }
+}
+
+
+/* =========================================================
+   PRACTICE TABLET POSITIONING
+   601px–900px: o conteúdo ativo pertence à fotografia.
+   A fotografia não se move. A lista continua abaixo dela.
+   ========================================================= */
+@media (min-width: 601px) and (max-width: 900px) {
+  .practice-stage {
+    grid-template-columns: 1fr;
+    grid-template-rows: 580px auto;
+    min-height: 0;
+  }
+
+  .practice-image-wrap {
+    grid-column: 1;
+    grid-row: 1;
+    height: 580px;
+  }
+
+  .practice-image-wrap .practice-current {
+    position: absolute;
+    left: 35px;
+    top: 245px;
+    right: auto;
+    bottom: auto;
+    width: min(560px, calc(100% - 70px));
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .practice-image-wrap .practice-current h3 {
+    font-size: clamp(44px, 6vw, 56px);
+    line-height: .96;
+  }
+
+  .practice-image-wrap .practice-current p {
+    max-width: 520px;
+    margin-top: 14px;
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .practice-stage .practice-list {
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border-left: 0;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  body[data-theme="light"] .practice-stage .practice-list {
+    border-top-color: var(--line-light);
   }
 }

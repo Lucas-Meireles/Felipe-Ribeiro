@@ -1004,6 +1004,17 @@ ${data.get('mensagem')}`;
             </div>
             <div class="practice-shade">
             </div>
+            <div class="practice-current">
+             <span class="practice-current-label" aria-hidden="true">
+              ÁREA EM FOCO
+             </span>
+             <h3 id="practiceTitle" aria-live="polite">
+              Prisão em flagrante
+             </h3>
+             <p id="practiceDescription" aria-live="polite">
+              Atuação desde os primeiros momentos da ocorrência e acompanhamento das medidas cabíveis.
+             </p>
+            </div>
             <div class="practice-detail">
              <span>
               01 / 06
@@ -1012,17 +1023,6 @@ ${data.get('mensagem')}`;
               ATUAÇÃO CRIMINAL
              </p>
             </div>
-           </div>
-           <div class="practice-current">
-            <span class="practice-current-label">
-             ÁREA EM FOCO
-            </span>
-            <h3 id="practiceTitle">
-             Prisão em flagrante
-            </h3>
-            <p id="practiceDescription">
-             Atuação desde os primeiros momentos da ocorrência e acompanhamento das medidas cabíveis.
-            </p>
            </div>
            <div aria-label="Áreas de atuação" class="practice-list" role="list">
             <button
@@ -1394,7 +1394,9 @@ ${data.get('mensagem')}`;
              </em>
             </h2>
            </div>
-
+           <p>
+            Espaço reservado para inserir imagens de avaliações reais de clientes, mantendo a apresentação visual discreta e alinhada à identidade do escritório.
+           </p>
           </div>
           <div
            aria-label="Galeria de avaliações de clientes"
