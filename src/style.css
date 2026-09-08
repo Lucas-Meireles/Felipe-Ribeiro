@@ -3887,3 +3887,100 @@ body.regional-access-locked {
     width: min(100%, 330px);
   }
 }
+
+/* =========================================================
+INTERMEDIATE PRACTICE LAYOUT · 901–1050px
+A navbar compacta não deve obrigar a seção de atuação a
+usar a composição de desktop. Nesta faixa, a imagem ocupa
+uma linha estável, o conteúdo fica ancorado dentro dela e a
+lista passa para uma faixa independente abaixo.
+========================================================= */
+
+@media (min-width: 901px) and (max-width: 1050px) {
+  .practice-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    min-height: 0;
+  }
+
+  .practice-image-wrap {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: clamp(460px, 55vw, 560px);
+    min-height: 0;
+  }
+
+  .practice-current {
+    position: absolute;
+    left: 5%;
+    right: auto;
+    bottom: 36px;
+    width: min(620px, 72%);
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .practice-current h3 {
+    font-size: clamp(46px, 5.5vw, 58px);
+    line-height: .95;
+  }
+
+  .practice-current p {
+    max-width: 560px;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .practice-list {
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    width: 100%;
+    padding: 22px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  body[data-theme="light"] .practice-list {
+    border-top-color: var(--line-light);
+  }
+
+  .practice-item {
+    min-width: 0;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  body[data-theme="light"] .practice-item {
+    border-bottom-color: var(--line-light);
+  }
+
+  .practice-item:nth-last-child(-n+3) {
+    border-bottom: 0;
+  }
+
+  .practice-item:before {
+    left: 0;
+    right: 0;
+    top: -1px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    transform: scaleX(0);
+  }
+
+  .practice-item.is-active:before {
+    transform: scaleX(1);
+  }
+
+  .practice-item strong {
+    font-size: clamp(20px, 2.15vw, 24px);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+}
