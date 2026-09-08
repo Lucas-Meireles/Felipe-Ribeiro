@@ -678,7 +678,7 @@ ${data.get('mensagem')}`;
     'needs-location': {
       eyebrow: 'VERIFICAÇÃO DE ÁREA',
       title: 'Só precisamos confirmar uma coisa.',
-      body: 'O atendimento está disponível em todo o Brasil. A localização é solicitada apenas para confirmar se o dispositivo está dentro da área restrita do Tatuapé.',
+      body: 'O atendimento está disponível em todo o Brasil. A localização é solicitada apenas para confirmar se o dispositivo está no território nacional.',
     },
     locating: {
       eyebrow: 'VERIFICAÇÃO DE ÁREA',
