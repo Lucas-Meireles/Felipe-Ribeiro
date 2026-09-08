@@ -62,3 +62,7 @@ O `worker.js` permanece sem bloqueio rígido por cidade. A única área restrita
 - Áreas de atuação movida para imediatamente após os compromissos e antes de O Advogado.
 - Transição de fotos refinada com duas camadas, crossfade, clip-path e movimento sutil.
 - Mantido o cache offline e o pré-carregamento das imagens.
+
+
+## Correção da navegação em larguras intermediárias
+A navegação mobile permanece disponível até 1050px. Isso evita que, entre 901px e 1050px, o painel mobile fique visível por padrão enquanto o menu desktop já está oculto. O painel agora segue o mesmo ciclo de fechado/aberto nessa faixa intermediária.

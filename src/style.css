@@ -1408,7 +1408,7 @@ body[data-theme="light"] .header-cta {
   }
 }
 
-@media(max-width:900px) {
+@media(max-width:1050px) {
   .site-header {
     height: 76px;
     padding: 0 5vw
@@ -2553,7 +2553,7 @@ button, a, input, textarea {
   min-width: 0;
 }
 
-/* Header: evita compressão do desktop antes do menu mobile. */
+/* Header: a navegação mobile entra até 1050px; acima disso, permanece o desktop. */
 
 @media (max-width: 1050px) {
   .site-header {
