@@ -929,7 +929,7 @@ ${data.get('mensagem')}`;
           <div class="hero-portrait hero-reveal delay-2">
            <img alt="Felipe Vinicius Santana Ribeiro" src="assets/felipe-corpo.jpg"/>
            <div class="portrait-caption">
-            FELIPE VINICIUS SANTANA RIBEIRO
+             FELIPE VINICIUS SANTANA RIBEIRO · OAB/SP 543.966
            </div>
           </div>
           <div aria-hidden="true" class="hero-vertical">
@@ -1141,6 +1141,9 @@ ${data.get('mensagem')}`;
            <p class="lead reveal">
             Felipe Vinicius Santana Ribeiro atua na área criminal com uma abordagem individualizada, comunicação clara e atenção aos detalhes que podem fazer diferença na
             construção de uma defesa.
+           </p>
+           <p class="reveal" style="margin-top: 18px; font-weight: 600;">
+            Felipe Vinicius Santana Ribeiro · OAB/SP 543.966
            </p>
            <p class="reveal">
             Cada atendimento parte da compreensão cuidadosa dos fatos. A estratégia é construída a partir das circunstâncias concretas do caso, com técnica, sigilo e proximidade.
@@ -1532,7 +1535,7 @@ ${data.get('mensagem')}`;
           ©
           <span id="year">
           </span>
-          Felipe Vinicius Santana Ribeiro. Todos os direitos reservados.
+          Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.
          </p>
         </footer>
       ` }} />
