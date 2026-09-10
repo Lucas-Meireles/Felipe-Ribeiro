@@ -664,7 +664,7 @@ ${data.get('mensagem')}`;
 
   const openLocationHelp = () => {
     window.alert(
-      'A localização é usada apenas para confirmar se o dispositivo está dentro da área restrita do Tatuapé. Se o navegador não puder informar a posição, o acesso nacional continua liberado.'
+      'A localização é usada apenas para confirmar se o dispositivo está dentro da área de atendimento. Se o navegador não puder informar a posição, o acesso nacional continua liberado.'
     );
   };
 
@@ -678,7 +678,7 @@ ${data.get('mensagem')}`;
     'needs-location': {
       eyebrow: 'VERIFICAÇÃO DE ÁREA',
       title: 'Só precisamos confirmar uma coisa.',
-      body: 'O atendimento está disponível em todo o Brasil. A localização é solicitada apenas para confirmar se o dispositivo está dentro da área restrita do Tatuapé.',
+      body: 'O atendimento está disponível em todo o Brasil. A localização é solicitada apenas para confirmar se o dispositivo está dentro da área de atendimento.',
     },
     locating: {
       eyebrow: 'VERIFICAÇÃO DE ÁREA',
@@ -688,12 +688,12 @@ ${data.get('mensagem')}`;
     denied: {
       eyebrow: 'ACESSO RESTRITO',
       title: 'Esta área não está disponível.',
-      body: 'O acesso não está disponível para dispositivos identificados dentro da área restrita do Tatuapé.',
+      body: 'O acesso não está disponível para dispositivos identificados dentro da área restrita.',
     },
     error: {
       eyebrow: 'VERIFICAÇÃO DE ÁREA',
       title: 'Não foi possível confirmar a localização.',
-      body: 'Sem uma confirmação precisa do Tatuapé, o acesso nacional permanece liberado.',
+      body: 'Sem uma confirmação precisa, o acesso nacional permanece liberado.',
     },
     'permission-blocked': {
       eyebrow: 'VERIFICAÇÃO DE ÁREA',
