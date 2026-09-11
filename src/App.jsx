@@ -991,7 +991,7 @@ ${data.get('mensagem')}`;
             </h2>
            </div>
            <p class="practice-intro reveal">
-            Conheça algumas das frentes de atuação criminal. O atendimento é direcionado conforme as particularidades de cada situação.
+            Atuação em defesa criminal com estratégia, acompanhamento próximo e resposta técnica em cada etapa do caso.
            </p>
           </div>
           <div class="practice-stage" id="practiceStage">
