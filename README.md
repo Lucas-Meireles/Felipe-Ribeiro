@@ -66,3 +66,21 @@ O `worker.js` permanece sem bloqueio rígido por cidade. A única área restrita
 
 ## Correção da navegação em larguras intermediárias
 A navegação mobile permanece disponível até 1050px. Isso evita que, entre 901px e 1050px, o painel mobile fique visível por padrão enquanto o menu desktop já está oculto. O painel agora segue o mesmo ciclo de fechado/aberto nessa faixa intermediária.
+
+
+## Rotas de conteúdo
+
+A aplicação mantém a home como landing page principal e possui páginas internas para ampliar a arquitetura de conteúdo e busca orgânica:
+
+- `/sobre`
+- `/atuacao`
+- `/atuacao/prisao-em-flagrante`
+- `/atuacao/habeas-corpus`
+- `/atuacao/audiencia-de-custodia`
+- `/atuacao/inquerito-policial`
+- `/atuacao/acao-penal`
+- `/atuacao/tribunal-do-juri`
+- `/depoimentos`
+- `/contato`
+
+O efeito de profundidade editorial das fotos é limitado a ponteiros finos em desktop. Em touch/mobile, tablet e `prefers-reduced-motion`, a interação é desativada para preservar responsividade e desempenho.

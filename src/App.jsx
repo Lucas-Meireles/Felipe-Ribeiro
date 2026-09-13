@@ -37,6 +37,54 @@ const isTatuapeLocation = ({ latitude, longitude, accuracy = 0 }) => {
   );
 };
 
+
+const INTERNAL_PAGES = {
+  '/atuacao/prisao-em-flagrante': { eyebrow:'ATUAÇÃO CRIMINAL · 01', title:'Prisão em flagrante', intro:'As primeiras horas podem definir os próximos passos.', image:'/assets/flagrante.png', text:'Uma prisão em flagrante exige atenção imediata às circunstâncias da ocorrência, ao procedimento adotado e às medidas que podem ser analisadas para a defesa.', points:['Acompanhamento desde os primeiros momentos','Análise das circunstâncias da prisão','Audiência de custódia e medidas cabíveis','Orientação sobre os próximos passos'] },
+  '/atuacao/habeas-corpus': { eyebrow:'ATUAÇÃO CRIMINAL · 02', title:'Habeas Corpus', intro:'Liberdade de locomoção exige resposta técnica.', image:'/assets/habeas-corpus.png', text:'O Habeas Corpus é um instrumento jurídico voltado à proteção da liberdade de locomoção. A análise depende das circunstâncias concretas e da medida discutida.', points:['Análise da legalidade da prisão','Avaliação da situação processual','Construção da medida adequada ao caso','Acompanhamento da estratégia de defesa'] },
+  '/atuacao/audiencia-de-custodia': { eyebrow:'ATUAÇÃO CRIMINAL · 03', title:'Audiência de custódia', intro:'Presença técnica desde o primeiro momento.', image:'/assets/audiencia.png', text:'A audiência de custódia é um momento relevante após a prisão. A atuação envolve preparação, acompanhamento e análise das circunstâncias apresentadas ao Judiciário.', points:['Acompanhamento presencial ou online quando cabível','Análise do auto de prisão','Argumentação técnica','Avaliação de medidas cautelares e liberdade'] },
+  '/atuacao/inquerito-policial': { eyebrow:'ATUAÇÃO CRIMINAL · 04', title:'Inquérito policial', intro:'A defesa também começa durante a investigação.', image:'/assets/inquerito.png', text:'O inquérito policial reúne elementos de investigação e pode influenciar os caminhos posteriores do caso. O acompanhamento permite analisar diligências, documentos e estratégias desde essa etapa.', points:['Acompanhamento de diligências','Análise de documentos e provas','Orientação durante a investigação','Definição de estratégia de defesa'] },
+  '/atuacao/acao-penal': { eyebrow:'ATUAÇÃO CRIMINAL · 05', title:'Ação penal', intro:'Defesa técnica em todas as fases do processo.', image:'/assets/acao-penal.png', text:'A ação penal exige acompanhamento contínuo e estratégia construída a partir das provas, dos atos processuais e das circunstâncias específicas de cada caso.', points:['Resposta à acusação','Produção e análise de provas','Atuação em audiências','Sustentação e recursos quando cabíveis'] },
+  '/atuacao/tribunal-do-juri': { eyebrow:'ATUAÇÃO CRIMINAL · 06', title:'Tribunal do Júri', intro:'Preparação, estratégia e presença em casos de alta complexidade.', image:'/assets/tribunal.png', text:'Casos submetidos ao Tribunal do Júri exigem preparação cuidadosa, domínio técnico e uma estratégia construída a partir das particularidades do processo e da prova.', points:['Análise do processo e das provas','Preparação para o julgamento','Construção da estratégia de plenário','Atuação técnica durante o júri'] },
+};
+const INTERNAL_SIMPLE = {
+  '/sobre': { eyebrow:'O ADVOGADO', title:'Felipe Vinicius Santana Ribeiro', intro:'Advocacia exige mais do que conhecimento. Exige posição.', image:'/assets/felipe-retrato.jpg', text:'A atuação criminal parte da compreensão cuidadosa dos fatos, com comunicação clara, atenção aos detalhes, sigilo e estratégia construída para cada situação.' },
+};
+function InternalPage({ path }) {
+  const practice = INTERNAL_PAGES[path];
+  const simple = INTERNAL_SIMPLE[path];
+  const isPracticeIndex = path === '/atuacao';
+  const isTestimonials = path === '/depoimentos';
+  const isContact = path === '/contato';
+  const title = practice?.title || simple?.title || (isPracticeIndex ? 'Áreas de atuação' : isTestimonials ? 'Depoimentos' : 'Contato');
+  const image = practice?.image || simple?.image || '/assets/felipe-escritorio.jpg';
+  const intro = practice?.intro || simple?.intro || (isPracticeIndex ? 'Conheça as principais frentes da atuação criminal.' : isTestimonials ? 'Experiências de pessoas que encontraram orientação e acompanhamento durante momentos importantes.' : 'Fale com Felipe Ribeiro e apresente sua situação.');
+  const text = practice?.text || simple?.text || (isPracticeIndex ? 'A atuação é direcionada conforme as circunstâncias concretas de cada caso.' : isTestimonials ? 'Os depoimentos apresentados no site devem corresponder a avaliações reais e autorizadas antes da publicação.' : 'O primeiro contato é o momento de apresentar a situação, esclarecer dúvidas e entender como o atendimento pode ser conduzido.');
+  const points = practice?.points || [];
+  return (
+    <div className="internal-page">
+      <div className="grain" aria-hidden="true" />
+      <header className="site-header internal-header" id="siteHeader">
+        <a className="brand" href="/" aria-label="Felipe Ribeiro, início"><img className="brand-dark" src="/assets/logo-felipe-ribeiro-dark.png" alt="Felipe Ribeiro Advogado" /><img className="brand-light" src="/assets/logo-felipe-ribeiro-clean.png" alt="Felipe Ribeiro Advogado" /></a>
+        <nav className="desktop-nav" aria-label="Navegação principal"><a href="/">Início</a><a href="/sobre">O advogado</a><a href="/atuacao">Atuação</a><a href="/contato">Contato</a></nav>
+        <div className="header-actions"><button className="theme-toggle" id="themeToggle" type="button" aria-label="Mudar para modo claro" aria-pressed="false" title="Alternar tema"><svg aria-hidden="true" className="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg><svg aria-hidden="true" className="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg></button><a className="header-cta" target="_blank" rel="noopener noreferrer" href="https://wa.me/5511944548048?text=Ol%C3%A1%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso.">Falar com o advogado <b>↗</b></a></div>
+        <button className="menu-button" id="menuButton" type="button" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span></button>
+        <div className="mobile-panel" id="mobilePanel"><nav aria-label="Navegação mobile"><a href="/">Início<b>01</b></a><a href="/sobre">O advogado<b>02</b></a><a href="/atuacao">Atuação<b>03</b></a><a href="/contato">Contato<b>04</b></a></nav><button className="mobile-theme" id="mobileTheme" type="button" aria-label="Alternar tema"><span>Alternar tema</span><svg aria-hidden="true" className="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg><svg aria-hidden="true" className="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg></button><a className="header-cta" target="_blank" rel="noopener noreferrer" href="https://wa.me/5511944548048?text=Ol%C3%A1%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso.">Falar com o advogado <b>↗</b></a></div>
+      </header>
+      <main className="internal-main">
+        <div className="internal-breadcrumb"><a href="/">Início</a><span>›</span>{isPracticeIndex ? <span>Áreas de atuação</span> : <><a href="/atuacao">Áreas de atuação</a><span>›</span><span>{title}</span></>}</div>
+        <div className="internal-back"><a href="/#informacoes" aria-label="Voltar para a home, na seção de informações">← <span>Voltar</span></a></div>
+        <section className="internal-hero">
+          <div className="internal-copy"><p className="eyebrow">{practice?.eyebrow || simple?.eyebrow || (isTestimonials ? 'EXPERIÊNCIAS' : isContact ? 'FALE COM O ADVOGADO' : 'ATUAÇÃO CRIMINAL')}</p><h1>{title}</h1><p className="internal-lead">{intro}</p><div className="thin-rule"></div><p className="internal-text">{text}</p>{simple && path === '/sobre' && <p className="internal-oab">Felipe Vinicius Santana Ribeiro · OAB/SP 543.966</p>}{practice && <ul className="internal-points">{points.map((point) => <li key={point}>{point}</li>)}</ul>}{isContact && <div className="internal-contact-details"><a href="tel:+5511944548048">+55 11 94454-8048</a><span>Atendimento nacional · 24 horas · todos os dias</span><span>Presencial e online</span><span>Sigilo e privacidade</span></div>}{!isTestimonials && <a className="button button-dark internal-button" target="_blank" rel="noopener noreferrer" href="https://wa.me/5511944548048?text=Ol%C3%A1%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso.">Falar pelo WhatsApp <span>↗</span></a>}</div>
+          <div className="internal-media"><img src={image} alt={title} loading="eager" onError={(event) => { event.currentTarget.style.opacity = '0'; }} /><span>{practice ? `${String(Object.keys(INTERNAL_PAGES).indexOf(path) + 1).padStart(2, '0')} / 06` : 'FR / 03'}</span></div>
+        </section>
+        {isPracticeIndex && <section className="internal-practice-index"><p className="eyebrow">ESCOLHA UMA ÁREA</p><div className="internal-practice-links">{Object.entries(INTERNAL_PAGES).map(([href, item], i) => <a key={href} href={href}><span>{String(i + 1).padStart(2, '0')}</span><strong>{item.title}</strong><b>↗</b></a>)}</div></section>}
+        {isTestimonials && <section className="internal-note"><p className="eyebrow">EXPERIÊNCIAS</p><h2>Confiança também se constrói na experiência.</h2><p>Os depoimentos apresentados no site devem corresponder a avaliações reais e autorizadas antes da publicação definitiva.</p><div className="internal-testimonials-grid"><img src="/assets/avaliacoes/avaliacao-01.png" alt="Avaliação de atendimento" /><img src="/assets/avaliacoes/avaliacao-02.png" alt="Avaliação de atendimento" /><img src="/assets/avaliacoes/avaliacao-03.png" alt="Avaliação de atendimento" /></div></section>}
+      </main>
+      <footer className="footer internal-footer"><div className="footer-brand"><img src="/assets/logo-felipe-ribeiro-clean.png" alt="Felipe Ribeiro Advogado" /></div><div className="footer-links"><a href="/">Início</a><a href="/sobre">O advogado</a><a href="/atuacao">Atuação</a><a href="/contato">Contato</a></div><p>© 2026 Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.</p></footer>
+    </div>
+  );
+}
+
 export default function App() {
   const [regionalAccess, setRegionalAccess] = useState({
     status: 'checking',
@@ -116,6 +164,36 @@ export default function App() {
     const mobileTheme = document.getElementById('mobileTheme');
     const themeToggle = document.getElementById('themeToggle');
     const contactForm = document.getElementById('contactForm');
+    const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
+    const seoPages = {
+      '/': ['Felipe Vinicius Santana Ribeiro | Advogado Criminalista', 'Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias.'],
+      '/sobre': ['Sobre Felipe Ribeiro | Advogado Criminalista', 'Conheça Felipe Vinicius Santana Ribeiro, advogado criminalista, sua abordagem de defesa e compromisso com atendimento individualizado.'],
+      '/depoimentos': ['Depoimentos | Felipe Ribeiro Advogado Criminalista', 'Experiências e avaliações de pessoas atendidas por Felipe Vinicius Santana Ribeiro.'],
+      '/contato': ['Contato | Felipe Ribeiro Advogado Criminalista', 'Fale com Felipe Vinicius Santana Ribeiro. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias.'],
+      '/atuacao': ['Áreas de Atuação | Felipe Ribeiro Advogado Criminalista', 'Conheça as principais áreas de atuação criminal de Felipe Vinicius Santana Ribeiro.'],
+      '/atuacao/prisao-em-flagrante': ['Prisão em Flagrante | Felipe Ribeiro Advogado Criminalista', 'Orientação e defesa técnica desde os primeiros momentos de uma prisão em flagrante.'],
+      '/atuacao/habeas-corpus': ['Habeas Corpus | Felipe Ribeiro Advogado Criminalista', 'Informações sobre Habeas Corpus e atuação técnica em situações que envolvem liberdade de locomoção.'],
+      '/atuacao/audiencia-de-custodia': ['Audiência de Custódia | Felipe Ribeiro Advogado Criminalista', 'Acompanhamento e orientação jurídica para audiência de custódia e os primeiros atos após a prisão.'],
+      '/atuacao/inquerito-policial': ['Inquérito Policial | Felipe Ribeiro Advogado Criminalista', 'Acompanhamento e defesa técnica durante a investigação criminal e seus desdobramentos.'],
+      '/atuacao/acao-penal': ['Ação Penal | Felipe Ribeiro Advogado Criminalista', 'Atuação estratégica nas diferentes fases da ação penal, com defesa técnica e acompanhamento do processo.'],
+      '/atuacao/tribunal-do-juri': ['Tribunal do Júri | Felipe Ribeiro Advogado Criminalista', 'Preparação e atuação técnica em casos submetidos ao julgamento pelo Tribunal do Júri.'],
+    };
+    const [seoTitle, seoDescription] = seoPages[pathname] || seoPages['/'];
+    document.title = seoTitle;
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.name = 'description';
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute('content', seoDescription);
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = `https://www.feliperibeiro.adv.br${pathname === '/' ? '/' : pathname}`;
 
     const setTheme = (theme) => {
       body.dataset.theme = theme;
@@ -320,6 +398,66 @@ export default function App() {
     window.addEventListener('scroll', updateParallax, { passive: true });
     updateParallax();
 
+    const hero = document.querySelector('.hero');
+    const heroPortrait3D = document.querySelector('.hero-portrait');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+    const updateHeroDepth = (event) => {
+      if (!hero || !heroPortrait3D || reduceMotion.matches || !finePointer.matches) return;
+
+      const rect = hero.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+      heroPortrait3D.style.setProperty('--depth-x', `${(x * 18).toFixed(2)}px`);
+      heroPortrait3D.style.setProperty('--depth-y', `${(y * 12).toFixed(2)}px`);
+      heroPortrait3D.style.setProperty('--depth-rotate-x', `${(y * -2.8).toFixed(2)}deg`);
+      heroPortrait3D.style.setProperty('--depth-rotate-y', `${(x * 4.2).toFixed(2)}deg`);
+      heroPortrait3D.style.setProperty('--depth-glow-x', `${(x * 28).toFixed(2)}px`);
+      heroPortrait3D.style.setProperty('--depth-glow-y', `${(y * 18).toFixed(2)}px`);
+    };
+
+    const resetHeroDepth = () => {
+      if (!heroPortrait3D) return;
+      heroPortrait3D.style.setProperty('--depth-x', '0px');
+      heroPortrait3D.style.setProperty('--depth-y', '0px');
+      heroPortrait3D.style.setProperty('--depth-rotate-x', '0deg');
+      heroPortrait3D.style.setProperty('--depth-rotate-y', '0deg');
+      heroPortrait3D.style.setProperty('--depth-glow-x', '0px');
+      heroPortrait3D.style.setProperty('--depth-glow-y', '0px');
+    };
+
+    if (hero && heroPortrait3D) {
+      hero.addEventListener('pointermove', updateHeroDepth, { passive: true });
+      hero.addEventListener('pointerleave', resetHeroDepth, { passive: true });
+    }
+
+    const practiceDepthWrap = document.querySelector('.practice-image-wrap');
+    const updatePracticeDepth = (event) => {
+      if (!practiceDepthWrap || reduceMotion.matches || !finePointer.matches) return;
+      const rect = practiceDepthWrap.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      practiceDepthWrap.style.setProperty('--practice-x', `${(x * 11).toFixed(2)}px`);
+      practiceDepthWrap.style.setProperty('--practice-y', `${(y * 7).toFixed(2)}px`);
+      practiceDepthWrap.style.setProperty('--practice-rx', `${(y * -1.5).toFixed(2)}deg`);
+      practiceDepthWrap.style.setProperty('--practice-ry', `${(x * 2.4).toFixed(2)}deg`);
+      practiceDepthWrap.style.setProperty('--practice-glow-x', `${(x * 18).toFixed(2)}px`);
+      practiceDepthWrap.style.setProperty('--practice-glow-y', `${(y * 12).toFixed(2)}px`);
+    };
+    const resetPracticeDepth = () => {
+      if (!practiceDepthWrap) return;
+      practiceDepthWrap.style.setProperty('--practice-x', '0px');
+      practiceDepthWrap.style.setProperty('--practice-y', '0px');
+      practiceDepthWrap.style.setProperty('--practice-rx', '0deg');
+      practiceDepthWrap.style.setProperty('--practice-ry', '0deg');
+      practiceDepthWrap.style.setProperty('--practice-glow-x', '0px');
+      practiceDepthWrap.style.setProperty('--practice-glow-y', '0px');
+    };
+    practiceDepthWrap?.addEventListener('pointermove', updatePracticeDepth, { passive: true });
+    practiceDepthWrap?.addEventListener('pointerleave', resetPracticeDepth, { passive: true });
+
     const timeline = document.getElementById('timeline');
     const axis = timeline?.querySelector('.timeline-axis');
     const steps = [...document.querySelectorAll('.timeline-step')];
@@ -348,10 +486,14 @@ export default function App() {
     const practiceImageNextImg = document.getElementById('practiceImageNextImg');
     const practiceTitle = document.getElementById('practiceTitle');
     const practiceDescription = document.getElementById('practiceDescription');
+    const practiceMore = document.getElementById('practiceMore');
     const practiceDetail = document.querySelector('.practice-detail span');
     const practiceItems = [
       ...document.querySelectorAll('.practice-item')
     ];
+
+    const initialPractice = document.querySelector('.practice-item.is-active');
+    if (practiceMore && initialPractice?.dataset.href) practiceMore.href = initialPractice.dataset.href;
 
     const practiceSources = practiceItems
       .map((item) => item.dataset.image)
@@ -374,6 +516,7 @@ export default function App() {
         !practiceImageNext ||
         !practiceImage ||
         !practiceImageNextImg ||
+        !practiceMore ||
         practiceBusy ||
         item.classList.contains('is-active')
       ) {
@@ -410,6 +553,7 @@ export default function App() {
           item.classList.add('is-active');
           practiceTitle.textContent = item.dataset.title;
           practiceDescription.textContent = item.dataset.description;
+          practiceMore.href = item.dataset.href || '/atuacao';
           practiceDetail.textContent = `${String(nextIndex + 1).padStart(2, '0')} / 06`;
 
           // A camada que entrou passa a ser a atual.
@@ -552,6 +696,8 @@ ${data.get('mensagem')}`;
       });
 
       contactForm?.removeEventListener('submit', submitContact);
+      practiceDepthWrap?.removeEventListener('pointermove', updatePracticeDepth);
+      practiceDepthWrap?.removeEventListener('pointerleave', resetPracticeDepth);
 
       revealObserver.disconnect();
       timelineObserver.disconnect();
@@ -668,6 +814,9 @@ ${data.get('mensagem')}`;
     );
   };
 
+  const currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
+  const isInternalRoute = currentPath !== '/' && (currentPath === '/sobre' || currentPath === '/depoimentos' || currentPath === '/contato' || currentPath === '/atuacao' || Object.prototype.hasOwnProperty.call(INTERNAL_PAGES, currentPath));
+
   const regionalGateVisible = regionalAccess.status !== 'allowed';
   const regionalGateCopy = {
     checking: {
@@ -701,6 +850,10 @@ ${data.get('mensagem')}`;
       body: 'Não foi possível confirmar a área restrita. O acesso nacional permanece liberado.',
     },
   }[regionalAccess.status] || {};
+
+  if (isInternalRoute && regionalAccess.status === 'allowed') {
+    return <InternalPage path={currentPath} />;
+  }
 
   return (
     <>
@@ -782,7 +935,7 @@ ${data.get('mensagem')}`;
       {regionalAccess.status === 'allowed' && (
       <div dangerouslySetInnerHTML={{ __html: `
         <div aria-hidden="true" class="loader" id="loader">
-         <img alt="Felipe Ribeiro Advogado" src="assets/logo-felipe-ribeiro-dark.png"/>
+         <img alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-dark.png"/>
          <div class="loader-rule">
           <span>
           </span>
@@ -799,20 +952,20 @@ ${data.get('mensagem')}`;
         </div>
         <header class="site-header" id="siteHeader">
          <a aria-label="Felipe Ribeiro, início" class="brand" href="#inicio">
-          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="assets/logo-felipe-ribeiro-dark.png"/>
-          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="assets/logo-felipe-ribeiro-clean.png"/>
+          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.png"/>
+          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.png"/>
          </a>
          <nav aria-label="Navegação principal" class="desktop-nav">
           <a href="#atuacao">
            Atuação
           </a>
-          <a href="#sobre">
+          <a href="/sobre">
            O advogado
           </a>
           <a href="#presenca">
            Presença
           </a>
-          <a href="#contato">
+          <a href="/contato">
            Contato
           </a>
          </nav>
@@ -847,7 +1000,7 @@ ${data.get('mensagem')}`;
              01
             </b>
            </a>
-           <a href="#sobre">
+           <a href="/sobre">
             O advogado
             <b>
              02
@@ -859,7 +1012,7 @@ ${data.get('mensagem')}`;
              03
             </b>
            </a>
-           <a href="#contato">
+           <a href="/contato">
             Contato
             <b>
              04
@@ -927,7 +1080,10 @@ ${data.get('mensagem')}`;
            </div>
           </div>
           <div class="hero-portrait hero-reveal delay-2">
-           <img alt="Felipe Vinicius Santana Ribeiro" src="assets/felipe-corpo.jpg"/>
+           <span class="hero-depth-frame" aria-hidden="true"></span>
+           <span class="hero-depth-light" aria-hidden="true"></span>
+           <span class="hero-depth-mark" aria-hidden="true">FR</span>
+           <img alt="Felipe Vinicius Santana Ribeiro" src="/assets/felipe-corpo.jpg"/>
            <div class="portrait-caption">
              FELIPE VINICIUS SANTANA RIBEIRO · OAB/SP 543.966
            </div>
@@ -997,11 +1153,13 @@ ${data.get('mensagem')}`;
           <div class="practice-stage" id="practiceStage">
            <div class="practice-image-wrap">
             <div class="practice-image-layer practice-image-layer-current" id="practiceImageCurrent">
-             <img alt="Ambiente relacionado à atuação criminal" id="practiceImage" src="assets/flagrante.png"/>
+             <img alt="Ambiente relacionado à atuação criminal" id="practiceImage" src="/assets/flagrante.png"/>
             </div>
             <div class="practice-image-layer practice-image-layer-next" id="practiceImageNext">
-             <img alt="" id="practiceImageNextImg" src="assets/audiencia.png"/>
+             <img alt="" id="practiceImageNextImg" src="/assets/audiencia.png"/>
             </div>
+            <span class="practice-depth-frame" aria-hidden="true"></span>
+            <span class="practice-depth-light" aria-hidden="true"></span>
             <div class="practice-shade">
             </div>
             <div class="practice-current">
@@ -1015,6 +1173,7 @@ ${data.get('mensagem')}`;
               Atuação desde os primeiros momentos da ocorrência e acompanhamento das medidas cabíveis.
              </p>
             </div>
+            <a class="practice-more" id="practiceMore" href="/atuacao/prisao-em-flagrante">Saiba mais <span>↗</span></a>
             <div class="practice-detail">
              <span>
               01 / 06
@@ -1032,6 +1191,7 @@ ${data.get('mensagem')}`;
              data-image="assets/flagrante.png"
              data-index="0"
              data-title="Prisão em flagrante"
+             data-href="/atuacao/prisao-em-flagrante"
             >
              <span>
               01
@@ -1047,6 +1207,7 @@ ${data.get('mensagem')}`;
              data-image="assets/audiencia.png"
              data-index="1"
              data-title="Audiência de custódia"
+             data-href="/atuacao/audiencia-de-custodia"
             >
              <span>
               02
@@ -1062,6 +1223,7 @@ ${data.get('mensagem')}`;
              data-image="assets/habeas-corpus.png"
              data-index="2"
              data-title="Habeas Corpus"
+             data-href="/atuacao/habeas-corpus"
             >
              <span>
               03
@@ -1077,6 +1239,7 @@ ${data.get('mensagem')}`;
              data-image="assets/inquerito.png"
              data-index="3"
              data-title="Inquérito policial"
+             data-href="/atuacao/inquerito-policial"
             >
              <span>
               04
@@ -1092,6 +1255,7 @@ ${data.get('mensagem')}`;
              data-image="assets/acao-penal.png"
              data-index="4"
              data-title="Ação penal"
+             data-href="/atuacao/acao-penal"
             >
              <span>
               05
@@ -1107,6 +1271,7 @@ ${data.get('mensagem')}`;
              data-image="assets/tribunal.png"
              data-index="5"
              data-title="Tribunal do Júri"
+             data-href="/atuacao/tribunal-do-juri"
             >
              <span>
               06
@@ -1118,9 +1283,55 @@ ${data.get('mensagem')}`;
            </div>
           </div>
          </section>
+<!--
+         <section class="important-info section-light" id="informacoes">
+          <div class="important-info-head">
+           <div><p class="eyebrow reveal">INFORMAÇÕES IMPORTANTES</p><h2 class="reveal">Entenda o que pode estar em jogo.</h2></div>
+           <p class="important-info-intro reveal">Conteúdos objetivos sobre situações que exigem atenção, orientação jurídica e estratégia.</p>
+          </div>
+          <div class="important-info-grid">
+           <article class="info-tile info-tile-news reveal">
+            <div class="info-tile-image"><img src="/assets/informacoes/noticia-01.jpg" alt="Imagem ilustrativa de conteúdo jurídico" loading="lazy" /></div>
+            <div class="info-tile-meta"><span>Saúde empresarial</span><span>2 min de leitura</span></div>
+            <h3>Falso coletivo nos planos de saúde: a consolidação da jurisprudência e seus reflexos</h3>
+            <span class="info-tile-link">Ler conteúdo <b>↗</b></span>
+           </article>
+           <article class="info-tile info-tile-news reveal">
+            <div class="info-tile-image"><img src="/assets/informacoes/noticia-02.jpg" alt="Imagem ilustrativa sobre alerta de golpe" loading="lazy" /></div>
+            <div class="info-tile-meta"><span>Alerta</span><span>2 min de leitura</span></div>
+            <h3>Alerta! O golpe do falso advogado chegou a um novo nível</h3>
+            <span class="info-tile-link">Ler conteúdo <b>↗</b></span>
+           </article>
+           <article class="info-tile info-tile-news reveal">
+            <div class="info-tile-image"><img src="/assets/informacoes/noticia-03.jpg" alt="Imagem ilustrativa sobre atuação profissional no Canadá" loading="lazy" /></div>
+            <div class="info-tile-meta"><span>Direito profissional</span><span>1 min de leitura</span></div>
+            <h3>Médico formado no Brasil e quer exercer a profissão no Canadá?</h3>
+            <span class="info-tile-link">Ler conteúdo <b>↗</b></span>
+           </article>
+           <article class="info-tile info-tile-news reveal">
+            <div class="info-tile-image"><img src="/assets/informacoes/noticia-04.jpg" alt="Imagem ilustrativa sobre duplicata escritural" loading="lazy" /></div>
+            <div class="info-tile-meta"><span>Empresarial</span><span>3 min de leitura</span></div>
+            <h3>Duplicata escritural: o que muda de verdade nas operações</h3>
+            <span class="info-tile-link">Ler conteúdo <b>↗</b></span>
+           </article>
+           <article class="info-tile info-tile-news reveal">
+            <div class="info-tile-image"><img src="/assets/informacoes/noticia-05.jpg" alt="Imagem ilustrativa de alerta contra falso advogado" loading="lazy" /></div>
+            <div class="info-tile-meta"><span>Segurança jurídica</span><span>2 min de leitura</span></div>
+            <h3>Alerta: golpe do falso advogado. Como se proteger</h3>
+            <span class="info-tile-link">Ler conteúdo <b>↗</b></span>
+           </article>
+           <article class="info-tile info-tile-news reveal">
+            <div class="info-tile-image"><img src="/assets/informacoes/noticia-06.jpg" alt="Imagem ilustrativa sobre fiscalização do Pix" loading="lazy" /></div>
+            <div class="info-tile-meta"><span>Atualidade</span><span>6 min de leitura</span></div>
+            <h3>Novo controle sobre o Pix: Receita Federal impõe rigor na fiscalização</h3>
+            <span class="info-tile-link">Ler conteúdo <b>↗</b></span>
+           </article>
+          </div>
+         </section>
+-->
          <section class="about section-light" id="sobre">
           <div class="about-media reveal-media">
-           <img alt="Felipe Vinicius Santana Ribeiro" src="assets/felipe-retrato.jpg"/>
+           <img alt="Felipe Vinicius Santana Ribeiro" src="/assets/felipe-retrato.jpg"/>
            <span class="image-index">
             01 / 03
            </span>
@@ -1409,21 +1620,21 @@ ${data.get('mensagem')}`;
             <img
              alt="Avaliação de cliente 1"
              class="review-photo"
-             src="assets/avaliacoes/avaliacao-01.png"
+             src="/assets/avaliacoes/avaliacao-01.png"
             />
            </figure>
            <figure class="review-card review-card-offset">
             <img
              alt="Avaliação de cliente 2"
              class="review-photo"
-             src="assets/avaliacoes/avaliacao-02.png"
+             src="/assets/avaliacoes/avaliacao-02.png"
             />
            </figure>
            <figure class="review-card">
             <img
              alt="Avaliação de cliente 3"
              class="review-photo"
-             src="assets/avaliacoes/avaliacao-03.png"
+             src="/assets/avaliacoes/avaliacao-03.png"
             />
            </figure>
           </div>
@@ -1515,7 +1726,7 @@ ${data.get('mensagem')}`;
         </main>
         <footer class="footer">
          <div class="footer-brand">
-          <img alt="Felipe Ribeiro Advogado" src="assets/logo-felipe-ribeiro-clean.png"/>
+          <img alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-clean.png"/>
          </div>
          <div class="footer-links">
           <a href="#atuacao">
