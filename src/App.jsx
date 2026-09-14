@@ -4,109 +4,205 @@ import './style.css';
 const WA_PHONE = '5511944548048';
 
 
-const TATUAPE_ZONE = {
-  name: 'Tatuapé',
-  lat: -23.5407,
-  lon: -46.5764,
-  radiusKm: 1.8,
+const REGIONAL_CHECK_STORAGE_KEY = 'felipe-regional-check-v2';
+
+
+const CURRENT_PATH = window.location.pathname.replace(/\/+$/, '') || '/';
+
+const PRACTICE_PAGES = {
+  '/atuacao/prisao-em-flagrante': {
+    title: 'Prisão em flagrante',
+    eyebrow: 'ÁREA DE ATUAÇÃO · 01',
+    subtitle: 'Atuação imediata para garantir seus direitos e evitar abusos.',
+    description: 'O flagrante exige resposta rápida e técnica. A atuação começa desde os primeiros momentos, com atenção à legalidade da prisão, aos procedimentos realizados e à proteção dos direitos da pessoa conduzida.',
+    image: 'assets/flagrante.png',
+    alt: 'Imagem relacionada à prisão em flagrante',
+    items: ['Acompanhamento na delegacia', 'Audiência de custódia', 'Pedido de liberdade', 'Análise de ilegalidades', 'Atuação em todo o Brasil']
+  },
+  '/atuacao/habeas-corpus': {
+    title: 'Habeas Corpus',
+    eyebrow: 'ÁREA DE ATUAÇÃO · 02',
+    subtitle: 'Liberdade é um direito fundamental.',
+    description: 'O Habeas Corpus é um instrumento essencial para combater prisões ilegais ou abusivas. A análise técnica considera as circunstâncias do caso e a medida adequada para a proteção da liberdade.',
+    image: 'assets/habeas-corpus.png',
+    alt: 'Documentos relacionados a Habeas Corpus',
+    items: ['Análise da legalidade da prisão', 'Elaboração e impetração do HC', 'Atuação em tribunais', 'Acompanhamento completo']
+  },
+  '/atuacao/audiencia-de-custodia': {
+    title: 'Audiência de custódia',
+    eyebrow: 'ÁREA DE ATUAÇÃO · 03',
+    subtitle: 'Presença técnica desde o primeiro momento.',
+    description: 'A audiência de custódia é uma etapa decisiva após a prisão. A atuação busca apresentar os argumentos pertinentes e avaliar as medidas possíveis para o caso concreto.',
+    image: 'assets/audiencia.png',
+    alt: 'Ambiente relacionado à audiência de custódia',
+    items: ['Acompanhamento presencial ou online', 'Análise do auto de prisão em flagrante', 'Argumentação técnica', 'Pedido de liberdade']
+  },
+  '/atuacao/inquerito-policial': {
+    title: 'Inquérito policial',
+    eyebrow: 'ÁREA DE ATUAÇÃO · 04',
+    subtitle: 'Acompanhamento em todas as etapas.',
+    description: 'O inquérito é o ponto de partida da investigação criminal. O acompanhamento desde o início permite analisar diligências, provas e estratégias de defesa com maior clareza.',
+    image: 'assets/inquerito.png',
+    alt: 'Documentos de investigação criminal',
+    items: ['Acompanhamento de diligências', 'Análise de provas', 'Requerimentos e manifestações', 'Orientação jurídica completa']
+  },
+  '/atuacao/acao-penal': {
+    title: 'Ação penal',
+    eyebrow: 'ÁREA DE ATUAÇÃO · 05',
+    subtitle: 'Defesa técnica em cada fase do processo.',
+    description: 'A ação penal exige acompanhamento estratégico, leitura cuidadosa dos autos e atuação nos atos necessários à defesa. Cada etapa deve ser conduzida com técnica e responsabilidade.',
+    image: 'assets/acao-penal.png',
+    alt: 'Ambiente relacionado à ação penal',
+    items: ['Análise estratégica do processo', 'Defesa e manifestações processuais', 'Acompanhamento de audiências', 'Atuação nas diferentes fases']
+  },
+  '/atuacao/tribunal-do-juri': {
+    title: 'Tribunal do Júri',
+    eyebrow: 'ÁREA DE ATUAÇÃO · 06',
+    subtitle: 'Preparação e atuação em casos de alta complexidade.',
+    description: 'Casos submetidos ao Tribunal do Júri exigem preparação cuidadosa, domínio técnico e estratégia de defesa. A atuação acompanha todas as etapas relevantes até o julgamento.',
+    image: 'assets/tribunal.png',
+    alt: 'Ambiente relacionado ao Tribunal do Júri',
+    items: ['Preparação estratégica do caso', 'Análise de provas e teses defensivas', 'Atuação em plenário', 'Acompanhamento completo da defesa']
+  }
 };
 
-const distanceInKm = (lat1, lon1, lat2, lon2) => {
-  const toRadians = (value) => (value * Math.PI) / 180;
-  const earthRadius = 6371;
-  const dLat = toRadians(lat2 - lat1);
-  const dLon = toRadians(lon2 - lon1);
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(toRadians(lat1)) *
-      Math.cos(toRadians(lat2)) *
-      Math.sin(dLon / 2) ** 2;
+const PRACTICE_OVERVIEW = Object.entries(PRACTICE_PAGES).map(([path, page], index) => ({ path, ...page, index }));
 
-  return 2 * earthRadius * Math.asin(Math.sqrt(a));
-};
+function internalPageHtml(page) {
+  const cards = PRACTICE_OVERVIEW.map((item) => `
+    <a class="internal-practice-card ${item.path === CURRENT_PATH ? 'is-current' : ''}" href="${item.path}">
+      <span>0${item.index + 1}</span>
+      <strong>${item.title}</strong>
+      <b>Saiba mais <i>↗</i></b>
+    </a>
+  `).join('');
 
-const isTatuapeLocation = ({ latitude, longitude, accuracy = 0 }) => {
-  const numericAccuracy = Number(accuracy);
-  // Só bloqueamos quando a posição é suficientemente precisa.
-  // Em caso de baixa precisão, liberamos para evitar falso positivo.
-  if (!Number.isFinite(numericAccuracy) || numericAccuracy > 250) return false;
+  const isOverview = CURRENT_PATH === '/atuacao';
+  const content = isOverview ? `
+    <section class="internal-hero internal-hero-overview">
+      <div class="internal-hero-copy">
+        <p class="eyebrow">ÁREAS DE ATUAÇÃO</p>
+        <h1>Defesa criminal com<br><em>estratégia e presença.</em></h1>
+        <p class="internal-lead">Conheça as principais frentes de atuação e encontre informações objetivas sobre cada etapa da defesa criminal.</p>
+      </div>
+    </section>
+    <section class="internal-practices section-light">
+      <div class="internal-section-heading">
+        <p class="eyebrow">ATUAÇÃO CRIMINAL</p>
+        <h2>Escolha uma área para<br><em>conhecer em detalhes.</em></h2>
+      </div>
+      <div class="internal-practice-grid">${cards}</div>
+    </section>
+  ` : `
+    <section class="internal-detail-hero">
+      <div class="internal-detail-copy">
+        <a class="internal-breadcrumb" href="/">Início <span>›</span> Áreas de atuação <span>›</span> ${page.title}</a>
+        <p class="eyebrow">${page.eyebrow}</p>
+        <h1>${page.title}</h1>
+        <p class="internal-subtitle">${page.subtitle}</p>
+        <p class="internal-description">${page.description}</p>
+        <ul class="internal-checklist">${page.items.map(item => `<li><span>✓</span>${item}</li>`).join('')}</ul>
+        <a class="header-cta internal-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20${encodeURIComponent(page.title)}." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a>
+      </div>
+      <div class="internal-detail-media">
+        <img src="/${page.image}" alt="${page.alt}">
+        <span>FELIPE RIBEIRO · ADVOCACIA CRIMINAL</span>
+      </div>
+    </section>
+    <section class="internal-related section-light">
+      <div class="internal-section-heading compact">
+        <p class="eyebrow">OUTRAS ÁREAS</p>
+        <h2>Continue conhecendo<br><em>as possibilidades de atuação.</em></h2>
+      </div>
+      <div class="internal-practice-grid">${cards}</div>
+    </section>
+  `;
 
-  return (
-    distanceInKm(latitude, longitude, TATUAPE_ZONE.lat, TATUAPE_ZONE.lon) <=
-    TATUAPE_ZONE.radiusKm
-  );
-};
+  return `
+    <div class="internal-page">
+      <div class="grain" aria-hidden="true"></div>
+      <header class="site-header" id="siteHeader">
+        <a aria-label="Felipe Ribeiro, início" class="brand" href="/">
+          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.png">
+          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.png">
+        </a>
+        <nav aria-label="Navegação principal" class="desktop-nav">
+          <a href="/#atuacao">Atuação</a>
+          <a href="/#sobre">O advogado</a>
+          <a href="/#presenca">Presença</a>
+          <a href="/#contato">Contato</a>
+        </nav>
+        <div class="header-actions">
+          <button aria-label="Mudar para modo claro" aria-pressed="false" class="theme-toggle" id="themeToggle" title="Alternar tema" type="button">
+            <svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg>
+            <svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg>
+          </button>
+          <a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a>
+        </div>
+        <button aria-expanded="false" aria-label="Abrir menu" class="menu-button" id="menuButton" type="button"><span></span><span></span></button>
+        <div class="mobile-panel" id="mobilePanel">
+          <nav aria-label="Navegação mobile">
+            <a href="/#atuacao">Atuação <b>01</b></a>
+            <a href="/#sobre">O advogado <b>02</b></a>
+            <a href="/#presenca">Presença <b>03</b></a>
+            <a href="/#contato">Contato <b>04</b></a>
+          </nav>
+          <button aria-label="Mudar para modo claro" class="mobile-theme" id="mobileTheme" title="Alternar tema" type="button"><span>Alternar tema</span><svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg><svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg></button>
+          <a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a>
+        </div>
+      </header>
+      <main>${content}
+        <section class="internal-final-cta">
+          <div><p class="eyebrow">ATENDIMENTO</p><h2>Precisa de orientação<br><em>sobre o seu caso?</em></h2><p>Apresente a situação e entenda os próximos passos do atendimento.</p></div>
+          <a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar agora <b>↗</b></a>
+        </section>
+      </main>
+      <footer class="footer"><div class="footer-brand"><img alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-clean.png"></div><div class="footer-links"><a href="/">Início</a><a href="/atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#contato">Contato</a></div><p>© ${new Date().getFullYear()} Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.</p></footer>
+    </div>
+  `;
+}
 
 export default function App() {
-  const [regionalAccess, setRegionalAccess] = useState({
-    status: 'checking',
-    city: '',
-    error: '',
-    permission: 'unknown',
-  });
+  const [regionalAccess, setRegionalAccess] = useState(() => {
+    try {
+      const savedCheck = localStorage.getItem(REGIONAL_CHECK_STORAGE_KEY);
 
-  useEffect(() => {
-    let cancelled = false;
+      if (savedCheck === 'restricted') {
+        return {
+          status: 'denied',
+          city: 'Tatuapé',
+          error: 'O acesso não está disponível nesta área.',
+          permission: 'stored',
+        };
+      }
 
-    const checkServerRegion = async () => {
-      try {
-        const response = await fetch('/api/region', {
-          headers: { Accept: 'application/json' },
-          cache: 'no-store',
-        });
-
-        if (!response.ok) throw new Error('region-request-failed');
-
-        const data = await response.json();
-
-        if (cancelled) return;
-
-        if (data.isBot || data.ipAllowed) {
-          setRegionalAccess({
-            status: 'allowed',
-            city: data.city || '',
-            error: '',
-            permission: 'unknown',
-          });
-          return;
-        }
-
-        if (data.needsDeviceLocation) {
-          setRegionalAccess({
-            status: 'needs-location',
-            city: data.city || '',
-            error: '',
-            permission: 'unknown',
-          });
-          return;
-        }
-
-        // Em qualquer falha/indefinição, priorizamos a disponibilidade
-        // nacional. O bloqueio só acontece após confirmação precisa do Tatuapé.
-        setRegionalAccess({
-          status: 'allowed',
-          city: data.city || '',
-          error: '',
-          permission: 'unknown',
-        });
-      } catch {
-        if (cancelled) return;
-
-        setRegionalAccess({
+      if (savedCheck === 'allowed') {
+        return {
           status: 'allowed',
           city: '',
           error: '',
-          permission: 'unknown',
-        });
+          permission: 'stored',
+        };
       }
-    };
+    } catch {
+      // Sem armazenamento disponível, o site segue normalmente.
+    }
 
-    checkServerRegion();
+    // A confirmação de localização já foi retirada da abertura recorrente.
+    // Na primeira entrada, o acesso fica liberado e a decisão permanece salva.
+    try {
+      localStorage.setItem(REGIONAL_CHECK_STORAGE_KEY, 'allowed');
+    } catch {
+      // O site continua funcionando mesmo sem localStorage.
+    }
 
-    return () => {
-      cancelled = true;
+    return {
+      status: 'allowed',
+      city: '',
+      error: '',
+      permission: 'stored',
     };
-  }, []);
+  });
 
   useEffect(() => {
     const body = document.body;
@@ -116,6 +212,22 @@ export default function App() {
     const mobileTheme = document.getElementById('mobileTheme');
     const themeToggle = document.getElementById('themeToggle');
     const contactForm = document.getElementById('contactForm');
+
+    const seoTitles = {
+      '/': 'Felipe Vinicius Santana Ribeiro | Advogado Criminalista',
+      '/atuacao': 'Áreas de Atuação | Felipe Ribeiro Advogado Criminalista',
+      ...Object.fromEntries(Object.entries(PRACTICE_PAGES).map(([path, page]) => [path, `${page.title} | Felipe Ribeiro Advogado Criminalista`]))
+    };
+
+    const seoDescriptions = {
+      '/': 'Felipe Vinicius Santana Ribeiro, advogado criminalista. Atuação em defesa criminal, com atendimento presencial e online em todo o Brasil.',
+      '/atuacao': 'Conheça as principais áreas de atuação criminal de Felipe Vinicius Santana Ribeiro.',
+      ...Object.fromEntries(Object.entries(PRACTICE_PAGES).map(([path, page]) => [path, `${page.title}: ${page.subtitle}`]))
+    };
+
+    document.title = seoTitles[CURRENT_PATH] || seoTitles['/'];
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) metaDescription.setAttribute('content', seoDescriptions[CURRENT_PATH] || seoDescriptions['/']);
 
     const setTheme = (theme) => {
       body.dataset.theme = theme;
@@ -583,203 +695,13 @@ ${data.get('mensagem')}`;
         }
       );
     };
-  }, [regionalAccess.status]);
+  }, []);
 
-  const requestDeviceLocation = async () => {
-    if (!('geolocation' in navigator)) {
-      // A localização é um reforço para confirmar o Tatuapé, nunca um
-      // requisito para o restante do território nacional.
-      setRegionalAccess({
-        status: 'allowed',
-        city: '',
-        error: '',
-        permission: 'unsupported',
-      });
-      return;
-    }
-
-    try {
-      if (navigator.permissions?.query) {
-        const permission = await navigator.permissions.query({ name: 'geolocation' });
-
-        if (permission.state === 'denied') {
-          // Sem confirmação do Tatuapé, não bloqueamos um visitante brasileiro.
-          setRegionalAccess({
-            status: 'allowed',
-            city: '',
-            error: '',
-            permission: 'denied',
-          });
-          return;
-        }
-      }
-    } catch {
-      // Alguns navegadores não expõem Permissions API para geolocation.
-    }
-
-    setRegionalAccess((current) => ({
-      ...current,
-      status: 'locating',
-      permission: 'prompt',
-      error: '',
-    }));
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude, accuracy } = position.coords;
-
-        if (isTatuapeLocation({ latitude, longitude, accuracy })) {
-          setRegionalAccess({
-            status: 'denied',
-            city: 'Tatuapé',
-            error: 'O acesso não está disponível nesta área.',
-            permission: 'granted',
-          });
-          return;
-        }
-
-        setRegionalAccess({
-          status: 'allowed',
-          city: '',
-          error: '',
-          permission: 'granted',
-        });
-      },
-      (error) => {
-        // Falha de localização não deve impedir o acesso nacional.
-        setRegionalAccess({
-          status: 'allowed',
-          city: '',
-          error: '',
-          permission: error?.code === error.PERMISSION_DENIED ? 'denied' : 'unknown',
-        });
-      },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 300000,
-        timeout: 12000,
-      }
-    );
-  };
-
-  const openLocationHelp = () => {
-    window.alert(
-      'A localização é usada apenas para confirmar se o dispositivo está dentro da área de atendimento. Se o navegador não puder informar a posição, o acesso nacional continua liberado.'
-    );
-  };
-
-  const regionalGateVisible = regionalAccess.status !== 'allowed';
-  const regionalGateCopy = {
-    checking: {
-      eyebrow: 'VERIFICAÇÃO DE ACESSO',
-      title: 'Confirmando o acesso.',
-      body: 'Estamos verificando rapidamente a região de acesso.',
-    },
-    'needs-location': {
-      eyebrow: 'VERIFICAÇÃO DE ÁREA',
-      title: 'Só precisamos confirmar uma coisa.',
-      body: 'O atendimento está disponível em todo o Brasil. A localização é solicitada apenas para confirmar se o dispositivo está dentro da área de atendimento.',
-    },
-    locating: {
-      eyebrow: 'VERIFICAÇÃO DE ÁREA',
-      title: 'Só um instante.',
-      body: 'Estamos confirmando sua localização com precisão. Isso leva apenas alguns segundos.',
-    },
-    denied: {
-      eyebrow: 'ACESSO RESTRITO',
-      title: 'Esta área não está disponível.',
-      body: 'O acesso não está disponível para dispositivos identificados dentro da área restrita.',
-    },
-    error: {
-      eyebrow: 'VERIFICAÇÃO DE ÁREA',
-      title: 'Não foi possível confirmar a localização.',
-      body: 'Sem uma confirmação precisa, o acesso nacional permanece liberado.',
-    },
-    'permission-blocked': {
-      eyebrow: 'VERIFICAÇÃO DE ÁREA',
-      title: 'Localização indisponível.',
-      body: 'Não foi possível confirmar a área restrita. O acesso nacional permanece liberado.',
-    },
-  }[regionalAccess.status] || {};
+  if (CURRENT_PATH === '/atuacao' || PRACTICE_PAGES[CURRENT_PATH]) {
+    return <div dangerouslySetInnerHTML={{ __html: internalPageHtml(PRACTICE_PAGES[CURRENT_PATH]) }} />;
+  }
 
   return (
-    <>
-      <div
-        aria-hidden={!regionalGateVisible}
-        className={`regional-gate ${regionalGateVisible ? 'is-visible' : ''}`}
-        role={regionalGateVisible ? 'dialog' : undefined}
-        aria-modal={regionalGateVisible ? 'true' : undefined}
-      >
-        <div className="regional-gate-glow" aria-hidden="true" />
-        <div className="regional-gate-inner">
-          <p className="regional-gate-eyebrow">
-            {regionalGateCopy.eyebrow}
-          </p>
-          <span className="regional-gate-rule" aria-hidden="true" />
-          <h1>{regionalGateCopy.title}</h1>
-          <p className="regional-gate-body">
-            {regionalGateCopy.body}
-          </p>
-
-          {regionalAccess.city && regionalAccess.status === 'needs-location' && (
-            <p className="regional-gate-detected">
-              Localização de rede identificada como <strong>{regionalAccess.city}</strong>.
-            </p>
-          )}
-
-          {regionalAccess.error && (
-            <p className="regional-gate-error">
-              {regionalAccess.error}
-            </p>
-          )}
-
-          {(regionalAccess.status === 'needs-location' ||
-            regionalAccess.status === 'error' ||
-            regionalAccess.status === 'denied') && (
-            <button
-              className="regional-gate-button"
-              type="button"
-              onClick={requestDeviceLocation}
-            >
-              Confirmar minha localização
-              <span aria-hidden="true">↗</span>
-            </button>
-          )}
-
-          {regionalAccess.status === 'permission-blocked' && (
-            <div className="regional-gate-actions">
-              <button
-                className="regional-gate-button"
-                type="button"
-                onClick={openLocationHelp}
-              >
-                Como liberar a localização
-                <span aria-hidden="true">?</span>
-              </button>
-              <button
-                className="regional-gate-secondary"
-                type="button"
-                onClick={requestDeviceLocation}
-              >
-                Já liberei, tentar novamente
-              </button>
-            </div>
-          )}
-
-          {regionalAccess.status === 'locating' && (
-            <div className="regional-gate-loading" aria-live="polite">
-              <span />
-              Verificando localização…
-            </div>
-          )}
-
-          <footer className="regional-gate-footer">
-            Felipe Ribeiro · Advogado
-          </footer>
-        </div>
-      </div>
-
-      {regionalAccess.status === 'allowed' && (
       <div dangerouslySetInnerHTML={{ __html: `
         <div aria-hidden="true" class="loader" id="loader">
          <img alt="Felipe Ribeiro Advogado" src="assets/logo-felipe-ribeiro-dark.png"/>
@@ -1025,6 +947,7 @@ ${data.get('mensagem')}`;
             </div>
            </div>
            <div aria-label="Áreas de atuação" class="practice-list" role="list">
+           <div class="practice-item-wrap">
             <button
              class="practice-item is-active"
              data-alt="Ambiente relacionado à prisão em flagrante"
@@ -1040,6 +963,9 @@ ${data.get('mensagem')}`;
               Prisão em flagrante
              </strong>
             </button>
+            <a class="practice-more" href="/atuacao/prisao-em-flagrante">Saiba mais <span aria-hidden="true">↗</span></a>
+           </div>
+           <div class="practice-item-wrap">
             <button
              class="practice-item"
              data-alt="Delegacia de Polícia"
@@ -1055,6 +981,9 @@ ${data.get('mensagem')}`;
               Audiência de custódia
              </strong>
             </button>
+            <a class="practice-more" href="/atuacao/audiencia-de-custodia">Saiba mais <span aria-hidden="true">↗</span></a>
+           </div>
+           <div class="practice-item-wrap">
             <button
              class="practice-item"
              data-alt="Felipe no escritório"
@@ -1070,6 +999,9 @@ ${data.get('mensagem')}`;
               Habeas Corpus
              </strong>
             </button>
+            <a class="practice-more" href="/atuacao/habeas-corpus">Saiba mais <span aria-hidden="true">↗</span></a>
+           </div>
+           <div class="practice-item-wrap">
             <button
              class="practice-item"
              data-alt="Ambiente de delegacia"
@@ -1085,6 +1017,9 @@ ${data.get('mensagem')}`;
               Inquérito policial
              </strong>
             </button>
+            <a class="practice-more" href="/atuacao/inquerito-policial">Saiba mais <span aria-hidden="true">↗</span></a>
+           </div>
+           <div class="practice-item-wrap">
             <button
              class="practice-item"
              data-alt="Escritório de Felipe Ribeiro"
@@ -1100,6 +1035,9 @@ ${data.get('mensagem')}`;
               Ação penal
              </strong>
             </button>
+            <a class="practice-more" href="/atuacao/acao-penal">Saiba mais <span aria-hidden="true">↗</span></a>
+           </div>
+           <div class="practice-item-wrap">
             <button
              class="practice-item"
              data-alt="Ambiente institucional"
@@ -1115,6 +1053,8 @@ ${data.get('mensagem')}`;
               Tribunal do Júri
              </strong>
             </button>
+            <a class="practice-more" href="/atuacao/tribunal-do-juri">Saiba mais <span aria-hidden="true">↗</span></a>
+           </div>
            </div>
           </div>
          </section>
@@ -1539,7 +1479,5 @@ ${data.get('mensagem')}`;
          </p>
         </footer>
       ` }} />
-      )}
-    </>
   );
 }

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://feliperibeiro.adv.br/</loc>
-  </url>
+  <url><loc>https://feliperibeiro.adv.br/</loc></url>
+  <url><loc>https://feliperibeiro.adv.br/atuacao</loc></url>
+  <url><loc>https://feliperibeiro.adv.br/atuacao/prisao-em-flagrante</loc></url>
+  <url><loc>https://feliperibeiro.adv.br/atuacao/habeas-corpus</loc></url>
+  <url><loc>https://feliperibeiro.adv.br/atuacao/audiencia-de-custodia</loc></url>
+  <url><loc>https://feliperibeiro.adv.br/atuacao/inquerito-policial</loc></url>
+  <url><loc>https://feliperibeiro.adv.br/atuacao/acao-penal</loc></url>
+  <url><loc>https://feliperibeiro.adv.br/atuacao/tribunal-do-juri</loc></url>
 </urlset>
