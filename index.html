@@ -5,32 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#111111" />
     <meta
-    name="description"
-    content="Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias."
->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="256x256"
-      href="/assets/favicon.png"
+      name="description"
+      content="Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias."
     />
-    <link
-      rel="apple-touch-icon"
-      href="/assets/favicon.png"
-    />
+
+    <!-- Prévia para mecanismos de busca e compartilhamentos -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Felipe Ribeiro | Advogado Criminalista" />
+    <meta property="og:title" content="Felipe Vinicius Santana Ribeiro | Advogado Criminalista" />
+    <meta property="og:description" content="Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias." />
+    <meta property="og:url" content="https://feliperibeiro.adv.br/" />
+    <meta property="og:image" content="https://feliperibeiro.adv.br/assets/google-preview-felipe.png" />
+    <meta property="og:image:alt" content="Felipe Vinicius Santana Ribeiro, advogado criminalista, em seu escritório" />
+    <meta property="og:image:width" content="1672" />
+    <meta property="og:image:height" content="941" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Felipe Vinicius Santana Ribeiro | Advogado Criminalista" />
+    <meta name="twitter:description" content="Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias." />
+    <meta name="twitter:image" content="https://feliperibeiro.adv.br/assets/google-preview-felipe.png" />
+    <link rel="icon" type="image/png" sizes="256x256" href="/assets/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
+    <!-- Imagens principais -->
     <link rel="preload" as="image" href="/assets/flagrante.png" />
     <link rel="preload" as="image" href="/assets/audiencia.png" />
     <link rel="preload" as="image" href="/assets/habeas-corpus.png" />
     <link rel="preload" as="image" href="/assets/inquerito.png" />
     <link rel="preload" as="image" href="/assets/acao-penal.png" />
     <link rel="preload" as="image" href="/assets/tribunal.png" />
+    <!-- Tipografia -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>Felipe Vinicius Santana Ribeiro | Advogado Criminalista</title>
+    <title>Felipe Ribeiro • Advogado Criminalista</title>
+    <!-- Dados estruturados -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://feliperibeiro.adv.br/#felipe-ribeiro",
+            "name": "Felipe Vinicius Santana Ribeiro",
+            "jobTitle": "Advogado Criminalista",
+            "url": "https://feliperibeiro.adv.br/",
+            "telephone": "+55 11 94454-8048",
+            "description": "Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias.",
+            "image": "https://feliperibeiro.adv.br/assets/google-preview-felipe.png",
+            "identifier": {
+              "@type": "PropertyValue",
+              "propertyID": "OAB/SP",
+              "value": "543.966"
+            },
+            "knowsAbout": [
+              "Direito Criminal",
+              "Prisão em flagrante",
+              "Habeas Corpus",
+              "Audiência de custódia",
+              "Inquérito policial",
+              "Ação penal",
+              "Tribunal do Júri"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://feliperibeiro.adv.br/#website",
+            "url": "https://feliperibeiro.adv.br/",
+            "name": "Felipe Ribeiro | Advogado Criminalista",
+            "publisher": {
+              "@id": "https://feliperibeiro.adv.br/#felipe-ribeiro"
+            },
+            "inLanguage": "pt-BR"
+          }
+        ]
+      }
+    </script>
   </head>
   <body data-theme="dark">
     <div id="root"></div>
