@@ -68,6 +68,182 @@ const PRACTICE_PAGES = {
 
 const PRACTICE_OVERVIEW = Object.entries(PRACTICE_PAGES).map(([path, page], index) => ({ path, ...page, index }));
 
+const IMPORTANT_DOCUMENT_PATH = '/informacao-importante';
+const PREVENTIVE_PRISON_DOCUMENT_PATH = '/informacao-importante/prisao-preventiva';
+
+function importantDocumentHtml() {
+  return `
+    <div class="internal-page article-page publication-modern">
+      <div class="grain" aria-hidden="true"></div>
+      <header class="site-header" id="siteHeader">
+        <a aria-label="Felipe Ribeiro, início" class="brand" href="/">
+          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.png">
+          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.png">
+        </a>
+        <nav aria-label="Navegação principal" class="desktop-nav">
+          <a href="/#atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#presenca">Presença</a><a href="/#contato">Contato</a>
+        </nav>
+        <div class="header-actions">
+          <button aria-label="Mudar para modo claro" aria-pressed="false" class="theme-toggle" id="themeToggle" title="Alternar tema" type="button">
+            <svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg>
+            <svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg>
+          </button>
+          <a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a>
+        </div>
+        <button aria-expanded="false" aria-label="Abrir menu" class="menu-button" id="menuButton" type="button"><span></span><span></span></button>
+        <div class="mobile-panel" id="mobilePanel"><nav aria-label="Navegação mobile"><a href="/#atuacao">Atuação <b>01</b></a><a href="/#sobre">O advogado <b>02</b></a><a href="/#presenca">Presença <b>03</b></a><a href="/#contato">Contato <b>04</b></a></nav><button aria-label="Mudar para modo claro" class="mobile-theme" id="mobileTheme" title="Alternar tema" type="button"><span>Alternar tema</span><svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg><svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg></button><a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a></div>
+      </header>
+
+      <main class="article-main publication-modern-main">
+        <article class="publication-page">
+          <header class="publication-hero">
+            <div class="publication-hero-copy">
+              <a class="publication-breadcrumb" href="/">Início <span>›</span> Informações importantes</a>
+              <p class="publication-kicker">DIREITO PENAL · EXECUÇÃO PENAL</p>
+              <h1>Como reduzir o tempo de prisão: <em>o que os familiares precisam saber</em></h1>
+              <p class="publication-deck">Entenda, de forma clara e objetiva, quais são as possibilidades legais para a redução do tempo de pena e a mudança de regime, e como a família pode acompanhar esse processo.</p>
+              <div class="publication-facts" aria-label="Informações da publicação">
+                <span>22 de setembro de 2026</span><i></i><span>Leitura de 6 min</span><i></i><span>Conteúdo informativo</span>
+              </div>
+            </div>
+          </header>
+
+          <div class="publication-layout">
+            <div class="publication-body">
+              <div class="publication-intro-card">
+                <span class="publication-intro-icon" aria-hidden="true">♧</span>
+                <p>Quando uma pessoa é presa e condenada, uma das principais preocupações da família é saber quanto tempo ela realmente ficará no presídio e se existe alguma forma legal de antecipar sua saída.</p>
+              </div>
+
+              <p>A resposta é que, em determinadas situações, a legislação permite que o preso reduza o tempo de pena a cumprir ou passe para um regime menos rigoroso antes do término da condenação. Entre as principais possibilidades estão a remição pelo trabalho e pelo estudo, a progressão de regime, o livramento condicional, a detração, além do indulto e da comutação de pena, quando preenchidos os requisitos legais.</p>
+              <p>É importante destacar que esses benefícios não são automáticos. Cada caso depende da situação específica do preso, do crime praticado, da pena aplicada, da existência ou não de reincidência, do comportamento carcerário e de outros fatores previstos na legislação.</p>
+
+              <section class="publication-topic" id="remicao-trabalho">
+                <div class="publication-topic-number">01</div><div><h2>Remição da pena pelo trabalho</h2><p>O trabalho realizado durante o cumprimento da pena pode permitir que o preso reduza o tempo restante da condenação. Em regra, a legislação prevê a remição de 1 dia de pena a cada 3 dias de trabalho.</p><p>Por isso, é importante que a família acompanhe se o trabalho realizado dentro da unidade prisional está sendo devidamente registrado e se as informações estão sendo encaminhadas ao processo de execução penal. Um erro ou uma ausência de registro pode fazer com que dias de remição deixem de ser considerados no cálculo da pena.</p></div>
+              </section>
+
+              <section class="publication-topic" id="remicao-estudo">
+                <div class="publication-topic-number">02</div><div><h2>Remição da pena pelo estudo</h2><p>O estudo também pode gerar remição. Em regra, são consideradas 12 horas de frequência escolar, divididas em pelo menos 3 dias, para a remição de 1 dia de pena.</p><p>Podem ser consideradas atividades de ensino fundamental, médio, superior e profissionalizante, observados os requisitos legais. Além disso, em determinadas situações, a conclusão de uma etapa de ensino durante o cumprimento da pena pode gerar acréscimo na remição. Trabalho e estudo também podem ser considerados simultaneamente, desde que atendidos os requisitos legais.</p><p>Por isso, a família deve verificar quais atividades educacionais estão disponíveis na unidade prisional e se a participação do preso está sendo corretamente registrada.</p></div>
+              </section>
+
+              <section class="publication-topic" id="progressao-regime">
+                <div class="publication-topic-number">03</div><div><h2>Progressão de regime</h2><p>A progressão de regime permite que o preso passe para um regime de cumprimento de pena menos rigoroso antes de terminar toda a condenação. Assim, uma pessoa que está cumprindo pena no regime fechado pode, preenchidos os requisitos legais, progredir para o semiaberto. Posteriormente, também poderá haver progressão para o regime aberto, conforme as condições do caso.</p><p>Para ter direito à progressão, não basta apenas ter cumprido determinado período da pena. É necessário observar os requisitos previstos na legislação, que podem variar conforme o crime cometido, a situação de reincidência, a quantidade de pena e outras circunstâncias. O cálculo do requisito temporal também merece atenção, especialmente quando existem diferentes condenações ou alterações no histórico de cumprimento da pena.</p><p>Por isso, é importante que o cálculo da execução penal seja analisado individualmente.</p></div>
+              </section>
+
+              <section class="publication-topic" id="livramento-condicional">
+                <div class="publication-topic-number">04</div><div><h2>Livramento condicional</h2><p>O livramento condicional é outra possibilidade prevista na legislação para que determinadas pessoas condenadas possam cumprir o restante da pena em liberdade, desde que preencham os requisitos legais.</p><p>Para a concessão, são analisados fatores como o tempo de pena cumprido, a natureza do crime, a reincidência e o comportamento do condenado, entre outros requisitos previstos em lei. O livramento condicional não significa que a pena simplesmente deixou de existir: a pessoa beneficiada deverá cumprir determinadas condições durante o período estabelecido.</p><p>Por isso, antes de fazer qualquer pedido, é necessário verificar se o preso efetivamente preenche todos os requisitos exigidos para o benefício.</p></div>
+              </section>
+
+              <section class="publication-topic" id="saida-temporaria">
+                <div class="publication-topic-number">05</div><div><h2>Saída temporária</h2><p>A saída temporária é diferente da progressão de regime e do livramento condicional. Ela permite, nas hipóteses previstas em lei, que determinados presos deixem temporariamente o estabelecimento prisional, retornando posteriormente para continuar o cumprimento da pena.</p><p>As regras sobre esse benefício foram alteradas pela legislação nos últimos anos. Por isso, não é correto afirmar que todo preso do regime semiaberto possui automaticamente direito a sair em datas como Natal, Páscoa ou Dia das Mães. A possibilidade de saída depende do caso concreto e das regras atualmente aplicáveis.</p><p>Por essa razão, é importante verificar a situação específica do preso antes de considerar que ele possui direito ao benefício.</p></div>
+              </section>
+
+              <section class="publication-topic" id="indulto-comutacao">
+                <div class="publication-topic-number">06</div><div><h2>Indulto e comutação de pena</h2><p>O indulto e a comutação são benefícios que dependem de decreto específico, normalmente editado pelo Governo Federal. O decreto estabelece quem pode ser beneficiado e quais requisitos precisam ser preenchidos.</p><p>Dependendo das regras estabelecidas, o indulto pode resultar no perdão da pena ou de parte dela. Já a comutação pode representar uma redução da pena. Os requisitos podem envolver, entre outros fatores, o tempo de pena cumprido, a natureza do crime, o comportamento do preso e outras condições estabelecidas no decreto.</p><p>Por isso, a cada novo decreto, é importante verificar se a pessoa presa se enquadra nas hipóteses previstas.</p></div>
+              </section>
+
+              <section class="publication-topic" id="detracao">
+                <div class="publication-topic-number">07</div><div><h2>Detração: o tempo que já foi cumprido</h2><p>Outro ponto que merece atenção é a detração penal. O período em que a pessoa permaneceu presa provisoriamente, antes da condenação definitiva, pode ser considerado no cálculo da pena, observadas as regras aplicáveis ao caso.</p><p>Por exemplo, se uma pessoa permaneceu presa preventivamente durante determinado período e posteriormente foi condenada a uma pena de prisão, esse período anterior pode ser considerado para fins de cumprimento da pena.</p><p>Por isso, é fundamental conferir se todo o período de prisão já cumprido foi corretamente incluído no cálculo da execução penal. Um erro no cálculo pode alterar a data em que o preso terá direito a determinado benefício.</p></div>
+              </section>
+
+              <aside class="publication-checklist" id="orientacoes-finais">
+                <p class="publication-kicker">O QUE A FAMÍLIA PODE FAZER DESDE JÁ</p>
+                <ul><li>Verificar se o preso está trabalhando e se os dias trabalhados estão sendo devidamente registrados.</li><li>Verificar se o preso está estudando e se as horas de estudo estão sendo contabilizadas para fins de remição.</li><li>Acompanhar o cálculo da pena, conferindo as datas previstas para progressão de regime, livramento condicional e outros benefícios.</li><li>Verificar se o período de prisão provisória foi corretamente considerado no cálculo da pena.</li><li>Acompanhar a existência de novos decretos de indulto e comutação.</li><li>Procurar orientação jurídica sempre que houver dúvida sobre algum benefício ou sobre a data prevista para a mudança de regime.</li></ul>
+              </aside>
+
+              <section class="publication-topic publication-topic-no-number">
+                <div></div><div><h2>Cada caso precisa ser analisado individualmente</h2><p>Não existe uma única regra que determine quanto tempo uma pessoa ficará presa. Duas pessoas condenadas por crimes semelhantes podem ter datas diferentes para progressão de regime ou outros benefícios, dependendo de fatores como a pena aplicada, reincidência, período de prisão provisória, remições obtidas, natureza do crime e situação da execução penal.</p><p>Por isso, simplesmente consultar a quantidade total de anos da condenação não é suficiente para saber quando ocorrerá a saída da prisão. É necessário analisar o cálculo da pena e todo o histórico da execução penal.</p></div>
+              </section>
+
+              <section class="publication-cta">
+                <p class="publication-kicker">ORIENTAÇÃO JURÍDICA</p><h2>Tem um familiar preso e não sabe <em>quanto tempo ainda falta?</em></h2><p>Se você tem um familiar preso e não sabe quanto tempo ainda falta para ele sair, quando poderá progredir de regime ou quais benefícios podem ser solicitados, é importante que um advogado criminalista analise o processo de execução penal.</p><p>Uma análise individualizada permite verificar se existem benefícios já preenchidos, se o cálculo da pena está correto e quais medidas podem ser tomadas no momento adequado. Cada dia pode fazer diferença no cumprimento da pena.</p><a class="publication-whatsapp" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Tenho%20um%20familiar%20preso%20e%20gostaria%20de%20orientação%20sobre%20execução%20penal." target="_blank" rel="noopener noreferrer">Falar agora pelo WhatsApp <b>↗</b></a><small>Atendimento sigiloso e profissional</small>
+              </section>
+
+              <p class="publication-disclaimer">Este material tem caráter informativo e não substitui a análise individualizada de um advogado sobre o processo de execução penal específico.</p>
+            </div>
+
+            <aside class="publication-sidebar" aria-label="Navegação da publicação">
+              <div class="publication-toc">
+                <p class="publication-toc-title">Neste conteúdo</p>
+                <a href="#remicao-trabalho"><b>01</b> Remição pelo trabalho</a>
+                <a href="#remicao-estudo"><b>02</b> Remição pelo estudo</a>
+                <a href="#progressao-regime"><b>03</b> Progressão de regime</a>
+                <a href="#livramento-condicional"><b>04</b> Livramento condicional</a>
+                <a href="#saida-temporaria"><b>05</b> Saída temporária</a>
+                <a href="#indulto-comutacao"><b>06</b> Indulto e comutação</a>
+                <a href="#detracao"><b>07</b> Detração</a>
+                <a href="#orientacoes-finais"><b>↗</b> Orientações finais</a>
+              </div>
+              <div class="publication-sidebar-cta"><span aria-hidden="true">▣</span><h2>Precisa de orientação?</h2><p>Cada caso é único. Fale com um advogado e receba uma análise personalizada da sua situação.</p><a href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Tenho%20um%20familiar%20preso%20e%20gostaria%20de%20orientação%20sobre%20execução%20penal." target="_blank" rel="noopener noreferrer">Falar agora pelo WhatsApp <b>↗</b></a><small>Atendimento sigiloso e profissional</small></div>
+            </aside>
+          </div>
+        </article>
+      </main>
+
+      <footer class="footer"><div class="footer-brand"><img alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-clean.png"></div><div class="footer-links"><a href="/">Início</a><a href="/atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#contato">Contato</a></div><p>© ${new Date().getFullYear()} Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.</p></footer>
+    </div>`;
+}
+function preventivePrisonDocumentHtml() {
+  return `
+    <div class="internal-page article-page publication-modern">
+      <div class="grain" aria-hidden="true"></div>
+      <header class="site-header" id="siteHeader">
+        <a aria-label="Felipe Ribeiro, início" class="brand" href="/">
+          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.png">
+          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.png">
+        </a>
+        <nav aria-label="Navegação principal" class="desktop-nav">
+          <a href="/#atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#presenca">Presença</a><a href="/#contato">Contato</a>
+        </nav>
+        <div class="header-actions">
+          <button aria-label="Mudar para modo claro" aria-pressed="false" class="theme-toggle" id="themeToggle" title="Alternar tema" type="button">
+            <svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg>
+            <svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg>
+          </button>
+          <a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a>
+        </div>
+        <button aria-expanded="false" aria-label="Abrir menu" class="menu-button" id="menuButton" type="button"><span></span><span></span></button>
+        <div class="mobile-panel" id="mobilePanel"><nav aria-label="Navegação mobile"><a href="/#atuacao">Atuação <b>01</b></a><a href="/#sobre">O advogado <b>02</b></a><a href="/#presenca">Presença <b>03</b></a><a href="/#contato">Contato <b>04</b></a></nav><button aria-label="Mudar para modo claro" class="mobile-theme" id="mobileTheme" title="Alternar tema" type="button"><span>Alternar tema</span></button><a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a></div>
+      </header>
+
+      <main class="article-main publication-modern-main">
+        <article class="publication-page">
+          <header class="publication-hero">
+            <div class="publication-hero-copy">
+              <a class="publication-breadcrumb" href="/">Início <span>›</span> Informações importantes</a>
+              <p class="publication-kicker">DIREITO PENAL · PRISÃO CAUTELAR</p>
+              <h1>Prisão preventiva: <em>o que pode ser feito para conseguir a liberdade?</em></h1>
+              <p class="publication-deck">Entenda o que é a prisão preventiva, quais medidas podem ser analisadas pela defesa e quais pontos precisam ser avaliados antes de um pedido de liberdade.</p>
+              <div class="publication-facts" aria-label="Informações da publicação"><span>Conteúdo informativo</span><i></i><span>Leitura · 5 min</span><i></i><span>Direito Penal</span></div>
+            </div>
+          </header>
+
+          <div class="publication-layout">
+            <div class="publication-body">
+              <div class="publication-intro-card"><span class="publication-intro-icon" aria-hidden="true">♧</span><p>Quando uma pessoa é presa preventivamente, uma das principais preocupações da família é saber por quanto tempo ela permanecerá presa e se existe alguma medida que possa ser tomada para buscar sua liberdade.</p></div>
+              <p>A prisão preventiva é uma medida cautelar e não significa que a pessoa já tenha sido condenada. Dependendo das circunstâncias, podem ser analisadas medidas como a revogação da prisão, a liberdade provisória ou a substituição por outras medidas menos gravosas.</p>
+              <p>A manutenção da prisão deve ser analisada de acordo com as circunstâncias concretas do processo e com os requisitos previstos na legislação. Cada situação exige avaliação individualizada.</p>
+
+              <section class="publication-topic" id="o-que-e"><div class="publication-topic-number">01</div><div><h2>O que é a prisão preventiva?</h2><p>A prisão preventiva é uma medida cautelar que pode ser determinada antes do julgamento definitivo do processo, quando estiverem presentes os requisitos previstos em lei. Ela pode ocorrer durante a investigação ou no decorrer do processo criminal.</p><p>Seu objetivo é assegurar finalidades previstas na legislação e não pode ser utilizada simplesmente como antecipação da pena. Estar preso preventivamente, portanto, não significa que a pessoa tenha sido definitivamente condenada.</p></div></section>
+              <section class="publication-topic" id="liberdade"><div class="publication-topic-number">02</div><div><h2>É possível conseguir a liberdade?</h2><p>Dependendo das circunstâncias do caso, a defesa pode solicitar a revogação da prisão preventiva ou a concessão de liberdade provisória.</p><p>Para isso, é necessário analisar a decisão que determinou ou manteve a prisão e verificar se ainda estão presentes os motivos que justificariam sua manutenção. Também devem ser consideradas outras medidas que possam permitir que a pessoa responda ao processo em liberdade.</p></div></section>
+              <section class="publication-topic" id="revogacao"><div class="publication-topic-number">03</div><div><h2>Revogação da prisão preventiva</h2><p>O pedido de revogação busca demonstrar que os motivos que justificaram a prisão não estão mais presentes ou que não existem fundamentos suficientes para que ela continue sendo mantida.</p><p>A situação pode mudar durante o andamento do processo. Por isso, uma prisão preventiva decretada em determinado momento pode ser posteriormente reavaliada.</p></div></section>
+              <section class="publication-topic" id="liberdade-provisoria"><div class="publication-topic-number">04</div><div><h2>Liberdade provisória</h2><p>A liberdade provisória permite que a pessoa responda ao processo em liberdade, quando preenchidos os requisitos legais. A concessão pode ser acompanhada de condições ou medidas cautelares que deverão ser cumpridas durante o processo.</p><p>Isso não significa o encerramento do processo criminal. A pessoa continuará respondendo ao processo, mas poderá fazê-lo fora do estabelecimento prisional, observadas as condições determinadas pela Justiça.</p></div></section>
+              <section class="publication-topic" id="medidas-cautelares"><div class="publication-topic-number">05</div><div><h2>Substituição por medidas cautelares</h2><p>Em determinadas situações, a prisão preventiva pode ser substituída por outras medidas cautelares. Elas podem impor obrigações ou restrições ao acusado sem que seja necessário mantê-lo preso.</p><p>Conforme o caso, podem ser determinadas medidas como comparecimento periódico em juízo, proibição de contato com determinadas pessoas, proibição de frequentar determinados lugares e outras restrições previstas na legislação.</p></div></section>
+              <section class="publication-topic" id="prisao-domiciliar"><div class="publication-topic-number">06</div><div><h2>Prisão domiciliar</h2><p>Em determinadas situações previstas em lei, pode ser analisada a substituição da prisão preventiva pela prisão domiciliar. A legislação estabelece hipóteses específicas para essa substituição.</p><p>Quando houver circunstâncias pessoais ou familiares relevantes, é importante verificar se existe fundamento para formular esse pedido e se os demais requisitos estão presentes.</p></div></section>
+
+              <aside class="publication-checklist" id="antes-do-pedido"><p class="publication-kicker">ANTES DE PEDIR A LIBERDADE</p><ul><li>Os motivos apresentados na decisão que decretou a prisão.</li><li>Se os fundamentos utilizados ainda estão presentes.</li><li>As circunstâncias do crime investigado ou imputado.</li><li>A situação pessoal e familiar do acusado.</li><li>A existência de residência fixa e trabalho, quando relevantes ao caso.</li><li>A eventual possibilidade de aplicação de medidas cautelares.</li><li>A eventual possibilidade de substituição por prisão domiciliar.</li><li>O andamento da investigação ou do processo.</li></ul></aside>
+
+              <section class="publication-topic publication-topic-no-number"><div></div><div><h2>Procure orientação jurídica</h2><p>A prisão preventiva não significa que a pessoa necessariamente permanecerá presa até o final do processo. Dependendo das circunstâncias, podem existir medidas jurídicas capazes de modificar a situação do preso.</p><p>Uma análise individualizada permite verificar se existem fundamentos para buscar a liberdade ou uma medida menos gravosa.</p></div></section>
+              <section class="publication-cta"><p class="publication-kicker">ORIENTAÇÃO JURÍDICA</p><h2>Um pedido de liberdade começa com <em>uma análise cuidadosa.</em></h2><p>Se um familiar está preso preventivamente, é importante analisar a decisão que determinou a prisão, o processo e as circunstâncias específicas do caso.</p><p>O conteúdo é informativo e não substitui a análise individualizada de um advogado sobre o processo específico.</p><a class="publication-whatsapp" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Tenho%20um familiar preso preventivamente e gostaria de orientação sobre o caso." target="_blank" rel="noopener noreferrer">Falar agora pelo WhatsApp <b>↗</b></a><small>Atendimento sigiloso e profissional</small></section>
+              <p class="publication-disclaimer">Este material tem caráter informativo e não substitui a análise individualizada de um advogado sobre o processo específico.</p>
+            </div>
+            <aside class="publication-sidebar" aria-label="Navegação da publicação"><div class="publication-toc"><p class="publication-toc-title">Neste conteúdo</p><a href="#o-que-e"><b>01</b> O que é a prisão preventiva?</a><a href="#liberdade"><b>02</b> É possível conseguir a liberdade?</a><a href="#revogacao"><b>03</b> Revogação</a><a href="#liberdade-provisoria"><b>04</b> Liberdade provisória</a><a href="#medidas-cautelares"><b>05</b> Medidas cautelares</a><a href="#prisao-domiciliar"><b>06</b> Prisão domiciliar</a><a href="#antes-do-pedido"><b>↗</b> O que analisar antes</a></div><div class="publication-sidebar-cta"><span aria-hidden="true">▣</span><h2>Precisa de orientação?</h2><p>Cada caso é único. Fale com um advogado e receba uma análise personalizada da sua situação.</p><a href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria de falar sobre um caso de prisão preventiva." target="_blank" rel="noopener noreferrer">Falar agora pelo WhatsApp <b>↗</b></a><small>Atendimento sigiloso e profissional</small></div></aside>
+          </div>
+        </article>
+      </main>
+      <footer class="footer"><div class="footer-brand"><img alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-clean.png"></div><div class="footer-links"><a href="/">Início</a><a href="/atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#contato">Contato</a></div><p>© ${new Date().getFullYear()} Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.</p></footer>
+    </div>`;
+}
 function internalPageHtml(page) {
   const cards = PRACTICE_OVERVIEW.map((item) => `
     <a class="internal-practice-card ${item.path === CURRENT_PATH ? 'is-current' : ''}" href="${item.path}">
@@ -216,12 +392,16 @@ export default function App() {
     const seoTitles = {
       '/': 'Felipe Vinicius Santana Ribeiro | Advogado Criminalista',
       '/atuacao': 'Áreas de Atuação | Felipe Ribeiro Advogado Criminalista',
+      [IMPORTANT_DOCUMENT_PATH]: 'Como reduzir o tempo de prisão | Felipe Ribeiro Advogado Criminalista',
+      [PREVENTIVE_PRISON_DOCUMENT_PATH]: 'Prisão preventiva: o que pode ser feito para conseguir a liberdade? | Felipe Ribeiro Advogado Criminalista',
       ...Object.fromEntries(Object.entries(PRACTICE_PAGES).map(([path, page]) => [path, `${page.title} | Felipe Ribeiro Advogado Criminalista`]))
     };
 
     const seoDescriptions = {
       '/': 'Felipe Vinicius Santana Ribeiro, advogado criminalista. Atuação em defesa criminal, com atendimento presencial e online em todo o Brasil.',
       '/atuacao': 'Conheça as principais áreas de atuação criminal de Felipe Vinicius Santana Ribeiro.',
+      [IMPORTANT_DOCUMENT_PATH]: 'Como reduzir o tempo de prisão: entenda remição, progressão de regime, livramento condicional, saída temporária, indulto, comutação e detração penal.',
+      [PREVENTIVE_PRISON_DOCUMENT_PATH]: 'Prisão preventiva: entenda o que é, quando pode ser revogada, as possibilidades de liberdade provisória, medidas cautelares e prisão domiciliar.',
       ...Object.fromEntries(Object.entries(PRACTICE_PAGES).map(([path, page]) => [path, `${page.title}: ${page.subtitle}`]))
     };
 
@@ -261,6 +441,42 @@ export default function App() {
       const nextTheme = body.dataset.theme === 'dark' ? 'light' : 'dark';
       setTheme(nextTheme);
     };
+
+    // Navegação da publicação: links da lateral fazem scroll suave e o item
+    // correspondente acompanha automaticamente a seção que está na leitura.
+    const publicationToc = document.querySelector('.publication-toc');
+    const publicationTocLinks = publicationToc
+      ? Array.from(publicationToc.querySelectorAll('a[href^="#"]'))
+      : [];
+    const publicationSections = publicationTocLinks
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    const setPublicationTocActive = (id) => {
+      publicationTocLinks.forEach((link) => {
+        const active = link.getAttribute('href') === `#${id}`;
+        link.classList.toggle('is-active', active);
+        if (active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    };
+
+    const publicationTocClickHandlers = [];
+    publicationTocLinks.forEach((link) => {
+      const handleClick = (event) => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${target.id}`);
+      };
+
+      link.addEventListener('click', handleClick);
+      publicationTocClickHandlers.push({ link, handleClick });
+    });
+
+
 
     const closeMenu = () => {
       header?.classList.remove('menu-open');
@@ -663,6 +879,10 @@ ${data.get('mensagem')}`;
         link.removeEventListener('click', closeMenu);
       });
 
+      publicationTocClickHandlers.forEach(({ link, handleClick }) => {
+        link.removeEventListener('click', handleClick);
+      });
+
       contactForm?.removeEventListener('submit', submitContact);
 
       revealObserver.disconnect();
@@ -696,6 +916,14 @@ ${data.get('mensagem')}`;
       );
     };
   }, []);
+
+  if (CURRENT_PATH === IMPORTANT_DOCUMENT_PATH) {
+    return <div dangerouslySetInnerHTML={{ __html: importantDocumentHtml() }} />;
+  }
+
+  if (CURRENT_PATH === PREVENTIVE_PRISON_DOCUMENT_PATH) {
+    return <div dangerouslySetInnerHTML={{ __html: preventivePrisonDocumentHtml() }} />;
+  }
 
   if (CURRENT_PATH === '/atuacao' || PRACTICE_PAGES[CURRENT_PATH]) {
     return <div dangerouslySetInnerHTML={{ __html: internalPageHtml(PRACTICE_PAGES[CURRENT_PATH]) }} />;
@@ -1057,6 +1285,38 @@ ${data.get('mensagem')}`;
            </div>
            </div>
           </div>
+         </section>
+         <section class="important-info section-light" id="informacoes">
+          <div class="important-info-head">
+           <div>
+            <p class="eyebrow reveal">INFORMAÇÕES IMPORTANTES</p>
+            <h2 class="reveal">Um conteúdo para <em>ler com atenção.</em></h2>
+           </div>
+           <div class="important-info-head-side reveal">
+            <p class="important-info-intro">Informação jurídica clara e objetiva para você entender seus direitos e tomar decisões com mais segurança.</p>
+           </div>
+          </div>
+          <div class="important-document-grid">
+           <a class="important-document-card reveal" href="/informacao-importante" aria-label="Ler publicação: Como reduzir o tempo de prisão">
+            <div class="important-document-copy">
+             <div class="important-document-top"><span class="important-document-icon" aria-hidden="true">01</span><div class="important-document-meta"><span>Direito Penal · Execução Penal</span><span>Leitura · 6 min</span></div></div>
+             <h3>Como reduzir o tempo de prisão</h3>
+             <p>Entenda remição pelo trabalho e estudo, progressão de regime, livramento condicional, saída temporária, indulto, comutação e detração.</p>
+             <span class="info-tile-link">Ler publicação <b>↗</b></span>
+            </div>
+            <div class="important-document-media"><img src="/assets/informacoes/como-reduzir-tempo-prisao-cover.png" alt="Capa editorial sobre execução penal" loading="lazy"></div>
+           </a>
+           <a class="important-document-card reveal" href="/informacao-importante/prisao-preventiva" aria-label="Ler publicação: Prisão preventiva">
+            <div class="important-document-copy">
+             <div class="important-document-top"><span class="important-document-icon" aria-hidden="true">02</span><div class="important-document-meta"><span>Direito Penal · Prisão Cautelar</span><span>Leitura · 5 min</span></div></div>
+             <h3>Prisão preventiva: o que pode ser feito para conseguir a liberdade?</h3>
+             <p>Entenda o que pode ser analisado antes de um pedido de liberdade e quais medidas podem ser consideradas no caso concreto.</p>
+             <span class="info-tile-link">Ler publicação <b>↗</b></span>
+            </div>
+            <div class="important-document-media"><img src="/assets/informacoes/prisao-preventiva-cover.png" alt="Capa editorial sobre prisão preventiva" loading="lazy"></div>
+           </a>
+          </div>
+          <div class="important-info-footer reveal"><span>Dois conteúdos disponíveis para leitura.</span></div>
          </section>
          <section class="about section-light" id="sobre">
           <div class="about-media reveal-media">
