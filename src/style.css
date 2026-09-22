@@ -5821,3 +5821,121 @@ body[data-theme="dark"] .important-info-footer {
   }
 
 }
+
+/* =========================================================
+   THEME SYNC FINAL PASS
+   Corrige contraste do header/navbar e dos cards de
+   informações no modo Clean sem alterar nenhum conteúdo.
+   ========================================================= */
+
+/* A navbar da publicação precisa acompanhar o tema global.
+   O conteúdo editorial continua deliberadamente escuro. */
+body[data-theme="dark"] .publication-modern .site-header {
+  background: rgba(17,17,17,.96) !important;
+  border-bottom-color: rgba(244,240,233,.14) !important;
+}
+
+body[data-theme="light"] .publication-modern .site-header {
+  background: rgba(242,238,231,.97) !important;
+  border-bottom-color: var(--line-light) !important;
+  color: var(--ink);
+}
+
+body[data-theme="light"] .publication-modern .site-header .desktop-nav a {
+  color: var(--ink) !important;
+}
+
+body[data-theme="light"] .publication-modern .site-header .theme-toggle {
+  color: var(--ink) !important;
+  border-color: rgba(21,21,21,.18) !important;
+}
+
+body[data-theme="light"] .publication-modern .site-header .header-cta {
+  color: #fff !important;
+  background: var(--rust) !important;
+  border-color: var(--rust) !important;
+}
+
+body[data-theme="light"] .publication-modern .site-header .header-cta b {
+  color: #fff !important;
+}
+
+/* Menu mobile da publicação também acompanha Clean/Dark. */
+body[data-theme="dark"] .publication-modern .mobile-panel {
+  background: #171715 !important;
+  color: var(--text);
+  border-color: var(--line-dark);
+}
+
+body[data-theme="light"] .publication-modern .mobile-panel {
+  background: var(--ivory) !important;
+  color: var(--ink);
+  border-color: var(--line-light);
+}
+
+body[data-theme="light"] .publication-modern .mobile-panel nav a {
+  color: var(--ink) !important;
+  border-color: var(--line-light) !important;
+}
+
+body[data-theme="light"] .publication-modern .mobile-theme {
+  color: var(--ink-muted) !important;
+}
+
+/* Card "Informações importantes": no Clean, nenhum texto
+   usa a paleta clara do Dark por engano. */
+body[data-theme="light"] .important-document-card {
+  color: var(--ink);
+  border-color: var(--line-light);
+  background: rgba(21,21,21,.018);
+}
+
+body[data-theme="light"] .important-document-card .important-document-meta {
+  color: var(--ink-muted);
+}
+
+body[data-theme="light"] .important-document-card .important-document-meta span:first-child {
+  color: var(--ink) !important;
+}
+
+body[data-theme="light"] .important-document-card .important-document-copy h3 {
+  color: var(--ink);
+}
+
+body[data-theme="light"] .important-document-card .important-document-copy p {
+  color: var(--ink-muted);
+}
+
+body[data-theme="light"] .important-document-card .info-tile-link {
+  color: var(--ink) !important;
+}
+
+body[data-theme="light"] .important-document-card .info-tile-link b {
+  color: var(--rust) !important;
+}
+
+body[data-theme="light"] .important-info-all,
+body[data-theme="light"] .important-info-footer a {
+  color: var(--ink) !important;
+}
+
+/* Estados de foco/teclado ficam visíveis nos dois temas. */
+.site-header a:focus-visible,
+.site-header button:focus-visible,
+.important-document-card:focus-visible,
+.info-tile-link:focus-visible {
+  outline: 2px solid var(--rust);
+  outline-offset: 4px;
+}
+
+/* Evita que a navbar clara fique translúcida demais sobre conteúdo
+   escuro em páginas editoriais. */
+@media (max-width: 980px) {
+  body[data-theme="light"] .publication-modern .site-header {
+    background: rgba(242,238,231,.98) !important;
+  }
+
+  body[data-theme="dark"] .publication-modern .site-header {
+    background: rgba(17,17,17,.96) !important;
+  }
+}

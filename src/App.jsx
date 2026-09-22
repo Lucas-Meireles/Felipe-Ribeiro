@@ -423,6 +423,16 @@ export default function App() {
         'aria-pressed',
         String(theme === 'light')
       );
+      mobileTheme?.setAttribute(
+        'aria-label',
+        theme === 'dark'
+          ? 'Mudar para modo claro'
+          : 'Mudar para modo escuro'
+      );
+      mobileTheme?.setAttribute(
+        'aria-pressed',
+        String(theme === 'light')
+      );
     };
 
     const savedTheme = localStorage.getItem('felipe-theme');
