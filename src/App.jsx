@@ -70,6 +70,42 @@ const PRACTICE_OVERVIEW = Object.entries(PRACTICE_PAGES).map(([path, page], inde
 
 const IMPORTANT_DOCUMENT_PATH = '/informacao-importante';
 const PREVENTIVE_PRISON_DOCUMENT_PATH = '/informacao-importante/prisao-preventiva';
+const SITE_ORIGIN = 'https://feliperibeiro.adv.br';
+
+const SEO_ROUTES = {
+  '/': {
+    title: 'Felipe Vinicius Santana Ribeiro | Advogado Criminalista',
+    description: 'Felipe Vinicius Santana Ribeiro, advogado criminalista. Atuação em defesa criminal, com atendimento presencial e online em todo o Brasil.',
+    type: 'WebPage'
+  },
+  '/atuacao': {
+    title: 'Áreas de Atuação | Felipe Ribeiro Advogado Criminalista',
+    description: 'Conheça as principais áreas de atuação criminal de Felipe Vinicius Santana Ribeiro.',
+    type: 'WebPage'
+  },
+  '/informacao-importante': {
+    title: 'Como reduzir o tempo de prisão | Felipe Ribeiro Advogado Criminalista',
+    description: 'Como reduzir o tempo de prisão: entenda remição, progressão de regime, livramento condicional, saída temporária, indulto, comutação e detração penal.',
+    type: 'Article',
+    image: `${SITE_ORIGIN}/assets/informacoes/como-reduzir-tempo-prisao-cover.png`,
+    section: 'Execução Penal'
+  },
+  '/informacao-importante/prisao-preventiva': {
+    title: 'Prisão preventiva: o que pode ser feito para conseguir a liberdade? | Felipe Ribeiro Advogado Criminalista',
+    description: 'Prisão preventiva: entenda o que é, quando pode ser revogada, as possibilidades de liberdade provisória, medidas cautelares e prisão domiciliar.',
+    type: 'Article',
+    image: `${SITE_ORIGIN}/assets/informacoes/prisao-preventiva-cover.png`,
+    section: 'Prisão Cautelar'
+  },
+  ...Object.fromEntries(Object.entries(PRACTICE_PAGES).map(([path, page]) => [path, {
+    title: `${page.title} | Felipe Ribeiro Advogado Criminalista`,
+    description: `${page.title}: ${page.subtitle}`,
+    type: 'WebPage',
+    image: `${SITE_ORIGIN}/${page.image}`
+  }]))
+};
+
+const INDEXABLE_ROUTES = new Set(Object.keys(SEO_ROUTES));
 
 function importantDocumentHtml() {
   return `
@@ -389,25 +425,110 @@ export default function App() {
     const themeToggle = document.getElementById('themeToggle');
     const contactForm = document.getElementById('contactForm');
 
-    const seoTitles = {
-      '/': 'Felipe Vinicius Santana Ribeiro | Advogado Criminalista',
-      '/atuacao': 'Áreas de Atuação | Felipe Ribeiro Advogado Criminalista',
-      [IMPORTANT_DOCUMENT_PATH]: 'Como reduzir o tempo de prisão | Felipe Ribeiro Advogado Criminalista',
-      [PREVENTIVE_PRISON_DOCUMENT_PATH]: 'Prisão preventiva: o que pode ser feito para conseguir a liberdade? | Felipe Ribeiro Advogado Criminalista',
-      ...Object.fromEntries(Object.entries(PRACTICE_PAGES).map(([path, page]) => [path, `${page.title} | Felipe Ribeiro Advogado Criminalista`]))
+    const seo = SEO_ROUTES[CURRENT_PATH] || SEO_ROUTES['/'];
+    const isIndexableRoute = INDEXABLE_ROUTES.has(CURRENT_PATH);
+    const canonicalUrl = `${SITE_ORIGIN}${CURRENT_PATH === '/' ? '/' : CURRENT_PATH}`;
+
+    document.title = seo.title;
+
+    const setMeta = (selector, content, attribute = 'content') => {
+      let element = document.querySelector(selector);
+      if (!element) {
+        element = document.createElement('meta');
+        if (selector.startsWith('meta[name="')) {
+          element.setAttribute('name', selector.slice(11, -2));
+        } else if (selector.startsWith('meta[property="')) {
+          element.setAttribute('property', selector.slice(15, -2));
+        }
+        document.head.appendChild(element);
+      }
+      element.setAttribute(attribute, content);
     };
 
-    const seoDescriptions = {
-      '/': 'Felipe Vinicius Santana Ribeiro, advogado criminalista. Atuação em defesa criminal, com atendimento presencial e online em todo o Brasil.',
-      '/atuacao': 'Conheça as principais áreas de atuação criminal de Felipe Vinicius Santana Ribeiro.',
-      [IMPORTANT_DOCUMENT_PATH]: 'Como reduzir o tempo de prisão: entenda remição, progressão de regime, livramento condicional, saída temporária, indulto, comutação e detração penal.',
-      [PREVENTIVE_PRISON_DOCUMENT_PATH]: 'Prisão preventiva: entenda o que é, quando pode ser revogada, as possibilidades de liberdade provisória, medidas cautelares e prisão domiciliar.',
-      ...Object.fromEntries(Object.entries(PRACTICE_PAGES).map(([path, page]) => [path, `${page.title}: ${page.subtitle}`]))
-    };
+    setMeta('meta[name="description"]', seo.description);
+    setMeta('meta[name="robots"]', isIndexableRoute ? 'index,follow,max-image-preview:large' : 'noindex,follow');
+    setMeta('meta[property="og:type"]', seo.type === 'Article' ? 'article' : 'website');
+    setMeta('meta[property="og:title"]', seo.title);
+    setMeta('meta[property="og:description"]', seo.description);
+    setMeta('meta[property="og:url"]', canonicalUrl);
+    if (seo.image) setMeta('meta[property="og:image"]', seo.image);
+    setMeta('meta[name="twitter:title"]', seo.title);
+    setMeta('meta[name="twitter:description"]', seo.description);
+    if (seo.image) setMeta('meta[name="twitter:image"]', seo.image);
 
-    document.title = seoTitles[CURRENT_PATH] || seoTitles['/'];
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) metaDescription.setAttribute('content', seoDescriptions[CURRENT_PATH] || seoDescriptions['/']);
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', canonicalUrl);
+
+    const oldStructuredData = document.getElementById('felipe-structured-data');
+    oldStructuredData?.remove();
+
+    const personId = `${SITE_ORIGIN}/#felipe-ribeiro`;
+    const websiteId = `${SITE_ORIGIN}/#website`;
+    const graph = [
+      {
+        '@type': 'Person',
+        '@id': personId,
+        name: 'Felipe Vinicius Santana Ribeiro',
+        jobTitle: 'Advogado Criminalista',
+        url: SITE_ORIGIN + '/',
+        telephone: '+55 11 94454-8048',
+        identifier: { '@type': 'PropertyValue', propertyID: 'OAB/SP', value: '543.966' },
+        knowsAbout: ['Direito Criminal', 'Prisão em flagrante', 'Habeas Corpus', 'Audiência de custódia', 'Inquérito policial', 'Ação penal', 'Tribunal do Júri']
+      },
+      {
+        '@type': 'LegalService',
+        '@id': `${SITE_ORIGIN}/#legal-service`,
+        name: 'Felipe Ribeiro | Advogado Criminalista',
+        url: SITE_ORIGIN + '/',
+        telephone: '+55 11 94454-8048',
+        areaServed: { '@type': 'Country', name: 'Brasil' },
+        serviceType: 'Advocacia criminal',
+        provider: { '@id': personId }
+      },
+      {
+        '@type': 'WebSite',
+        '@id': websiteId,
+        url: SITE_ORIGIN + '/',
+        name: 'Felipe Ribeiro | Advogado Criminalista',
+        publisher: { '@id': personId },
+        inLanguage: 'pt-BR'
+      },
+      {
+        '@type': seo.type,
+        '@id': `${canonicalUrl}#webpage`,
+        url: canonicalUrl,
+        name: seo.title,
+        description: seo.description,
+        isPartOf: { '@id': websiteId },
+        inLanguage: 'pt-BR'
+      }
+    ];
+
+    if (seo.type === 'Article') {
+      graph.push({
+        '@type': 'Article',
+        '@id': `${canonicalUrl}#article`,
+        mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
+        headline: seo.title.replace(' | Felipe Ribeiro Advogado Criminalista', ''),
+        description: seo.description,
+        image: seo.image ? [seo.image] : undefined,
+        author: { '@id': personId },
+        publisher: { '@id': personId },
+        articleSection: seo.section,
+        inLanguage: 'pt-BR'
+      });
+    }
+
+    const structuredData = document.createElement('script');
+    structuredData.id = 'felipe-structured-data';
+    structuredData.type = 'application/ld+json';
+    structuredData.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+    document.head.appendChild(structuredData);
 
     const setTheme = (theme) => {
       body.dataset.theme = theme;
