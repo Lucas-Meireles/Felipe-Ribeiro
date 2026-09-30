@@ -2,49 +2,200 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#111111" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <!-- SEO / Indexação -->
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large"
+    />
+    <meta
+      name="googlebot"
+      content="index, follow, max-image-preview:large"
+    />
+
     <meta
       name="description"
       content="Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias."
     />
 
-    <!-- Prévia para mecanismos de busca e compartilhamentos -->
+    <meta
+      name="author"
+      content="Felipe Vinicius Santana Ribeiro"
+    />
+
+    <meta
+      name="theme-color"
+      content="#111111"
+    />
+
+    <!-- URL oficial -->
+    <link
+      rel="canonical"
+      href="https://feliperibeiro.adv.br/"
+    />
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:site_name" content="Felipe Ribeiro | Advogado Criminalista" />
-    <meta property="og:title" content="Felipe Vinicius Santana Ribeiro | Advogado Criminalista" />
-    <meta property="og:description" content="Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias." />
-    <meta property="og:url" content="https://feliperibeiro.adv.br/" />
-    <meta property="og:image" content="https://feliperibeiro.adv.br/assets/google-preview-felipe.png" />
-    <meta property="og:image:alt" content="Felipe Vinicius Santana Ribeiro, advogado criminalista, em seu escritório" />
-    <meta property="og:image:width" content="1672" />
-    <meta property="og:image:height" content="941" />
+    <meta
+      property="og:site_name"
+      content="Felipe Ribeiro | Advogado Criminalista"
+    />
+    <meta
+      property="og:title"
+      content="Felipe Vinicius Santana Ribeiro | Advogado Criminalista"
+    />
+    <meta
+      property="og:description"
+      content="Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias."
+    />
+    <meta
+      property="og:url"
+      content="https://feliperibeiro.adv.br/"
+    />
+    <meta
+      property="og:image"
+      content="https://feliperibeiro.adv.br/assets/google-preview-felipe.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="Felipe Vinicius Santana Ribeiro, advogado criminalista, em seu escritório"
+    />
+    <meta
+      property="og:image:width"
+      content="1672"
+    />
+    <meta
+      property="og:image:height"
+      content="941"
+    />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Felipe Vinicius Santana Ribeiro | Advogado Criminalista" />
-    <meta name="twitter:description" content="Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias." />
-    <meta name="twitter:image" content="https://feliperibeiro.adv.br/assets/google-preview-felipe.png" />
-    <link rel="icon" type="image/png" sizes="256x256" href="/assets/favicon.png" />
-    <link rel="apple-touch-icon" href="/assets/favicon.png" />
+    <!-- Twitter / X -->
+    <meta
+      name="twitter:card"
+      content="summary_large_image"
+    />
+    <meta
+      name="twitter:title"
+      content="Felipe Vinicius Santana Ribeiro | Advogado Criminalista"
+    />
+    <meta
+      name="twitter:description"
+      content="Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online, 24 horas por dia, todos os dias."
+    />
+    <meta
+      name="twitter:image"
+      content="https://feliperibeiro.adv.br/assets/google-preview-felipe.png"
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="256x256"
+      href="/assets/favicon.png"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      href="/assets/favicon.png"
+    />
+
+    <!-- Dados estruturados Schema.org -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LegalService",
+        "@id": "https://feliperibeiro.adv.br/#legalservice",
+        "name": "Felipe Ribeiro | Advogado Criminalista",
+        "url": "https://feliperibeiro.adv.br/",
+        "description": "Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento nacional, presencial e online.",
+        "image": "https://feliperibeiro.adv.br/assets/google-preview-felipe.png",
+        "logo": "https://feliperibeiro.adv.br/assets/favicon.png",
+        "founder": {
+          "@type": "Person",
+          "name": "Felipe Vinicius Santana Ribeiro",
+          "jobTitle": "Advogado Criminalista"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "Brasil"
+        },
+        "url": "https://feliperibeiro.adv.br/"
+      }
+    </script>
+
     <!-- Imagens principais -->
-    <link rel="preload" as="image" href="/assets/flagrante.png" />
-    <link rel="preload" as="image" href="/assets/audiencia.png" />
-    <link rel="preload" as="image" href="/assets/habeas-corpus.png" />
-    <link rel="preload" as="image" href="/assets/inquerito.png" />
-    <link rel="preload" as="image" href="/assets/acao-penal.png" />
-    <link rel="preload" as="image" href="/assets/tribunal.png" />
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/flagrante.png"
+    />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/audiencia.png"
+    />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/habeas-corpus.png"
+    />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/inquerito.png"
+    />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/acao-penal.png"
+    />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/tribunal.png"
+    />
+
     <!-- Tipografia -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>Felipe Ribeiro • Advogado Criminalista</title>
+
+    <!-- Título principal -->
+    <title>
+      Felipe Ribeiro • Advogado Criminalista
+    </title>
   </head>
+
   <body data-theme="dark">
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+
+    <script
+      type="module"
+      src="/src/main.jsx"
+    ></script>
   </body>
 </html>
