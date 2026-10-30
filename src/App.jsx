@@ -1709,56 +1709,6 @@ ${data.get('mensagem')}`;
            </div>
           </div>
          </section>
-         <section class="testimonials section-dark" id="depoimentos">
-          <div class="testimonial-head">
-           <p class="eyebrow">
-            EXPERIÊNCIAS
-           </p>
-           <span id="testimonialCounter">
-            01 / 03
-           </span>
-          </div>
-          <div class="review-intro">
-           <div>
-            <h2>
-             Experiências reais.
-             <br/>
-             <em>
-              Registradas com autorização.
-             </em>
-            </h2>
-           </div>
-           <p>
-            Espaço reservado para inserir imagens de avaliações reais de clientes, mantendo a apresentação visual discreta e alinhada à identidade do escritório.
-           </p>
-          </div>
-          <div
-           aria-label="Galeria de avaliações de clientes"
-           class="review-gallery"
-          >
-           <figure class="review-card">
-            <img
-             alt="Avaliação de cliente 1"
-             class="review-photo"
-             src="assets/avaliacoes/avaliacao-01.png"
-            />
-           </figure>
-           <figure class="review-card review-card-offset">
-            <img
-             alt="Avaliação de cliente 2"
-             class="review-photo"
-             src="assets/avaliacoes/avaliacao-02.png"
-            />
-           </figure>
-           <figure class="review-card">
-            <img
-             alt="Avaliação de cliente 3"
-             class="review-photo"
-             src="assets/avaliacoes/avaliacao-03.png"
-            />
-           </figure>
-          </div>
-         </section>
          <section class="final-cta section-dark">
           <div class="final-cta-inner">
            <p class="eyebrow reveal">
