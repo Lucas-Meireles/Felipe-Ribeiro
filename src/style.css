@@ -5973,7 +5973,7 @@ body[data-theme="light"] .important-info-footer a {
   transition: transform .2s cubic-bezier(.2, .8, .2, 1), box-shadow .2s ease;
   -webkit-tap-highlight-color: transparent;
   /* Batida: o próprio botão cresce e volta, junto com o anel */
-  animation: floating-social-beat 2.4s ease-in-out infinite;
+  animation: floating-social-beat 1.8s ease-in-out infinite;
 }
 
 .floating-social-btn svg {
@@ -5992,12 +5992,12 @@ body[data-theme="light"] .important-info-footer a {
   inset: 0;
   border-radius: inherit;
   box-shadow: 0 0 0 0 var(--fs-pulse);
-  animation: floating-social-pulse 2.4s cubic-bezier(.25, .6, .3, 1) infinite;
+  animation: floating-social-pulse 1.8s cubic-bezier(.25, .6, .3, 1) infinite;
   pointer-events: none;
 }
 
 .floating-social-btn::after {
-  animation-delay: 1.2s;
+  animation-delay: .9s;
 }
 
 .floating-social-whatsapp {
@@ -6010,9 +6010,9 @@ body[data-theme="light"] .important-info-footer a {
 }
 
 /* Desencontra o pulso dos dois botões */
-.floating-social-instagram { animation-delay: 1.2s; }
-.floating-social-instagram::before { animation-delay: 1.2s; }
-.floating-social-instagram::after { animation-delay: 2.4s; }
+.floating-social-instagram { animation-delay: .9s; }
+.floating-social-instagram::before { animation-delay: .9s; }
+.floating-social-instagram::after { animation-delay: 1.8s; }
 
 @media (hover: hover) {
   .floating-social-btn:hover {
@@ -6036,15 +6036,15 @@ body[data-theme="light"] .floating-social-btn:focus-visible {
 
 @keyframes floating-social-beat {
   0%, 100% { scale: 1; }
-  12% { scale: 1.1; }
-  24% { scale: .98; }
-  36% { scale: 1.05; }
-  50% { scale: 1; }
+  14% { scale: 1.14; }
+  28% { scale: .97; }
+  42% { scale: 1.08; }
+  60% { scale: 1; }
 }
 
 @keyframes floating-social-pulse {
   0% { box-shadow: 0 0 0 0 var(--fs-pulse); }
-  70% { box-shadow: 0 0 0 14px rgba(0, 0, 0, 0); }
+  70% { box-shadow: 0 0 0 18px rgba(0, 0, 0, 0); }
   100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
 }
 
@@ -6064,16 +6064,29 @@ body.no-scroll .floating-social {
   .floating-social-btn { --fs-size: 44px; }
 }
 
+/* Movimento reduzido: sem crescer/encolher, mas com um brilho pulsando
+   (variação de luz, sem deslocamento), para o botão continuar chamando atenção. */
 @media (prefers-reduced-motion: reduce) {
-  .floating-social-btn::before,
-  .floating-social-btn::after {
-    animation: none;
-  }
-
   .floating-social-btn {
     transition: none;
     animation: none;
   }
+
+  .floating-social-btn::before {
+    box-shadow: 0 0 0 7px var(--fs-pulse);
+    animation: floating-social-glow 2s ease-in-out infinite;
+    /* Exceção à regra global que zera animações nesse modo */
+    animation-duration: 2s !important;
+  }
+
+  .floating-social-btn::after {
+    animation: none;
+  }
+}
+
+@keyframes floating-social-glow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 @media print {
