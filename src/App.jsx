@@ -423,7 +423,7 @@ function notFoundHtml() {
             </div>
             <div class="not-found-file" aria-hidden="true">
               <div class="not-found-file-head">
-                <span>FELIPE RIBEIRO · ADVOCACIA CRIMINAL</span>
+                <span>FELIPE RIBEIRO<em> · ADVOCACIA CRIMINAL</em></span>
                 <span>AUTOS Nº 404</span>
               </div>
               <dl class="not-found-file-body">
@@ -818,7 +818,12 @@ export default function App() {
     // 404: mostra o endereço tentado na "ficha" e aplica um parallax leve no "404" de fundo.
     const notFoundHero = document.getElementById('notFoundHero');
     const notFoundPath = document.getElementById('notFoundPath');
-    if (notFoundPath) notFoundPath.textContent = decodeURIComponent(window.location.pathname);
+    if (notFoundPath) {
+      // Permite quebra de linha logo após cada "/" (endereços longos no celular).
+      let attemptedPath = window.location.pathname;
+      try { attemptedPath = decodeURIComponent(attemptedPath); } catch { /* mantém o original */ }
+      notFoundPath.replaceChildren(...attemptedPath.split(/(?<=\/)/).flatMap((part) => [part, document.createElement('wbr')]));
+    }
 
     let notFoundFrame = 0;
     const onNotFoundPointer = (event) => {
