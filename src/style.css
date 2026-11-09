@@ -5958,8 +5958,8 @@ body[data-theme="light"] .important-info-footer a {
 }
 
 .floating-social-btn {
-  --fs-size: 58px;
-  --fs-pulse: rgba(37, 211, 102, .55);
+  --fs-size: 46px;
+  --fs-pulse: rgba(37, 211, 102, .6);
   position: relative;
   display: grid;
   place-items: center;
@@ -5972,6 +5972,8 @@ body[data-theme="light"] .important-info-footer a {
   box-shadow: 0 10px 26px rgba(0, 0, 0, .32), 0 2px 6px rgba(0, 0, 0, .2);
   transition: transform .2s cubic-bezier(.2, .8, .2, 1), box-shadow .2s ease;
   -webkit-tap-highlight-color: transparent;
+  /* Batida: o próprio botão cresce e volta, junto com o anel */
+  animation: floating-social-beat 2.4s ease-in-out infinite;
 }
 
 .floating-social-btn svg {
@@ -6003,14 +6005,14 @@ body[data-theme="light"] .important-info-footer a {
 }
 
 .floating-social-instagram {
-  --fs-size: 50px;
-  --fs-pulse: rgba(214, 41, 118, .5);
+  --fs-pulse: rgba(214, 41, 118, .55);
   background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
 }
 
 /* Desencontra o pulso dos dois botões */
-.floating-social-instagram::before { animation-delay: .6s; }
-.floating-social-instagram::after { animation-delay: 1.8s; }
+.floating-social-instagram { animation-delay: 1.2s; }
+.floating-social-instagram::before { animation-delay: 1.2s; }
+.floating-social-instagram::after { animation-delay: 2.4s; }
 
 @media (hover: hover) {
   .floating-social-btn:hover {
@@ -6032,9 +6034,17 @@ body[data-theme="light"] .floating-social-btn:focus-visible {
   outline-color: #111;
 }
 
+@keyframes floating-social-beat {
+  0%, 100% { scale: 1; }
+  12% { scale: 1.1; }
+  24% { scale: .98; }
+  36% { scale: 1.05; }
+  50% { scale: 1; }
+}
+
 @keyframes floating-social-pulse {
   0% { box-shadow: 0 0 0 0 var(--fs-pulse); }
-  70% { box-shadow: 0 0 0 16px rgba(0, 0, 0, 0); }
+  70% { box-shadow: 0 0 0 14px rgba(0, 0, 0, 0); }
   100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
 }
 
@@ -6051,8 +6061,7 @@ body.no-scroll .floating-social {
     gap: 12px;
   }
 
-  .floating-social-btn { --fs-size: 54px; }
-  .floating-social-instagram { --fs-size: 46px; }
+  .floating-social-btn { --fs-size: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -6063,6 +6072,7 @@ body.no-scroll .floating-social {
 
   .floating-social-btn {
     transition: none;
+    animation: none;
   }
 }
 
