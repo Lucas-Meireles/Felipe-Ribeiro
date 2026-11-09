@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './style.css';
+import { LEGAL_DOCUMENTS, LEGAL_UPDATED_AT, PRIVACY_PATH, TERMS_PATH } from './legal';
 
 const WA_PHONE = '5511944548048';
 const INSTAGRAM_URL = 'https://www.instagram.com/feliperibeiro_30/';
@@ -106,6 +107,16 @@ const SEO_ROUTES = {
     image: `${SITE_ORIGIN}/assets/informacoes/prisao-preventiva-cover.png`,
     section: 'Prisão Cautelar'
   },
+  [PRIVACY_PATH]: {
+    title: 'Política de Privacidade e Cookies | Felipe Ribeiro Advogado Criminalista',
+    description: 'Como os dados de quem acessa o site de Felipe Vinicius Santana Ribeiro são tratados: LGPD, cookies, armazenamento local e direitos do titular.',
+    type: 'WebPage'
+  },
+  [TERMS_PATH]: {
+    title: 'Termos e Condições de Uso | Felipe Ribeiro Advogado Criminalista',
+    description: 'Termos e condições de uso do site de Felipe Vinicius Santana Ribeiro, advogado criminalista: natureza informativa, contato, sigilo e propriedade intelectual.',
+    type: 'WebPage'
+  },
   ...Object.fromEntries(Object.entries(PRACTICE_PAGES).map(([path, page]) => [path, {
     title: `${page.title} | Felipe Ribeiro Advogado Criminalista`,
     description: `${page.title}: ${page.subtitle}`,
@@ -115,6 +126,12 @@ const SEO_ROUTES = {
 };
 
 const INDEXABLE_ROUTES = new Set(Object.keys(SEO_ROUTES));
+
+const NOT_FOUND_SEO = {
+  title: 'Página não encontrada | Felipe Ribeiro Advogado Criminalista',
+  description: 'O endereço acessado não existe. Acesse a página inicial ou as áreas de atuação de Felipe Vinicius Santana Ribeiro, advogado criminalista.',
+  type: 'WebPage'
+};
 
 function importantDocumentHtml() {
   return `
@@ -225,7 +242,7 @@ function importantDocumentHtml() {
         </article>
       </main>
 
-      <footer class="footer"><div class="footer-brand"><img alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-clean.png"></div><div class="footer-links"><a href="/">Início</a><a href="/atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#contato">Contato</a></div><p>© ${new Date().getFullYear()} Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.</p></footer>
+      ${siteFooterHtml()}
     </div>`;
 }
 function preventivePrisonDocumentHtml() {
@@ -286,9 +303,136 @@ function preventivePrisonDocumentHtml() {
           </div>
         </article>
       </main>
-      <footer class="footer"><div class="footer-brand"><img alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-clean.png"></div><div class="footer-links"><a href="/">Início</a><a href="/atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#contato">Contato</a></div><p>© ${new Date().getFullYear()} Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.</p></footer>
+      ${siteFooterHtml()}
     </div>`;
 }
+
+const COOKIE_CONSENT_KEY = 'felipe-cookie-consent';
+
+function readCookieConsent() {
+  try {
+    const value = localStorage.getItem(COOKIE_CONSENT_KEY);
+    return value === 'all' || value === 'essential' ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+function footerLegalHtml() {
+  return `<nav aria-label="Informações legais" class="footer-legal"><a href="${PRIVACY_PATH}">Política de Privacidade e Cookies</a><a href="${TERMS_PATH}">Termos e Condições de Uso</a><button type="button" data-open-cookie-settings>Preferências de cookies</button></nav>`;
+}
+
+function siteFooterHtml() {
+  return `<footer class="footer"><div class="footer-brand"><img alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-clean.png"></div><div class="footer-links"><a href="/">Início</a><a href="/atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#contato">Contato</a></div><p>© ${new Date().getFullYear()} Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.</p>${footerLegalHtml()}</footer>`;
+}
+
+function siteHeaderHtml() {
+  return `
+      <header class="site-header" id="siteHeader">
+        <a aria-label="Felipe Ribeiro, início" class="brand" href="/">
+          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.png">
+          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.png">
+        </a>
+        <nav aria-label="Navegação principal" class="desktop-nav">
+          <a href="/#atuacao">Atuação</a>
+          <a href="/#sobre">O advogado</a>
+          <a href="/#presenca">Presença</a>
+          <a href="/#contato">Contato</a>
+        </nav>
+        <div class="header-actions">
+          <button aria-label="Mudar para modo claro" aria-pressed="false" class="theme-toggle" id="themeToggle" title="Alternar tema" type="button">
+            <svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg>
+            <svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg>
+          </button>
+          <a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a>
+        </div>
+        <button aria-expanded="false" aria-label="Abrir menu" class="menu-button" id="menuButton" type="button"><span></span><span></span></button>
+        <div class="mobile-panel" id="mobilePanel">
+          <nav aria-label="Navegação mobile">
+            <a href="/#atuacao">Atuação <b>01</b></a>
+            <a href="/#sobre">O advogado <b>02</b></a>
+            <a href="/#presenca">Presença <b>03</b></a>
+            <a href="/#contato">Contato <b>04</b></a>
+          </nav>
+          <button aria-label="Mudar para modo claro" class="mobile-theme" id="mobileTheme" title="Alternar tema" type="button"><span>Alternar tema</span><svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg><svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg></button>
+          <a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a>
+        </div>
+      </header>
+  `;
+}
+
+function legalPageHtml(doc) {
+  const toc = doc.sections.map((section, index) => `<a href="#${section.id}"><b>${String(index + 1).padStart(2, '0')}</b> ${section.title}</a>`).join('');
+  const sections = doc.sections.map((section, index) => `
+    <section class="legal-section" id="${section.id}">
+      <h2><span>${String(index + 1).padStart(2, '0')}</span>${section.title}</h2>
+      <div class="legal-text">${section.body}</div>
+    </section>
+  `).join('');
+
+  return `
+    <div class="internal-page legal-page">
+      <div class="grain" aria-hidden="true"></div>
+      ${siteHeaderHtml()}
+      <main>
+        <section class="internal-hero legal-hero">
+          <div class="internal-hero-copy">
+            <a class="internal-breadcrumb" href="/">Início <span>›</span> ${doc.title} ${doc.titleEm}</a>
+            <p class="eyebrow">${doc.eyebrow}</p>
+            <h1>${doc.title}<br><em>${doc.titleEm}</em></h1>
+            <p class="internal-lead">${doc.lead}</p>
+            <p class="legal-updated">Última atualização: ${LEGAL_UPDATED_AT}</p>
+          </div>
+        </section>
+        <div class="legal-body section-light">
+          <nav class="legal-toc" aria-label="Neste documento"><p>Neste documento</p>${toc}</nav>
+          <article class="legal-article">${sections}</article>
+        </div>
+      </main>
+      ${siteFooterHtml()}
+    </div>
+  `;
+}
+
+function notFoundHtml() {
+  const links = [
+    ['/', 'Página inicial'],
+    ['/atuacao', 'Áreas de atuação'],
+    ['/atuacao/prisao-em-flagrante', 'Prisão em flagrante'],
+    ['/atuacao/habeas-corpus', 'Habeas Corpus'],
+    ['/informacao-importante', 'Como reduzir o tempo de prisão'],
+    ['/informacao-importante/prisao-preventiva', 'Prisão preventiva']
+  ].map(([href, label], index) => `<a class="internal-practice-card" href="${href}"><span>0${index + 1}</span><strong>${label}</strong><b>Acessar <i>↗</i></b></a>`).join('');
+
+  return `
+    <div class="internal-page not-found-page">
+      <div class="grain" aria-hidden="true"></div>
+      ${siteHeaderHtml()}
+      <main>
+        <section class="internal-hero not-found-hero">
+          <div class="internal-hero-copy">
+            <p class="eyebrow">ERRO 404 · PÁGINA NÃO ENCONTRADA</p>
+            <h1>Este endereço<br><em>não existe.</em></h1>
+            <p class="internal-lead">A página que você tentou acessar foi removida, mudou de endereço ou o link está incorreto. Se você precisa de orientação urgente, o atendimento continua disponível.</p>
+            <div class="not-found-actions">
+              <a class="header-cta" href="/">Voltar ao início <b>↗</b></a>
+              <a class="not-found-secondary" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar pelo WhatsApp <b>↗</b></a>
+            </div>
+          </div>
+        </section>
+        <section class="internal-practices section-light">
+          <div class="internal-section-heading">
+            <p class="eyebrow">CAMINHOS ÚTEIS</p>
+            <h2>Talvez você esteja<br><em>procurando por aqui.</em></h2>
+          </div>
+          <div class="internal-practice-grid">${links}</div>
+        </section>
+      </main>
+      ${siteFooterHtml()}
+    </div>
+  `;
+}
+
 function internalPageHtml(page) {
   const cards = PRACTICE_OVERVIEW.map((item) => `
     <a class="internal-practice-card ${item.path === CURRENT_PATH ? 'is-current' : ''}" href="${item.path}">
@@ -342,43 +486,14 @@ function internalPageHtml(page) {
   return `
     <div class="internal-page">
       <div class="grain" aria-hidden="true"></div>
-      <header class="site-header" id="siteHeader">
-        <a aria-label="Felipe Ribeiro, início" class="brand" href="/">
-          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.png">
-          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.png">
-        </a>
-        <nav aria-label="Navegação principal" class="desktop-nav">
-          <a href="/#atuacao">Atuação</a>
-          <a href="/#sobre">O advogado</a>
-          <a href="/#presenca">Presença</a>
-          <a href="/#contato">Contato</a>
-        </nav>
-        <div class="header-actions">
-          <button aria-label="Mudar para modo claro" aria-pressed="false" class="theme-toggle" id="themeToggle" title="Alternar tema" type="button">
-            <svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg>
-            <svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg>
-          </button>
-          <a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a>
-        </div>
-        <button aria-expanded="false" aria-label="Abrir menu" class="menu-button" id="menuButton" type="button"><span></span><span></span></button>
-        <div class="mobile-panel" id="mobilePanel">
-          <nav aria-label="Navegação mobile">
-            <a href="/#atuacao">Atuação <b>01</b></a>
-            <a href="/#sobre">O advogado <b>02</b></a>
-            <a href="/#presenca">Presença <b>03</b></a>
-            <a href="/#contato">Contato <b>04</b></a>
-          </nav>
-          <button aria-label="Mudar para modo claro" class="mobile-theme" id="mobileTheme" title="Alternar tema" type="button"><span>Alternar tema</span><svg aria-hidden="true" class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5V5M12 19V21.5M4.77 4.77l1.77 1.77M17.46 17.46l1.77 1.77M2.5 12H5M19 12h2.5M4.77 19.23l1.77-1.77M17.46 6.54l1.77-1.77"></path></svg><svg aria-hidden="true" class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none"><path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z"></path></svg></button>
-          <a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar com o advogado <b>↗</b></a>
-        </div>
-      </header>
+      ${siteHeaderHtml()}
       <main>${content}
         <section class="internal-final-cta">
           <div><p class="eyebrow">ATENDIMENTO</p><h2>Precisa de orientação<br><em>sobre o seu caso?</em></h2><p>Apresente a situação e entenda os próximos passos do atendimento.</p></div>
           <a class="header-cta" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar agora <b>↗</b></a>
         </section>
       </main>
-      <footer class="footer"><div class="footer-brand"><img alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-clean.png"></div><div class="footer-links"><a href="/">Início</a><a href="/atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#contato">Contato</a></div><p>© ${new Date().getFullYear()} Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.</p></footer>
+      ${siteFooterHtml()}
     </div>
   `;
 }
@@ -411,6 +526,79 @@ function FloatingSocial() {
         </svg>
       </a>
     </div>
+  );
+}
+
+function CookieConsent() {
+  // Renderizado só no navegador (após montar), para não piscar no HTML pré-renderizado.
+  const [open, setOpen] = useState(false);
+  const bannerRef = useRef(null);
+  const openedByUserRef = useRef(false);
+
+  useEffect(() => {
+    if (!readCookieConsent()) setOpen(true);
+
+    const handleOpen = (event) => {
+      if (!event.target.closest('[data-open-cookie-settings]')) return;
+      event.preventDefault();
+      openedByUserRef.current = true;
+      setOpen(true);
+    };
+
+    document.addEventListener('click', handleOpen);
+    return () => document.removeEventListener('click', handleOpen);
+  }, []);
+
+  // Em telas pequenas, os botões flutuantes sobem enquanto o aviso estiver aberto.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (!open || !bannerRef.current) {
+      root.style.removeProperty('--cookie-banner-offset');
+      return undefined;
+    }
+
+    const update = () => root.style.setProperty('--cookie-banner-offset', `${bannerRef.current.offsetHeight + 12}px`);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(bannerRef.current);
+    // Foco só quando a pessoa abriu as preferências (não rouba o foco na entrada).
+    if (openedByUserRef.current) bannerRef.current.querySelector('button')?.focus({ preventScroll: true });
+
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty('--cookie-banner-offset');
+    };
+  }, [open]);
+
+  const choose = (value) => {
+    try {
+      localStorage.setItem(COOKIE_CONSENT_KEY, value);
+      if (value === 'all') {
+        localStorage.setItem('felipe-theme', document.body.dataset.theme === 'light' ? 'light' : 'dark');
+      } else {
+        localStorage.removeItem('felipe-theme');
+      }
+    } catch {
+      // Sem armazenamento, a escolha vale apenas para esta visita.
+    }
+    setOpen(false);
+  };
+
+  if (!open) return null;
+
+  return (
+    <section className="cookie-consent" ref={bannerRef} role="region" aria-labelledby="cookie-consent-title">
+      <h2 id="cookie-consent-title">Privacidade e cookies</h2>
+      <p>
+        Este site não usa cookies de publicidade nem de rastreamento. Utilizamos apenas o armazenamento
+        essencial ao funcionamento e, com a sua permissão, lembramos sua preferência de tema.{' '}
+        <a href={PRIVACY_PATH}>Saiba mais</a>.
+      </p>
+      <div className="cookie-consent-actions">
+        <button type="button" className="cookie-consent-btn is-primary" onClick={() => choose('all')}>Aceitar</button>
+        <button type="button" className="cookie-consent-btn" onClick={() => choose('essential')}>Somente essenciais</button>
+      </div>
+    </section>
   );
 }
 
@@ -465,7 +653,7 @@ export default function App() {
     const themeToggle = document.getElementById('themeToggle');
     const contactForm = document.getElementById('contactForm');
 
-    const seo = SEO_ROUTES[CURRENT_PATH] || SEO_ROUTES['/'];
+    const seo = SEO_ROUTES[CURRENT_PATH] || NOT_FOUND_SEO;
     const isIndexableRoute = INDEXABLE_ROUTES.has(CURRENT_PATH);
     const canonicalUrl = `${SITE_ORIGIN}${CURRENT_PATH === '/' ? '/' : CURRENT_PATH}`;
 
@@ -497,12 +685,17 @@ export default function App() {
     if (seo.image) setMeta('meta[name="twitter:image"]', seo.image);
 
     let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
+    if (isIndexableRoute) {
+      if (!canonical) {
+        canonical = document.createElement('link');
+        canonical.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonical);
+      }
+      canonical.setAttribute('href', canonicalUrl);
+    } else {
+      // Página 404: sem canonical, para não apontar um endereço inexistente.
+      canonical?.remove();
     }
-    canonical.setAttribute('href', canonicalUrl);
 
     const oldStructuredData = document.getElementById('felipe-structured-data');
     oldStructuredData?.remove();
@@ -572,7 +765,12 @@ export default function App() {
 
     const setTheme = (theme) => {
       body.dataset.theme = theme;
-      localStorage.setItem('felipe-theme', theme);
+      // A preferência de tema só é lembrada com consentimento (aviso de cookies).
+      try {
+        if (readCookieConsent() === 'all') localStorage.setItem('felipe-theme', theme);
+      } catch {
+        // Sem armazenamento disponível, o tema vale só para esta visita.
+      }
 
       themeToggle?.setAttribute(
         'aria-label',
@@ -1089,15 +1287,23 @@ ${data.get('mensagem')}`;
   }, []);
 
   if (CURRENT_PATH === IMPORTANT_DOCUMENT_PATH) {
-    return <><div dangerouslySetInnerHTML={{ __html: importantDocumentHtml() }} /><FloatingSocial /></>;
+    return <><div dangerouslySetInnerHTML={{ __html: importantDocumentHtml() }} /><FloatingSocial /><CookieConsent /></>;
   }
 
   if (CURRENT_PATH === PREVENTIVE_PRISON_DOCUMENT_PATH) {
-    return <><div dangerouslySetInnerHTML={{ __html: preventivePrisonDocumentHtml() }} /><FloatingSocial /></>;
+    return <><div dangerouslySetInnerHTML={{ __html: preventivePrisonDocumentHtml() }} /><FloatingSocial /><CookieConsent /></>;
   }
 
   if (CURRENT_PATH === '/atuacao' || PRACTICE_PAGES[CURRENT_PATH]) {
-    return <><div dangerouslySetInnerHTML={{ __html: internalPageHtml(PRACTICE_PAGES[CURRENT_PATH]) }} /><FloatingSocial /></>;
+    return <><div dangerouslySetInnerHTML={{ __html: internalPageHtml(PRACTICE_PAGES[CURRENT_PATH]) }} /><FloatingSocial /><CookieConsent /></>;
+  }
+
+  if (LEGAL_DOCUMENTS[CURRENT_PATH]) {
+    return <><div dangerouslySetInnerHTML={{ __html: legalPageHtml(LEGAL_DOCUMENTS[CURRENT_PATH]) }} /><FloatingSocial /><CookieConsent /></>;
+  }
+
+  if (CURRENT_PATH !== '/') {
+    return <><div dangerouslySetInnerHTML={{ __html: notFoundHtml() }} /><FloatingSocial /><CookieConsent /></>;
   }
 
   return (
@@ -1859,9 +2065,11 @@ ${data.get('mensagem')}`;
           </span>
           Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.
          </p>
+         ${footerLegalHtml()}
         </footer>
       ` }} />
       <FloatingSocial />
+      <CookieConsent />
     </>
   );
 }

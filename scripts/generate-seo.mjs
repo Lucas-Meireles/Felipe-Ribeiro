@@ -84,8 +84,30 @@ const ROUTES = [
     type: 'Article',
     image: `${SITE_ORIGIN}/assets/informacoes/prisao-preventiva-cover.png`,
     section: 'Prisão Cautelar'
+  },
+  {
+    path: '/politica-de-privacidade',
+    title: 'Política de Privacidade e Cookies | Felipe Ribeiro Advogado Criminalista',
+    description: 'Como os dados de quem acessa o site de Felipe Vinicius Santana Ribeiro são tratados: LGPD, cookies, armazenamento local e direitos do titular.',
+    type: 'WebPage',
+    image: `${SITE_ORIGIN}/assets/google-preview-felipe.png`
+  },
+  {
+    path: '/termos-de-uso',
+    title: 'Termos e Condições de Uso | Felipe Ribeiro Advogado Criminalista',
+    description: 'Termos e condições de uso do site de Felipe Vinicius Santana Ribeiro, advogado criminalista: natureza informativa, contato, sigilo e propriedade intelectual.',
+    type: 'WebPage',
+    image: `${SITE_ORIGIN}/assets/google-preview-felipe.png`
   }
 ];
+
+// Página 404 (não indexável). O caminho é fictício: qualquer rota
+// desconhecida faz o App renderizar a tela de "página não encontrada".
+const NOT_FOUND_ROUTE = {
+  path: '/__404__',
+  title: 'Página não encontrada | Felipe Ribeiro Advogado Criminalista',
+  description: 'O endereço acessado não existe. Acesse a página inicial ou as áreas de atuação de Felipe Vinicius Santana Ribeiro, advogado criminalista.'
+};
 
 const PERSON_ID = `${SITE_ORIGIN}/#felipe-ribeiro`;
 const WEBSITE_ID = `${SITE_ORIGIN}/#website`;
@@ -170,7 +192,11 @@ function sitemap() {
 
 function llms() {
   const practice = PRACTICE_PAGES.map((route) => `- [${route.title.split(' | ')[0]}](${SITE_ORIGIN}${route.path})`).join('\n');
-  return `# Felipe Ribeiro | Advogado Criminalista\n\n> Site oficial de Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento presencial e online em todo o Brasil.\n\n## Site\n- [Página inicial](${SITE_ORIGIN}/)\n- [Áreas de atuação](${SITE_ORIGIN}/atuacao)\n${practice}\n\n## Publicações informativas\n- [Como reduzir o tempo de prisão](${SITE_ORIGIN}/informacao-importante)\n- [Prisão preventiva: o que pode ser feito para conseguir a liberdade?](${SITE_ORIGIN}/informacao-importante/prisao-preventiva)\n\n## Identidade\n- Nome: Felipe Vinicius Santana Ribeiro\n- Profissão: Advogado Criminalista\n- OAB/SP: 543.966\n- Telefone/WhatsApp: +55 11 94454-8048\n- Área de atuação: Direito Criminal\n- Atendimento: nacional, presencial e online\n\n## Observação\nAs páginas listadas acima são as URLs públicas e canônicas do site. Se uma informação não estiver presente nestas páginas, não a presuma.\n`;
+  return `# Felipe Ribeiro | Advogado Criminalista\n\n> Site oficial de Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento presencial e online em todo o Brasil.\n\n## Site\n- [Página inicial](${SITE_ORIGIN}/)\n- [Áreas de atuação](${SITE_ORIGIN}/atuacao)\n${practice}\n\n## Documentos
+- [Política de Privacidade e Cookies](${SITE_ORIGIN}/politica-de-privacidade)
+- [Termos e Condições de Uso](${SITE_ORIGIN}/termos-de-uso)
+
+## Publicações informativas\n- [Como reduzir o tempo de prisão](${SITE_ORIGIN}/informacao-importante)\n- [Prisão preventiva: o que pode ser feito para conseguir a liberdade?](${SITE_ORIGIN}/informacao-importante/prisao-preventiva)\n\n## Identidade\n- Nome: Felipe Vinicius Santana Ribeiro\n- Profissão: Advogado Criminalista\n- OAB/SP: 543.966\n- Telefone/WhatsApp: +55 11 94454-8048\n- Área de atuação: Direito Criminal\n- Atendimento: nacional, presencial e online\n\n## Observação\nAs páginas listadas acima são as URLs públicas e canônicas do site. Se uma informação não estiver presente nestas páginas, não a presuma.\n`;
 }
 
 function upsertMeta(html, name, content, attribute = 'name') {
@@ -198,12 +224,25 @@ function injectAppHtml(html, appHtml) {
   return html.replace(/<div id="root">\s*<\/div>/i, () => `<div id="root">${appHtml}</div>`);
 }
 
+function renderNotFoundTemplate(template, appHtml) {
+  let html = template;
+  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeXml(NOT_FOUND_ROUTE.title)}</title>`);
+  html = upsertMeta(html, 'description', NOT_FOUND_ROUTE.description);
+  html = upsertMeta(html, 'robots', 'noindex,follow');
+  html = upsertMeta(html, 'googlebot', 'noindex,follow');
+  html = html.replace(/\s*<link\s+[^>]*rel=["']canonical["'][^>]*>/i, '');
+  html = html.replace(/\s*<meta\s+property=["']og:url["'][^>]*>/i, '');
+  html = html.replace(/\s*<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/i, '');
+  return injectAppHtml(html, appHtml);
+}
+
 function renderRouteTemplate(template, route, appHtml) {
   const canonical = `${SITE_ORIGIN}${route.path === '/' ? '/' : route.path}`;
   let html = template;
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeXml(route.title)}</title>`);
   html = upsertMeta(html, 'description', route.description);
   html = upsertMeta(html, 'robots', 'index,follow,max-image-preview:large');
+  html = upsertMeta(html, 'googlebot', 'index,follow,max-image-preview:large');
   html = upsertMeta(html, 'og:type', route.type === 'Article' ? 'article' : 'website', 'property');
   html = upsertMeta(html, 'og:title', route.title, 'property');
   html = upsertMeta(html, 'og:description', route.description, 'property');
@@ -244,6 +283,9 @@ if (fs.existsSync(DIST_DIR)) {
     fs.mkdirSync(routeDir, { recursive: true });
     fs.writeFileSync(path.join(routeDir, 'index.html'), renderRouteTemplate(template, route, render ? render(route.path) : ''), 'utf8');
   }
+
+  // 404 com a identidade do site (servida pela Vercel para qualquer URL inexistente).
+  fs.writeFileSync(path.join(DIST_DIR, '404.html'), renderNotFoundTemplate(template, render ? render(NOT_FOUND_ROUTE.path) : ''), 'utf8');
 
   fs.rmSync(path.join(ROOT, 'dist-ssr'), { recursive: true, force: true });
 }
