@@ -409,14 +409,31 @@ function notFoundHtml() {
       <div class="grain" aria-hidden="true"></div>
       ${siteHeaderHtml()}
       <main>
-        <section class="internal-hero not-found-hero">
-          <div class="internal-hero-copy">
-            <p class="eyebrow">ERRO 404 · PÁGINA NÃO ENCONTRADA</p>
-            <h1>Este endereço<br><em>não existe.</em></h1>
-            <p class="internal-lead">A página que você tentou acessar foi removida, mudou de endereço ou o link está incorreto. Se você precisa de orientação urgente, o atendimento continua disponível.</p>
-            <div class="not-found-actions">
-              <a class="header-cta" href="/">Voltar ao início <b>↗</b></a>
-              <a class="not-found-secondary" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar pelo WhatsApp <b>↗</b></a>
+        <section class="internal-hero not-found-hero" id="notFoundHero">
+          <span class="not-found-number" aria-hidden="true">404</span>
+          <div class="not-found-layout">
+            <div class="internal-hero-copy not-found-copy">
+              <p class="eyebrow nf-in" style="--i:0">ERRO 404 · PÁGINA NÃO ENCONTRADA</p>
+              <h1 class="nf-in" style="--i:1">Este endereço<br><em>não existe.</em></h1>
+              <p class="internal-lead nf-in" style="--i:2">A página que você tentou acessar foi removida, mudou de endereço ou o link está incorreto. Se você precisa de orientação urgente, o atendimento continua disponível.</p>
+              <div class="not-found-actions nf-in" style="--i:3">
+                <a class="header-cta" href="/">Voltar ao início <b>↗</b></a>
+                <a class="not-found-secondary" href="https://wa.me/${WA_PHONE}?text=Olá%2C%20Felipe!%20Gostaria%20de%20falar%20sobre%20um%20caso." target="_blank" rel="noopener noreferrer">Falar pelo WhatsApp <b>↗</b></a>
+              </div>
+            </div>
+            <div class="not-found-file" aria-hidden="true">
+              <div class="not-found-file-head">
+                <span>FELIPE RIBEIRO · ADVOCACIA CRIMINAL</span>
+                <span>AUTOS Nº 404</span>
+              </div>
+              <dl class="not-found-file-body">
+                <div><dt>Assunto</dt><dd>Busca por página</dd></div>
+                <div><dt>Endereço</dt><dd class="not-found-path" id="notFoundPath">/</dd></div>
+                <div><dt>Diligência</dt><dd>Busca realizada em todo o site</dd></div>
+                <div><dt>Situação</dt><dd>Aguardando novo endereço</dd></div>
+              </dl>
+              <div class="not-found-file-lines"><i></i><i></i><i></i></div>
+              <span class="not-found-stamp">Não localizada</span>
             </div>
           </div>
         </section>
@@ -797,6 +814,28 @@ export default function App() {
     const savedTheme = localStorage.getItem('felipe-theme');
     const initialTheme = savedTheme === 'light' ? 'light' : 'dark';
     setTheme(initialTheme);
+
+    // 404: mostra o endereço tentado na "ficha" e aplica um parallax leve no "404" de fundo.
+    const notFoundHero = document.getElementById('notFoundHero');
+    const notFoundPath = document.getElementById('notFoundPath');
+    if (notFoundPath) notFoundPath.textContent = decodeURIComponent(window.location.pathname);
+
+    let notFoundFrame = 0;
+    const onNotFoundPointer = (event) => {
+      if (!notFoundHero) return;
+      cancelAnimationFrame(notFoundFrame);
+      notFoundFrame = requestAnimationFrame(() => {
+        const rect = notFoundHero.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        notFoundHero.style.setProperty('--nf-x', x.toFixed(3));
+        notFoundHero.style.setProperty('--nf-y', y.toFixed(3));
+      });
+    };
+    const allowNotFoundParallax = notFoundHero
+      && window.matchMedia('(pointer: fine)').matches
+      && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (allowNotFoundParallax) notFoundHero.addEventListener('pointermove', onNotFoundPointer);
 
     const loaderTimer = window.setTimeout(() => {
       loader?.classList.add('hide');
@@ -1236,6 +1275,8 @@ ${data.get('mensagem')}`;
 
     return () => {
       window.clearTimeout(loaderTimer);
+      cancelAnimationFrame(notFoundFrame);
+      notFoundHero?.removeEventListener('pointermove', onNotFoundPointer);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
       window.removeEventListener('scroll', updateParallax);

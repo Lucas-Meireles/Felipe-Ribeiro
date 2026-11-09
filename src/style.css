@@ -6476,3 +6476,251 @@ body.no-scroll .cookie-consent { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .cookie-consent { animation: none; }
 }
+
+/* =========================================================
+   404 animada · conceito "processo não localizado"
+   ========================================================= */
+.not-found-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  --nf-x: 0;
+  --nf-y: 0;
+}
+
+.not-found-number {
+  position: absolute;
+  z-index: -1;
+  right: 3vw;
+  top: 96px;
+  font: 500 clamp(200px, 24vw, 420px)/.8 var(--serif);
+  letter-spacing: -.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(192, 106, 81, .28);
+  pointer-events: none;
+  user-select: none;
+  transform: translate3d(calc(var(--nf-x) * -36px), calc(var(--nf-y) * -24px), 0);
+  transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+  animation: nf-number-in 1.4s cubic-bezier(.2, .8, .2, 1) both, nf-number-breathe 7s ease-in-out 1.4s infinite;
+}
+
+.not-found-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  align-items: end;
+  gap: clamp(40px, 6vw, 100px);
+  width: 100%;
+}
+
+/* Entrada em sequência dos textos */
+.nf-in {
+  animation: nf-rise .9s cubic-bezier(.2, .8, .2, 1) both;
+  animation-delay: calc(var(--i, 0) * .12s + .1s);
+}
+
+/* Ficha dos autos */
+.not-found-file {
+  position: relative;
+  padding: 26px 26px 30px;
+  background: #f2eee7;
+  color: var(--ink);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, .45), 0 2px 0 rgba(0, 0, 0, .2);
+  transform: translate3d(calc(var(--nf-x) * 14px), calc(var(--nf-y) * 10px), 0) rotate(2.2deg);
+  transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+  animation: nf-file-in 1s cubic-bezier(.2, .8, .2, 1) .35s both;
+}
+
+.not-found-file::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 28px;
+  width: 92px;
+  height: 22px;
+  background: rgba(166, 83, 60, .85);
+  transform: rotate(-3deg);
+}
+
+.not-found-file-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+}
+
+.not-found-file-head span:last-child {
+  flex: none;
+  white-space: nowrap;
+}
+
+.not-found-file-body {
+  display: grid;
+  margin-top: 6px;
+}
+
+.not-found-file-body > div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed rgba(21, 21, 21, .22);
+  font-size: 14px;
+}
+
+.not-found-file-body dt {
+  color: #8a8279;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding-top: 2px;
+}
+
+.not-found-file-body dd {
+  font-weight: 500;
+}
+
+.not-found-path {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 13px;
+  color: var(--rust);
+  word-break: break-all;
+}
+
+/* Cursor piscando ao fim do endereço */
+.not-found-path::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -2px;
+  background: currentColor;
+  animation: nf-caret 1s steps(1) infinite;
+}
+
+.not-found-file-lines {
+  display: grid;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.not-found-file-lines i {
+  height: 6px;
+  background: rgba(21, 21, 21, .08);
+  transform-origin: left;
+  animation: nf-line 1s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.not-found-file-lines i:nth-child(1) { width: 92%; animation-delay: .9s; }
+.not-found-file-lines i:nth-child(2) { width: 78%; animation-delay: 1s; }
+.not-found-file-lines i:nth-child(3) { width: 54%; animation-delay: 1.1s; }
+
+/* Carimbo */
+.not-found-stamp {
+  position: absolute;
+  right: 18px;
+  bottom: 26px;
+  padding: 8px 14px 6px;
+  border: 3px double var(--rust);
+  color: var(--rust);
+  font: 700 15px/1 var(--sans);
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  background: rgba(242, 238, 231, .78);
+  mix-blend-mode: multiply;
+  transform: rotate(-11deg);
+  animation: nf-stamp .5s cubic-bezier(.3, 1.6, .5, 1) 1.45s both;
+}
+
+/* Cartões de "caminhos úteis" entram em sequência */
+.not-found-page .internal-practice-card {
+  animation: nf-rise .8s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.not-found-page .internal-practice-card:nth-child(1) { animation-delay: .9s; }
+.not-found-page .internal-practice-card:nth-child(2) { animation-delay: 1s; }
+.not-found-page .internal-practice-card:nth-child(3) { animation-delay: 1.1s; }
+.not-found-page .internal-practice-card:nth-child(4) { animation-delay: 1.2s; }
+.not-found-page .internal-practice-card:nth-child(5) { animation-delay: 1.3s; }
+.not-found-page .internal-practice-card:nth-child(6) { animation-delay: 1.4s; }
+
+@keyframes nf-rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes nf-number-in {
+  from { opacity: 0; -webkit-text-stroke-color: rgba(192, 106, 81, 0); }
+  to { opacity: 1; }
+}
+
+@keyframes nf-number-breathe {
+  0%, 100% { -webkit-text-stroke-color: rgba(192, 106, 81, .28); }
+  50% { -webkit-text-stroke-color: rgba(192, 106, 81, .5); }
+}
+
+@keyframes nf-file-in {
+  from { opacity: 0; translate: 0 60px; rotate: 9deg; }
+  to { opacity: 1; translate: 0 0; rotate: 0deg; }
+}
+
+@keyframes nf-line {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes nf-stamp {
+  0% { opacity: 0; transform: rotate(-11deg) scale(2.6); }
+  60% { opacity: 1; transform: rotate(-11deg) scale(.92); }
+  100% { opacity: 1; transform: rotate(-11deg) scale(1); }
+}
+
+@keyframes nf-caret {
+  50% { opacity: 0; }
+}
+
+@media (max-width: 980px) {
+  .not-found-layout {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .not-found-file {
+    max-width: 440px;
+    transform: rotate(1.6deg);
+  }
+
+  .not-found-number {
+    right: -6vw;
+    top: auto;
+    bottom: 40px;
+    margin-top: 0;
+    font-size: clamp(180px, 52vw, 340px);
+    -webkit-text-stroke-color: rgba(192, 106, 81, .18);
+    animation: nf-number-in 1.4s cubic-bezier(.2, .8, .2, 1) both;
+  }
+}
+
+@media (max-width: 640px) {
+  .not-found-file { padding: 22px 18px 26px; margin-right: 4px; }
+  .not-found-file-head { font-size: 10px; letter-spacing: 1px; }
+  .not-found-file-body > div { grid-template-columns: 84px minmax(0, 1fr); font-size: 13px; }
+  .not-found-stamp { font-size: 13px; right: 12px; bottom: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .not-found-number,
+  .not-found-file,
+  .nf-in,
+  .not-found-file-lines i,
+  .not-found-stamp,
+  .not-found-path::after,
+  .not-found-page .internal-practice-card {
+    animation: none !important;
+  }
+}
