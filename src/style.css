@@ -5959,7 +5959,7 @@ body[data-theme="light"] .important-info-footer a {
 
 .floating-social-btn {
   --fs-size: 46px;
-  --fs-pulse: rgba(37, 211, 102, .6);
+  --fs-pulse: rgba(37, 211, 102, .45);
   position: relative;
   display: grid;
   place-items: center;
@@ -5973,7 +5973,7 @@ body[data-theme="light"] .important-info-footer a {
   transition: transform .2s cubic-bezier(.2, .8, .2, 1), box-shadow .2s ease;
   -webkit-tap-highlight-color: transparent;
   /* Batida: o próprio botão cresce e volta, junto com o anel */
-  animation: floating-social-beat 1.8s ease-in-out infinite;
+  animation: floating-social-beat 2.2s ease-in-out infinite;
 }
 
 .floating-social-btn svg {
@@ -5992,12 +5992,12 @@ body[data-theme="light"] .important-info-footer a {
   inset: 0;
   border-radius: inherit;
   box-shadow: 0 0 0 0 var(--fs-pulse);
-  animation: floating-social-pulse 1.8s cubic-bezier(.25, .6, .3, 1) infinite;
+  animation: floating-social-pulse 2.2s cubic-bezier(.25, .6, .3, 1) infinite;
   pointer-events: none;
 }
 
 .floating-social-btn::after {
-  animation-delay: .9s;
+  animation-delay: 1.1s;
 }
 
 .floating-social-whatsapp {
@@ -6005,14 +6005,14 @@ body[data-theme="light"] .important-info-footer a {
 }
 
 .floating-social-instagram {
-  --fs-pulse: rgba(214, 41, 118, .55);
+  --fs-pulse: rgba(214, 41, 118, .42);
   background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
 }
 
 /* Desencontra o pulso dos dois botões */
-.floating-social-instagram { animation-delay: .9s; }
-.floating-social-instagram::before { animation-delay: .9s; }
-.floating-social-instagram::after { animation-delay: 1.8s; }
+.floating-social-instagram { animation-delay: 1.1s; }
+.floating-social-instagram::before { animation-delay: 1.1s; }
+.floating-social-instagram::after { animation-delay: 2.2s; }
 
 @media (hover: hover) {
   .floating-social-btn:hover {
@@ -6036,15 +6036,15 @@ body[data-theme="light"] .floating-social-btn:focus-visible {
 
 @keyframes floating-social-beat {
   0%, 100% { scale: 1; }
-  14% { scale: 1.14; }
-  28% { scale: .97; }
-  42% { scale: 1.08; }
+  14% { scale: 1.07; }
+  28% { scale: .99; }
+  42% { scale: 1.04; }
   60% { scale: 1; }
 }
 
 @keyframes floating-social-pulse {
   0% { box-shadow: 0 0 0 0 var(--fs-pulse); }
-  70% { box-shadow: 0 0 0 18px rgba(0, 0, 0, 0); }
+  70% { box-shadow: 0 0 0 12px rgba(0, 0, 0, 0); }
   100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
 }
 
@@ -6073,7 +6073,7 @@ body.no-scroll .floating-social {
   }
 
   .floating-social-btn::before {
-    box-shadow: 0 0 0 7px var(--fs-pulse);
+    box-shadow: 0 0 0 5px var(--fs-pulse);
     animation: floating-social-glow 2s ease-in-out infinite;
     /* Exceção à regra global que zera animações nesse modo */
     animation-duration: 2s !important;
