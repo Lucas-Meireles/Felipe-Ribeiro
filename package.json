@@ -5,14 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node node_modules/vite/bin/vite.js build && node scripts/generate-seo.mjs",
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr --emptyOutDir && node scripts/generate-seo.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "@vitejs/plugin-react": "^6.1.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "vite": "^8.2.2"
   },
   "devDependencies": {},
   "engines": {

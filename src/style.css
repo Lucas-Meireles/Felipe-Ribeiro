@@ -5939,3 +5939,133 @@ body[data-theme="light"] .important-info-footer a {
     background: rgba(17,17,17,.96) !important;
   }
 }
+
+/* =========================================================
+   Botões flutuantes · Instagram (acima) + WhatsApp (abaixo)
+   Canto inferior direito, respeitando safe-area do iOS.
+   ========================================================= */
+.floating-social {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  pointer-events: none;
+  transition: opacity .25s ease, visibility .25s ease;
+}
+
+.floating-social-btn {
+  --fs-size: 58px;
+  --fs-pulse: rgba(37, 211, 102, .55);
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--fs-size);
+  height: var(--fs-size);
+  border-radius: 50%;
+  color: #fff;
+  text-decoration: none;
+  pointer-events: auto;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .32), 0 2px 6px rgba(0, 0, 0, .2);
+  transition: transform .2s cubic-bezier(.2, .8, .2, 1), box-shadow .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.floating-social-btn svg {
+  position: relative;
+  z-index: 1;
+  width: 50%;
+  height: 50%;
+  fill: currentColor;
+}
+
+/* Anel pulsante */
+.floating-social-btn::before,
+.floating-social-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 var(--fs-pulse);
+  animation: floating-social-pulse 2.4s cubic-bezier(.25, .6, .3, 1) infinite;
+  pointer-events: none;
+}
+
+.floating-social-btn::after {
+  animation-delay: 1.2s;
+}
+
+.floating-social-whatsapp {
+  background: #25d366;
+}
+
+.floating-social-instagram {
+  --fs-size: 50px;
+  --fs-pulse: rgba(214, 41, 118, .5);
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+}
+
+/* Desencontra o pulso dos dois botões */
+.floating-social-instagram::before { animation-delay: .6s; }
+.floating-social-instagram::after { animation-delay: 1.8s; }
+
+@media (hover: hover) {
+  .floating-social-btn:hover {
+    transform: translateY(-3px) scale(1.06);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .38), 0 3px 8px rgba(0, 0, 0, .22);
+  }
+}
+
+.floating-social-btn:active {
+  transform: scale(.95);
+}
+
+.floating-social-btn:focus-visible {
+  outline: 3px solid #f4f0e9;
+  outline-offset: 4px;
+}
+
+body[data-theme="light"] .floating-social-btn:focus-visible {
+  outline-color: #111;
+}
+
+@keyframes floating-social-pulse {
+  0% { box-shadow: 0 0 0 0 var(--fs-pulse); }
+  70% { box-shadow: 0 0 0 16px rgba(0, 0, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+}
+
+/* Menu mobile aberto: os botões saem de cena para não cobrir a navegação */
+body.no-scroll .floating-social {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (max-width: 640px) {
+  .floating-social {
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    gap: 12px;
+  }
+
+  .floating-social-btn { --fs-size: 54px; }
+  .floating-social-instagram { --fs-size: 46px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-social-btn::before,
+  .floating-social-btn::after {
+    animation: none;
+  }
+
+  .floating-social-btn {
+    transition: none;
+  }
+}
+
+@media print {
+  .floating-social { display: none; }
+}

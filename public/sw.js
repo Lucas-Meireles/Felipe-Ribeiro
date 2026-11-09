@@ -1,4 +1,4 @@
-const CACHE_NAME = 'felipe-ribeiro-v2';
+const CACHE_NAME = 'felipe-ribeiro-v3';
 const PRACTICE_ASSETS = [
   '/assets/flagrante.png',
   '/assets/audiencia.png',
@@ -35,7 +35,22 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
 
   if (request.method !== 'GET') return;
-  if (new URL(request.url).origin !== self.location.origin) return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  // Páginas (HTML): sempre rede primeiro, para o visitante nunca ficar preso
+  // a uma versão antiga do site após uma nova publicação.
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request).catch(() =>
+        caches.match(request).then((cached) => cached || caches.match('/'))
+      )
+    );
+    return;
+  }
+
+  // Imagens e arquivos com hash: cache primeiro (não mudam de conteúdo).
+  if (!url.pathname.startsWith('/assets/')) return;
 
   event.respondWith(
     caches.match(request).then((cached) => {
@@ -47,11 +62,6 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
         }
         return response;
-      }).catch(() => {
-        if (request.mode === 'navigate') {
-          return caches.match('/index.html');
-        }
-        return cached;
       });
     })
   );

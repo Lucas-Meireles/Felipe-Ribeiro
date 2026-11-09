@@ -1,9 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const ROOT = process.cwd();
 const PUBLIC_DIR = path.join(ROOT, 'public');
 const DIST_DIR = path.join(ROOT, 'dist');
+const SSR_ENTRY = path.join(ROOT, 'dist-ssr', 'entry-server.js');
 const SITE_ORIGIN = 'https://feliperibeiro.adv.br';
 
 const PRACTICE_PAGES = [
@@ -191,7 +193,12 @@ function upsertJsonLd(html, json) {
   return regex.test(html) ? html.replace(regex, block) : html.replace('</head>', `    ${block}\n  </head>`);
 }
 
-function renderRouteTemplate(template, route) {
+function injectAppHtml(html, appHtml) {
+  if (!appHtml) return html;
+  return html.replace(/<div id="root">\s*<\/div>/i, () => `<div id="root">${appHtml}</div>`);
+}
+
+function renderRouteTemplate(template, route, appHtml) {
   const canonical = `${SITE_ORIGIN}${route.path === '/' ? '/' : route.path}`;
   let html = template;
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeXml(route.title)}</title>`);
@@ -207,6 +214,7 @@ function renderRouteTemplate(template, route) {
   html = upsertMeta(html, 'twitter:image', route.image);
   html = upsertLink(html, 'canonical', canonical);
   html = upsertJsonLd(html, structuredData(route));
+  html = injectAppHtml(html, appHtml);
   return html;
 }
 
@@ -222,11 +230,22 @@ if (fs.existsSync(DIST_DIR)) {
   const templatePath = path.join(DIST_DIR, 'index.html');
   const template = fs.readFileSync(templatePath, 'utf8');
 
+  // Pré-renderização: o conteúdo de cada rota entra no HTML estático.
+  // Se o bundle SSR não existir, o build segue apenas com as metatags.
+  let render = null;
+  if (fs.existsSync(SSR_ENTRY)) {
+    ({ render } = await import(pathToFileURL(SSR_ENTRY).href));
+  } else {
+    console.warn('SSR bundle not found: pages will be generated without prerendered content.');
+  }
+
   for (const route of ROUTES) {
     const routeDir = route.path === '/' ? DIST_DIR : path.join(DIST_DIR, ...route.path.split('/').filter(Boolean));
     fs.mkdirSync(routeDir, { recursive: true });
-    fs.writeFileSync(path.join(routeDir, 'index.html'), renderRouteTemplate(template, route), 'utf8');
+    fs.writeFileSync(path.join(routeDir, 'index.html'), renderRouteTemplate(template, route, render ? render(route.path) : ''), 'utf8');
   }
+
+  fs.rmSync(path.join(ROOT, 'dist-ssr'), { recursive: true, force: true });
 }
 
 console.log(`SEO generated: ${ROUTES.length} indexable routes, robots.txt, sitemap.xml and llms.txt.`);

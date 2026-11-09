@@ -20,12 +20,49 @@
       "source": "/contato",
       "destination": "/#contato",
       "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "rewrites": [
     {
-      "source": "/((?!api/|assets/|favicon\\.ico$|robots\\.txt$|sitemap\\.xml$).*)",
-      "destination": "/index.html"
+      "source": "/atuacao",
+      "destination": "/atuacao/index.html"
+    },
+    {
+      "source": "/atuacao/prisao-em-flagrante",
+      "destination": "/atuacao/prisao-em-flagrante/index.html"
+    },
+    {
+      "source": "/atuacao/habeas-corpus",
+      "destination": "/atuacao/habeas-corpus/index.html"
+    },
+    {
+      "source": "/atuacao/audiencia-de-custodia",
+      "destination": "/atuacao/audiencia-de-custodia/index.html"
+    },
+    {
+      "source": "/atuacao/inquerito-policial",
+      "destination": "/atuacao/inquerito-policial/index.html"
+    },
+    {
+      "source": "/atuacao/acao-penal",
+      "destination": "/atuacao/acao-penal/index.html"
+    },
+    {
+      "source": "/atuacao/tribunal-do-juri",
+      "destination": "/atuacao/tribunal-do-juri/index.html"
+    },
+    {
+      "source": "/informacao-importante",
+      "destination": "/informacao-importante/index.html"
+    },
+    {
+      "source": "/informacao-importante/prisao-preventiva",
+      "destination": "/informacao-importante/prisao-preventiva/index.html"
     }
   ],
   "headers": [
@@ -35,6 +72,24 @@
         {
           "key": "Permissions-Policy",
           "value": "geolocation=(self)"
+        }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(404|403)\\.html",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
         }
       ]
     }
