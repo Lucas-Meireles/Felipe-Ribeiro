@@ -335,7 +335,7 @@ body[data-theme="light"] .header-cta {
 .hero-image {
   position: absolute;
   inset: 0;
-  background-image: url("/assets/felipe-corpo.jpg");
+  background-image: url("/assets/felipe-corpo.webp");
   background-size: cover;
   background-position: 62% 20%;
   opacity: .48;
@@ -1094,7 +1094,8 @@ h2 em {
 }
 
 .footer-brand img {
-  width: 210px
+  width: 210px;
+  height: auto
 }
 
 .footer-links {
@@ -1950,7 +1951,7 @@ body[data-theme="dark"] .footer > p {
 }
 
 body[data-theme="dark"] .footer-brand img {
-  content: url("/assets/logo-felipe-ribeiro-dark.png");
+  content: url("/assets/logo-felipe-ribeiro-dark.webp");
 }
 
 body[data-theme="dark"] .section-dark .principle p,
@@ -3241,7 +3242,7 @@ body[data-theme="light"] .footer > p {
 }
 
 body[data-theme="light"] .footer-brand img {
-  content: url("/assets/logo-felipe-ribeiro-clean.png");
+  content: url("/assets/logo-felipe-ribeiro-clean.webp");
 }
 
 body[data-theme="light"] .button-dark {

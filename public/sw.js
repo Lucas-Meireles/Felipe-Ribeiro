@@ -1,13 +1,13 @@
-const CACHE_NAME = 'felipe-ribeiro-v3';
+const CACHE_NAME = 'felipe-ribeiro-v4';
 const PRACTICE_ASSETS = [
-  '/assets/flagrante.png',
-  '/assets/audiencia.png',
-  '/assets/habeas-corpus.png',
-  '/assets/inquerito.png',
-  '/assets/acao-penal.png',
-  '/assets/tribunal.png',
-  '/assets/logo-felipe-ribeiro-dark.png',
-  '/assets/logo-felipe-ribeiro-clean.png',
+  '/assets/flagrante.webp',
+  '/assets/audiencia.webp',
+  '/assets/habeas-corpus.webp',
+  '/assets/inquerito.webp',
+  '/assets/acao-penal.webp',
+  '/assets/tribunal.webp',
+  '/assets/logo-felipe-ribeiro-dark.webp',
+  '/assets/logo-felipe-ribeiro-clean.webp',
   '/assets/favicon.png',
 ];
 

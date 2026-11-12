@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import './style.css';
 import { LEGAL_DOCUMENTS, LEGAL_UPDATED_AT, PRIVACY_PATH, TERMS_PATH } from './legal';
+import { INSTAGRAM_URL, NOT_FOUND_SEO, SEO_ROUTES, canonicalUrl as buildCanonicalUrl, structuredData as buildStructuredData } from './seo-data';
 
 const WA_PHONE = '5511944548048';
-const INSTAGRAM_URL = 'https://www.instagram.com/feliperibeiro_30/';
 
 
 const REGIONAL_CHECK_STORAGE_KEY = 'felipe-regional-check-v2';
@@ -25,7 +25,7 @@ const PRACTICE_PAGES = {
     eyebrow: 'ÁREA DE ATUAÇÃO · 01',
     subtitle: 'Atuação imediata para garantir seus direitos e evitar abusos.',
     description: 'O flagrante exige resposta rápida e técnica. A atuação começa desde os primeiros momentos, com atenção à legalidade da prisão, aos procedimentos realizados e à proteção dos direitos da pessoa conduzida.',
-    image: 'assets/flagrante.png',
+    image: 'assets/flagrante.webp',
     alt: 'Imagem relacionada à prisão em flagrante',
     items: ['Acompanhamento na delegacia', 'Audiência de custódia', 'Pedido de liberdade', 'Análise de ilegalidades', 'Atuação em todo o Brasil']
   },
@@ -34,7 +34,7 @@ const PRACTICE_PAGES = {
     eyebrow: 'ÁREA DE ATUAÇÃO · 02',
     subtitle: 'Liberdade é um direito fundamental.',
     description: 'O Habeas Corpus é um instrumento essencial para combater prisões ilegais ou abusivas. A análise técnica considera as circunstâncias do caso e a medida adequada para a proteção da liberdade.',
-    image: 'assets/habeas-corpus.png',
+    image: 'assets/habeas-corpus.webp',
     alt: 'Documentos relacionados a Habeas Corpus',
     items: ['Análise da legalidade da prisão', 'Elaboração e impetração do HC', 'Atuação em tribunais', 'Acompanhamento completo']
   },
@@ -43,7 +43,7 @@ const PRACTICE_PAGES = {
     eyebrow: 'ÁREA DE ATUAÇÃO · 03',
     subtitle: 'Presença técnica desde o primeiro momento.',
     description: 'A audiência de custódia é uma etapa decisiva após a prisão. A atuação busca apresentar os argumentos pertinentes e avaliar as medidas possíveis para o caso concreto.',
-    image: 'assets/audiencia.png',
+    image: 'assets/audiencia.webp',
     alt: 'Ambiente relacionado à audiência de custódia',
     items: ['Acompanhamento presencial ou online', 'Análise do auto de prisão em flagrante', 'Argumentação técnica', 'Pedido de liberdade']
   },
@@ -52,7 +52,7 @@ const PRACTICE_PAGES = {
     eyebrow: 'ÁREA DE ATUAÇÃO · 04',
     subtitle: 'Acompanhamento em todas as etapas.',
     description: 'O inquérito é o ponto de partida da investigação criminal. O acompanhamento desde o início permite analisar diligências, provas e estratégias de defesa com maior clareza.',
-    image: 'assets/inquerito.png',
+    image: 'assets/inquerito.webp',
     alt: 'Documentos de investigação criminal',
     items: ['Acompanhamento de diligências', 'Análise de provas', 'Requerimentos e manifestações', 'Orientação jurídica completa']
   },
@@ -61,7 +61,7 @@ const PRACTICE_PAGES = {
     eyebrow: 'ÁREA DE ATUAÇÃO · 05',
     subtitle: 'Defesa técnica em cada fase do processo.',
     description: 'A ação penal exige acompanhamento estratégico, leitura cuidadosa dos autos e atuação nos atos necessários à defesa. Cada etapa deve ser conduzida com técnica e responsabilidade.',
-    image: 'assets/acao-penal.png',
+    image: 'assets/acao-penal.webp',
     alt: 'Ambiente relacionado à ação penal',
     items: ['Análise estratégica do processo', 'Defesa e manifestações processuais', 'Acompanhamento de audiências', 'Atuação nas diferentes fases']
   },
@@ -70,7 +70,7 @@ const PRACTICE_PAGES = {
     eyebrow: 'ÁREA DE ATUAÇÃO · 06',
     subtitle: 'Preparação e atuação em casos de alta complexidade.',
     description: 'Casos submetidos ao Tribunal do Júri exigem preparação cuidadosa, domínio técnico e estratégia de defesa. A atuação acompanha todas as etapas relevantes até o julgamento.',
-    image: 'assets/tribunal.png',
+    image: 'assets/tribunal.webp',
     alt: 'Ambiente relacionado ao Tribunal do Júri',
     items: ['Preparação estratégica do caso', 'Análise de provas e teses defensivas', 'Atuação em plenário', 'Acompanhamento completo da defesa']
   }
@@ -80,58 +80,7 @@ const PRACTICE_OVERVIEW = Object.entries(PRACTICE_PAGES).map(([path, page], inde
 
 const IMPORTANT_DOCUMENT_PATH = '/informacao-importante';
 const PREVENTIVE_PRISON_DOCUMENT_PATH = '/informacao-importante/prisao-preventiva';
-const SITE_ORIGIN = 'https://feliperibeiro.adv.br';
-
-const SEO_ROUTES = {
-  '/': {
-    title: 'Felipe Vinicius Santana Ribeiro | Advogado Criminalista',
-    description: 'Felipe Vinicius Santana Ribeiro, advogado criminalista. Atuação em defesa criminal, com atendimento presencial e online em todo o Brasil.',
-    type: 'WebPage'
-  },
-  '/atuacao': {
-    title: 'Áreas de Atuação | Felipe Ribeiro Advogado Criminalista',
-    description: 'Conheça as principais áreas de atuação criminal de Felipe Vinicius Santana Ribeiro.',
-    type: 'WebPage'
-  },
-  '/informacao-importante': {
-    title: 'Como reduzir o tempo de prisão | Felipe Ribeiro Advogado Criminalista',
-    description: 'Como reduzir o tempo de prisão: entenda remição, progressão de regime, livramento condicional, saída temporária, indulto, comutação e detração penal.',
-    type: 'Article',
-    image: `${SITE_ORIGIN}/assets/informacoes/como-reduzir-tempo-prisao-cover.png`,
-    section: 'Execução Penal'
-  },
-  '/informacao-importante/prisao-preventiva': {
-    title: 'Prisão preventiva: o que pode ser feito para conseguir a liberdade? | Felipe Ribeiro Advogado Criminalista',
-    description: 'Prisão preventiva: entenda o que é, quando pode ser revogada, as possibilidades de liberdade provisória, medidas cautelares e prisão domiciliar.',
-    type: 'Article',
-    image: `${SITE_ORIGIN}/assets/informacoes/prisao-preventiva-cover.png`,
-    section: 'Prisão Cautelar'
-  },
-  [PRIVACY_PATH]: {
-    title: 'Política de Privacidade e Cookies | Felipe Ribeiro Advogado Criminalista',
-    description: 'Como os dados de quem acessa o site de Felipe Vinicius Santana Ribeiro são tratados: LGPD, cookies, armazenamento local e direitos do titular.',
-    type: 'WebPage'
-  },
-  [TERMS_PATH]: {
-    title: 'Termos e Condições de Uso | Felipe Ribeiro Advogado Criminalista',
-    description: 'Termos e condições de uso do site de Felipe Vinicius Santana Ribeiro, advogado criminalista: natureza informativa, contato, sigilo e propriedade intelectual.',
-    type: 'WebPage'
-  },
-  ...Object.fromEntries(Object.entries(PRACTICE_PAGES).map(([path, page]) => [path, {
-    title: `${page.title} | Felipe Ribeiro Advogado Criminalista`,
-    description: `${page.title}: ${page.subtitle}`,
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/${page.image}`
-  }]))
-};
-
 const INDEXABLE_ROUTES = new Set(Object.keys(SEO_ROUTES));
-
-const NOT_FOUND_SEO = {
-  title: 'Página não encontrada | Felipe Ribeiro Advogado Criminalista',
-  description: 'O endereço acessado não existe. Acesse a página inicial ou as áreas de atuação de Felipe Vinicius Santana Ribeiro, advogado criminalista.',
-  type: 'WebPage'
-};
 
 function importantDocumentHtml() {
   return `
@@ -139,8 +88,8 @@ function importantDocumentHtml() {
       <div class="grain" aria-hidden="true"></div>
       <header class="site-header" id="siteHeader">
         <a aria-label="Felipe Ribeiro, início" class="brand" href="/">
-          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.png">
-          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.png">
+          <img width="866" height="288" alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.webp">
+          <img width="772" height="256" alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.webp">
         </a>
         <nav aria-label="Navegação principal" class="desktop-nav">
           <a href="/#atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#presenca">Presença</a><a href="/#contato">Contato</a>
@@ -251,8 +200,8 @@ function preventivePrisonDocumentHtml() {
       <div class="grain" aria-hidden="true"></div>
       <header class="site-header" id="siteHeader">
         <a aria-label="Felipe Ribeiro, início" class="brand" href="/">
-          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.png">
-          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.png">
+          <img width="866" height="288" alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.webp">
+          <img width="772" height="256" alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.webp">
         </a>
         <nav aria-label="Navegação principal" class="desktop-nav">
           <a href="/#atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#presenca">Presença</a><a href="/#contato">Contato</a>
@@ -323,15 +272,15 @@ function footerLegalHtml() {
 }
 
 function siteFooterHtml() {
-  return `<footer class="footer"><div class="footer-brand"><img alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-clean.png"></div><div class="footer-links"><a href="/">Início</a><a href="/atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#contato">Contato</a></div><p>© ${new Date().getFullYear()} Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.</p>${footerLegalHtml()}</footer>`;
+  return `<footer class="footer"><div class="footer-brand"><img width="772" height="256" alt="Felipe Ribeiro Advogado" src="/assets/logo-felipe-ribeiro-clean.webp"></div><div class="footer-links"><a href="/">Início</a><a href="/atuacao">Atuação</a><a href="/#sobre">O advogado</a><a href="/#contato">Contato</a></div><p>© ${new Date().getFullYear()} Felipe Vinicius Santana Ribeiro · OAB/SP 543.966. Todos os direitos reservados.</p>${footerLegalHtml()}</footer>`;
 }
 
 function siteHeaderHtml() {
   return `
       <header class="site-header" id="siteHeader">
         <a aria-label="Felipe Ribeiro, início" class="brand" href="/">
-          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.png">
-          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.png">
+          <img width="866" height="288" alt="Felipe Ribeiro Advogado" class="brand-dark" src="/assets/logo-felipe-ribeiro-dark.webp">
+          <img width="772" height="256" alt="Felipe Ribeiro Advogado" class="brand-light" src="/assets/logo-felipe-ribeiro-clean.webp">
         </a>
         <nav aria-label="Navegação principal" class="desktop-nav">
           <a href="/#atuacao">Atuação</a>
@@ -672,7 +621,7 @@ export default function App() {
 
     const seo = SEO_ROUTES[CURRENT_PATH] || NOT_FOUND_SEO;
     const isIndexableRoute = INDEXABLE_ROUTES.has(CURRENT_PATH);
-    const canonicalUrl = `${SITE_ORIGIN}${CURRENT_PATH === '/' ? '/' : CURRENT_PATH}`;
+    const canonicalUrl = buildCanonicalUrl(CURRENT_PATH);
 
     document.title = seo.title;
 
@@ -695,7 +644,7 @@ export default function App() {
     setMeta('meta[property="og:type"]', seo.type === 'Article' ? 'article' : 'website');
     setMeta('meta[property="og:title"]', seo.title);
     setMeta('meta[property="og:description"]', seo.description);
-    setMeta('meta[property="og:url"]', canonicalUrl);
+    if (isIndexableRoute) setMeta('meta[property="og:url"]', canonicalUrl);
     if (seo.image) setMeta('meta[property="og:image"]', seo.image);
     setMeta('meta[name="twitter:title"]', seo.title);
     setMeta('meta[name="twitter:description"]', seo.description);
@@ -714,71 +663,15 @@ export default function App() {
       canonical?.remove();
     }
 
-    const oldStructuredData = document.getElementById('felipe-structured-data');
-    oldStructuredData?.remove();
-
-    const personId = `${SITE_ORIGIN}/#felipe-ribeiro`;
-    const websiteId = `${SITE_ORIGIN}/#website`;
-    const graph = [
-      {
-        '@type': 'Person',
-        '@id': personId,
-        name: 'Felipe Vinicius Santana Ribeiro',
-        jobTitle: 'Advogado Criminalista',
-        url: SITE_ORIGIN + '/',
-        telephone: '+55 11 94454-8048',
-        identifier: { '@type': 'PropertyValue', propertyID: 'OAB/SP', value: '543.966' },
-        knowsAbout: ['Direito Criminal', 'Prisão em flagrante', 'Habeas Corpus', 'Audiência de custódia', 'Inquérito policial', 'Ação penal', 'Tribunal do Júri']
-      },
-      {
-        '@type': 'LegalService',
-        '@id': `${SITE_ORIGIN}/#legal-service`,
-        name: 'Felipe Ribeiro | Advogado Criminalista',
-        url: SITE_ORIGIN + '/',
-        telephone: '+55 11 94454-8048',
-        areaServed: { '@type': 'Country', name: 'Brasil' },
-        serviceType: 'Advocacia criminal',
-        provider: { '@id': personId }
-      },
-      {
-        '@type': 'WebSite',
-        '@id': websiteId,
-        url: SITE_ORIGIN + '/',
-        name: 'Felipe Ribeiro | Advogado Criminalista',
-        publisher: { '@id': personId },
-        inLanguage: 'pt-BR'
-      },
-      {
-        '@type': seo.type,
-        '@id': `${canonicalUrl}#webpage`,
-        url: canonicalUrl,
-        name: seo.title,
-        description: seo.description,
-        isPartOf: { '@id': websiteId },
-        inLanguage: 'pt-BR'
-      }
-    ];
-
-    if (seo.type === 'Article') {
-      graph.push({
-        '@type': 'Article',
-        '@id': `${canonicalUrl}#article`,
-        mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
-        headline: seo.title.replace(' | Felipe Ribeiro Advogado Criminalista', ''),
-        description: seo.description,
-        image: seo.image ? [seo.image] : undefined,
-        author: { '@id': personId },
-        publisher: { '@id': personId },
-        articleSection: seo.section,
-        inLanguage: 'pt-BR'
-      });
+    // Dados estruturados vêm da mesma fonte usada no HTML gerado no build.
+    document.getElementById('felipe-structured-data')?.remove();
+    if (isIndexableRoute) {
+      const structuredData = document.createElement('script');
+      structuredData.id = 'felipe-structured-data';
+      structuredData.type = 'application/ld+json';
+      structuredData.textContent = JSON.stringify(buildStructuredData(seo));
+      document.head.appendChild(structuredData);
     }
-
-    const structuredData = document.createElement('script');
-    structuredData.id = 'felipe-structured-data';
-    structuredData.type = 'application/ld+json';
-    structuredData.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
-    document.head.appendChild(structuredData);
 
     const setTheme = (theme) => {
       body.dataset.theme = theme;
@@ -1356,7 +1249,7 @@ ${data.get('mensagem')}`;
     <>
       <div dangerouslySetInnerHTML={{ __html: `
         <div aria-hidden="true" class="loader" id="loader">
-         <img alt="Felipe Ribeiro Advogado" src="assets/logo-felipe-ribeiro-dark.png"/>
+         <img width="866" height="288" alt="Felipe Ribeiro Advogado" src="assets/logo-felipe-ribeiro-dark.webp"/>
          <div class="loader-rule">
           <span>
           </span>
@@ -1373,8 +1266,8 @@ ${data.get('mensagem')}`;
         </div>
         <header class="site-header" id="siteHeader">
          <a aria-label="Felipe Ribeiro, início" class="brand" href="#inicio">
-          <img alt="Felipe Ribeiro Advogado" class="brand-dark" src="assets/logo-felipe-ribeiro-dark.png"/>
-          <img alt="Felipe Ribeiro Advogado" class="brand-light" src="assets/logo-felipe-ribeiro-clean.png"/>
+          <img width="866" height="288" alt="Felipe Ribeiro Advogado" class="brand-dark" src="assets/logo-felipe-ribeiro-dark.webp"/>
+          <img width="772" height="256" alt="Felipe Ribeiro Advogado" class="brand-light" src="assets/logo-felipe-ribeiro-clean.webp"/>
          </a>
          <nav aria-label="Navegação principal" class="desktop-nav">
           <a href="#atuacao">
@@ -1501,7 +1394,7 @@ ${data.get('mensagem')}`;
            </div>
           </div>
           <div class="hero-portrait hero-reveal delay-2">
-           <img alt="Felipe Vinicius Santana Ribeiro" src="assets/felipe-corpo.jpg"/>
+           <img alt="Felipe Vinicius Santana Ribeiro" src="assets/felipe-corpo.webp"/>
            <div class="portrait-caption">
              FELIPE VINICIUS SANTANA RIBEIRO · OAB/SP 543.966
            </div>
@@ -1571,10 +1464,10 @@ ${data.get('mensagem')}`;
           <div class="practice-stage" id="practiceStage">
            <div class="practice-image-wrap">
             <div class="practice-image-layer practice-image-layer-current" id="practiceImageCurrent">
-             <img alt="Ambiente relacionado à atuação criminal" id="practiceImage" src="assets/flagrante.png"/>
+             <img alt="Ambiente relacionado à atuação criminal" id="practiceImage" src="assets/flagrante.webp"/>
             </div>
             <div class="practice-image-layer practice-image-layer-next" id="practiceImageNext">
-             <img alt="" id="practiceImageNextImg" src="assets/audiencia.png"/>
+             <img alt="" id="practiceImageNextImg" src="assets/audiencia.webp"/>
             </div>
             <div class="practice-shade">
             </div>
@@ -1599,12 +1492,12 @@ ${data.get('mensagem')}`;
             </div>
            </div>
            <div aria-label="Áreas de atuação" class="practice-list" role="list">
-           <div class="practice-item-wrap">
+           <div class="practice-item-wrap" role="listitem">
             <button
              class="practice-item is-active"
              data-alt="Ambiente relacionado à prisão em flagrante"
              data-description="Atuação desde os primeiros momentos da ocorrência e acompanhamento das medidas cabíveis."
-             data-image="assets/flagrante.png"
+             data-image="assets/flagrante.webp"
              data-index="0"
              data-title="Prisão em flagrante"
             >
@@ -1617,12 +1510,12 @@ ${data.get('mensagem')}`;
             </button>
             <a class="practice-more" href="/atuacao/prisao-em-flagrante">Saiba mais <span aria-hidden="true">↗</span></a>
            </div>
-           <div class="practice-item-wrap">
+           <div class="practice-item-wrap" role="listitem">
             <button
              class="practice-item"
              data-alt="Delegacia de Polícia"
              data-description="Acompanhamento jurídico e análise da situação para definição da estratégia de defesa."
-             data-image="assets/audiencia.png"
+             data-image="assets/audiencia.webp"
              data-index="1"
              data-title="Audiência de custódia"
             >
@@ -1635,12 +1528,12 @@ ${data.get('mensagem')}`;
             </button>
             <a class="practice-more" href="/atuacao/audiencia-de-custodia">Saiba mais <span aria-hidden="true">↗</span></a>
            </div>
-           <div class="practice-item-wrap">
+           <div class="practice-item-wrap" role="listitem">
             <button
              class="practice-item"
              data-alt="Felipe no escritório"
              data-description="Análise das circunstâncias e das medidas processuais aplicáveis ao caso concreto."
-             data-image="assets/habeas-corpus.png"
+             data-image="assets/habeas-corpus.webp"
              data-index="2"
              data-title="Habeas Corpus"
             >
@@ -1653,12 +1546,12 @@ ${data.get('mensagem')}`;
             </button>
             <a class="practice-more" href="/atuacao/habeas-corpus">Saiba mais <span aria-hidden="true">↗</span></a>
            </div>
-           <div class="practice-item-wrap">
+           <div class="practice-item-wrap" role="listitem">
             <button
              class="practice-item"
              data-alt="Ambiente de delegacia"
              data-description="Orientação e defesa técnica durante a fase de investigação e seus desdobramentos."
-             data-image="assets/inquerito.png"
+             data-image="assets/inquerito.webp"
              data-index="3"
              data-title="Inquérito policial"
             >
@@ -1671,12 +1564,12 @@ ${data.get('mensagem')}`;
             </button>
             <a class="practice-more" href="/atuacao/inquerito-policial">Saiba mais <span aria-hidden="true">↗</span></a>
            </div>
-           <div class="practice-item-wrap">
+           <div class="practice-item-wrap" role="listitem">
             <button
              class="practice-item"
              data-alt="Escritório de Felipe Ribeiro"
              data-description="Acompanhamento estratégico do processo e atuação nos atos necessários à defesa."
-             data-image="assets/acao-penal.png"
+             data-image="assets/acao-penal.webp"
              data-index="4"
              data-title="Ação penal"
             >
@@ -1689,12 +1582,12 @@ ${data.get('mensagem')}`;
             </button>
             <a class="practice-more" href="/atuacao/acao-penal">Saiba mais <span aria-hidden="true">↗</span></a>
            </div>
-           <div class="practice-item-wrap">
+           <div class="practice-item-wrap" role="listitem">
             <button
              class="practice-item"
              data-alt="Ambiente institucional"
              data-description="Preparação e atuação técnica em casos submetidos ao julgamento pelo Tribunal do Júri."
-             data-image="assets/tribunal.png"
+             data-image="assets/tribunal.webp"
              data-index="5"
              data-title="Tribunal do Júri"
             >
@@ -1728,7 +1621,7 @@ ${data.get('mensagem')}`;
              <p>Entenda remição pelo trabalho e estudo, progressão de regime, livramento condicional, saída temporária, indulto, comutação e detração.</p>
              <span class="info-tile-link">Ler publicação <b>↗</b></span>
             </div>
-            <div class="important-document-media"><img src="/assets/informacoes/como-reduzir-tempo-prisao-cover.png" alt="Capa editorial sobre execução penal" loading="lazy"></div>
+            <div class="important-document-media"><img src="/assets/informacoes/como-reduzir-tempo-prisao-cover.webp" alt="Capa editorial sobre execução penal" loading="lazy"></div>
            </a>
            <a class="important-document-card reveal" href="/informacao-importante/prisao-preventiva" aria-label="Ler publicação: Prisão preventiva">
             <div class="important-document-copy">
@@ -1737,14 +1630,14 @@ ${data.get('mensagem')}`;
              <p>Entenda o que pode ser analisado antes de um pedido de liberdade e quais medidas podem ser consideradas no caso concreto.</p>
              <span class="info-tile-link">Ler publicação <b>↗</b></span>
             </div>
-            <div class="important-document-media"><img src="/assets/informacoes/prisao-preventiva-cover.png" alt="Capa editorial sobre prisão preventiva" loading="lazy"></div>
+            <div class="important-document-media"><img src="/assets/informacoes/prisao-preventiva-cover.webp" alt="Capa editorial sobre prisão preventiva" loading="lazy"></div>
            </a>
           </div>
           <div class="important-info-footer reveal"><span>Dois conteúdos disponíveis para leitura.</span></div>
          </section>
          <section class="about section-light" id="sobre">
           <div class="about-media reveal-media">
-           <img alt="Felipe Vinicius Santana Ribeiro" src="assets/felipe-retrato.jpg"/>
+           <img alt="Felipe Vinicius Santana Ribeiro" src="assets/felipe-retrato.webp"/>
            <span class="image-index">
             01 / 03
            </span>
@@ -2089,7 +1982,7 @@ ${data.get('mensagem')}`;
         </main>
         <footer class="footer">
          <div class="footer-brand">
-          <img alt="Felipe Ribeiro Advogado" src="assets/logo-felipe-ribeiro-clean.png"/>
+          <img width="772" height="256" alt="Felipe Ribeiro Advogado" src="assets/logo-felipe-ribeiro-clean.webp"/>
          </div>
          <div class="footer-links">
           <a href="#atuacao">

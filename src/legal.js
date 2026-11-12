@@ -4,7 +4,7 @@
 // Se o site passar a usar Google Analytics, Meta Pixel ou similares, a política
 // e o aviso de cookies precisam ser atualizados ANTES da publicação.
 
-export const LEGAL_UPDATED_AT = '9 de novembro de 2026';
+export const LEGAL_UPDATED_AT = '12 de novembro de 2026';
 
 export const PRIVACY_PATH = '/politica-de-privacidade';
 export const TERMS_PATH = '/termos-de-uso';
@@ -57,7 +57,7 @@ export const LEGAL_DOCUMENTS = {
             <div role="row"><span role="cell">Cache de imagens</span><span role="cell">Guarda imagens do site para carregamento mais rápido nas próximas visitas.</span><span role="cell">Essencial</span></div>
             <div role="row"><span role="cell"><code>felipe-theme</code></span><span role="cell">Lembra se você prefere o tema claro ou escuro.</span><span role="cell">Preferência (somente com consentimento)</span></div>
           </div>
-          <p><strong>Serviços de terceiros.</strong> As fontes tipográficas são carregadas do Google Fonts, o que faz o Google receber o seu endereço IP no carregamento da página. Os botões de WhatsApp e Instagram levam a serviços da Meta, que passam a aplicar as próprias políticas somente quando você clica neles.</p>
+          <p><strong>Serviços de terceiros.</strong> As fontes tipográficas são hospedadas no próprio site, sem consulta a serviços externos. Os botões de WhatsApp e Instagram levam a serviços da Meta, que passam a aplicar as próprias políticas somente quando você clica neles.</p>
           <p>Você pode alterar sua escolha a qualquer momento em <button type="button" class="legal-inline-button" data-open-cookie-settings>Preferências de cookies</button> ou apagar os dados do site nas configurações do seu navegador.</p>`
       },
       {
@@ -67,7 +67,6 @@ export const LEGAL_DOCUMENTS = {
           <p>Os dados pessoais não são vendidos nem cedidos para fins de publicidade. Eles podem ser tratados por fornecedores necessários ao funcionamento do site e do atendimento:</p>
           <ul>
             <li><strong>Vercel Inc.</strong> — hospedagem do site;</li>
-            <li><strong>Google LLC</strong> — fornecimento das fontes tipográficas;</li>
             <li><strong>Meta Platforms</strong> — WhatsApp e Instagram, quando você escolhe utilizá-los.</li>
           </ul>
           <p>Alguns desses fornecedores podem processar dados fora do Brasil. Nesses casos, a transferência ocorre nas hipóteses permitidas pelo art. 33 da LGPD.</p>
@@ -158,7 +157,7 @@ export const LEGAL_DOCUMENTS = {
       {
         id: 'terceiros',
         title: 'Links e serviços de terceiros',
-        body: `<p>O site contém links para serviços externos, como WhatsApp, Instagram e Google. Esses serviços possuem termos e políticas próprios, e o seu uso é de responsabilidade dos respectivos fornecedores.</p>`
+        body: `<p>O site contém links para serviços externos, como WhatsApp e Instagram. Esses serviços possuem termos e políticas próprios, e o seu uso é de responsabilidade dos respectivos fornecedores.</p>`
       },
       {
         id: 'responsabilidade',

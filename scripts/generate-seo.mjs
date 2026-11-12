@@ -1,116 +1,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { NOT_FOUND_SEO, PRACTICE_SEO_PAGES, SEO_ROUTE_LIST, SITE_ORIGIN, canonicalUrl, structuredData } from '../src/seo-data.js';
 
 const ROOT = process.cwd();
 const PUBLIC_DIR = path.join(ROOT, 'public');
 const DIST_DIR = path.join(ROOT, 'dist');
 const SSR_ENTRY = path.join(ROOT, 'dist-ssr', 'entry-server.js');
-const SITE_ORIGIN = 'https://feliperibeiro.adv.br';
-
-const PRACTICE_PAGES = [
-  {
-    path: '/atuacao/prisao-em-flagrante',
-    title: 'Prisão em flagrante | Felipe Ribeiro Advogado Criminalista',
-    description: 'Prisão em flagrante: atuação técnica desde os primeiros momentos para análise da legalidade da prisão e proteção dos direitos da pessoa conduzida.',
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/assets/flagrante.png`
-  },
-  {
-    path: '/atuacao/habeas-corpus',
-    title: 'Habeas Corpus | Felipe Ribeiro Advogado Criminalista',
-    description: 'Habeas Corpus: análise técnica de prisões ilegais ou abusivas e atuação para a proteção da liberdade no caso concreto.',
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/assets/habeas-corpus.png`
-  },
-  {
-    path: '/atuacao/audiencia-de-custodia',
-    title: 'Audiência de custódia | Felipe Ribeiro Advogado Criminalista',
-    description: 'Audiência de custódia: acompanhamento técnico, análise do auto de prisão em flagrante e avaliação das medidas possíveis.',
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/assets/audiencia.png`
-  },
-  {
-    path: '/atuacao/inquerito-policial',
-    title: 'Inquérito policial | Felipe Ribeiro Advogado Criminalista',
-    description: 'Inquérito policial: acompanhamento de diligências, análise de provas, requerimentos e orientação jurídica durante a investigação.',
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/assets/inquerito.png`
-  },
-  {
-    path: '/atuacao/acao-penal',
-    title: 'Ação penal | Felipe Ribeiro Advogado Criminalista',
-    description: 'Ação penal: defesa técnica, análise estratégica do processo e acompanhamento das diferentes fases da defesa criminal.',
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/assets/acao-penal.png`
-  },
-  {
-    path: '/atuacao/tribunal-do-juri',
-    title: 'Tribunal do Júri | Felipe Ribeiro Advogado Criminalista',
-    description: 'Tribunal do Júri: preparação estratégica, análise de provas e atuação técnica em casos submetidos ao julgamento pelo júri.',
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/assets/tribunal.png`
-  }
-];
-
-const ROUTES = [
-  {
-    path: '/',
-    title: 'Felipe Vinicius Santana Ribeiro | Advogado Criminalista',
-    description: 'Felipe Vinicius Santana Ribeiro, advogado criminalista. Atuação em defesa criminal, com atendimento presencial e online em todo o Brasil.',
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/assets/google-preview-felipe.png`
-  },
-  {
-    path: '/atuacao',
-    title: 'Áreas de Atuação | Felipe Ribeiro Advogado Criminalista',
-    description: 'Conheça as principais áreas de atuação criminal de Felipe Vinicius Santana Ribeiro.',
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/assets/google-preview-felipe.png`
-  },
-  ...PRACTICE_PAGES,
-  {
-    path: '/informacao-importante',
-    title: 'Como reduzir o tempo de prisão | Felipe Ribeiro Advogado Criminalista',
-    description: 'Como reduzir o tempo de prisão: entenda remição, progressão de regime, livramento condicional, saída temporária, indulto, comutação e detração penal.',
-    type: 'Article',
-    image: `${SITE_ORIGIN}/assets/informacoes/como-reduzir-tempo-prisao-cover.png`,
-    section: 'Execução Penal'
-  },
-  {
-    path: '/informacao-importante/prisao-preventiva',
-    title: 'Prisão preventiva: o que pode ser feito para conseguir a liberdade? | Felipe Ribeiro Advogado Criminalista',
-    description: 'Prisão preventiva: entenda o que é, quando pode ser revogada, as possibilidades de liberdade provisória, medidas cautelares e prisão domiciliar.',
-    type: 'Article',
-    image: `${SITE_ORIGIN}/assets/informacoes/prisao-preventiva-cover.png`,
-    section: 'Prisão Cautelar'
-  },
-  {
-    path: '/politica-de-privacidade',
-    title: 'Política de Privacidade e Cookies | Felipe Ribeiro Advogado Criminalista',
-    description: 'Como os dados de quem acessa o site de Felipe Vinicius Santana Ribeiro são tratados: LGPD, cookies, armazenamento local e direitos do titular.',
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/assets/google-preview-felipe.png`
-  },
-  {
-    path: '/termos-de-uso',
-    title: 'Termos e Condições de Uso | Felipe Ribeiro Advogado Criminalista',
-    description: 'Termos e condições de uso do site de Felipe Vinicius Santana Ribeiro, advogado criminalista: natureza informativa, contato, sigilo e propriedade intelectual.',
-    type: 'WebPage',
-    image: `${SITE_ORIGIN}/assets/google-preview-felipe.png`
-  }
-];
+// Fonte única de SEO (a mesma usada pelo App no navegador).
+const ROUTES = SEO_ROUTE_LIST;
+const PRACTICE_PAGES = PRACTICE_SEO_PAGES;
 
 // Página 404 (não indexável). O caminho é fictício: qualquer rota
 // desconhecida faz o App renderizar a tela de "página não encontrada".
-const NOT_FOUND_ROUTE = {
-  path: '/__404__',
-  title: 'Página não encontrada | Felipe Ribeiro Advogado Criminalista',
-  description: 'O endereço acessado não existe. Acesse a página inicial ou as áreas de atuação de Felipe Vinicius Santana Ribeiro, advogado criminalista.'
-};
-
-const PERSON_ID = `${SITE_ORIGIN}/#felipe-ribeiro`;
-const WEBSITE_ID = `${SITE_ORIGIN}/#website`;
+const NOT_FOUND_ROUTE = { path: '/__404__', ...NOT_FOUND_SEO };
 
 function escapeXml(value) {
   return String(value)
@@ -121,77 +24,17 @@ function escapeXml(value) {
     .replaceAll("'", '&apos;');
 }
 
-function structuredData(route) {
-  const webpageId = `${SITE_ORIGIN}${route.path === '/' ? '/' : route.path}#webpage`;
-  const graph = [
-    {
-      '@type': 'Person',
-      '@id': PERSON_ID,
-      name: 'Felipe Vinicius Santana Ribeiro',
-      jobTitle: 'Advogado Criminalista',
-      url: `${SITE_ORIGIN}/`,
-      telephone: '+55 11 94454-8048',
-      identifier: { '@type': 'PropertyValue', propertyID: 'OAB/SP', value: '543.966' },
-      knowsAbout: ['Direito Criminal', 'Prisão em flagrante', 'Habeas Corpus', 'Audiência de custódia', 'Inquérito policial', 'Ação penal', 'Tribunal do Júri']
-    },
-    {
-      '@type': 'LegalService',
-      '@id': `${SITE_ORIGIN}/#legal-service`,
-      name: 'Felipe Ribeiro | Advogado Criminalista',
-      url: `${SITE_ORIGIN}/`,
-      telephone: '+55 11 94454-8048',
-      areaServed: { '@type': 'Country', name: 'Brasil' },
-      serviceType: 'Advocacia criminal',
-      provider: { '@id': PERSON_ID }
-    },
-    {
-      '@type': 'WebSite',
-      '@id': WEBSITE_ID,
-      url: `${SITE_ORIGIN}/`,
-      name: 'Felipe Ribeiro | Advogado Criminalista',
-      publisher: { '@id': PERSON_ID },
-      inLanguage: 'pt-BR'
-    },
-    {
-      '@type': route.type,
-      '@id': webpageId,
-      url: `${SITE_ORIGIN}${route.path === '/' ? '/' : route.path}`,
-      name: route.title,
-      description: route.description,
-      isPartOf: { '@id': WEBSITE_ID },
-      inLanguage: 'pt-BR'
-    }
-  ];
-
-  if (route.type === 'Article') {
-    graph.push({
-      '@type': 'Article',
-      '@id': `${SITE_ORIGIN}${route.path}#article`,
-      mainEntityOfPage: { '@id': webpageId },
-      headline: route.title.replace(' | Felipe Ribeiro Advogado Criminalista', ''),
-      description: route.description,
-      image: [route.image],
-      author: { '@id': PERSON_ID },
-      publisher: { '@id': PERSON_ID },
-      articleSection: route.section,
-      inLanguage: 'pt-BR'
-    });
-  }
-
-  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
-}
-
 function robots() {
   return `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /404.html\n\nSitemap: ${SITE_ORIGIN}/sitemap.xml\n`;
 }
 
 function sitemap() {
-  const urls = ROUTES.map((route) => `  <url><loc>${escapeXml(`${SITE_ORIGIN}${route.path === '/' ? '/' : route.path}`)}</loc></url>`).join('\n');
+  const urls = ROUTES.map((route) => `  <url><loc>${escapeXml(canonicalUrl(route.path))}</loc></url>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
 
 function llms() {
-  const practice = PRACTICE_PAGES.map((route) => `- [${route.title.split(' | ')[0]}](${SITE_ORIGIN}${route.path})`).join('\n');
+  const practice = PRACTICE_PAGES.map((route) => `- [${route.name}](${SITE_ORIGIN}${route.path})`).join('\n');
   return `# Felipe Ribeiro | Advogado Criminalista\n\n> Site oficial de Felipe Vinicius Santana Ribeiro, advogado criminalista. Atendimento presencial e online em todo o Brasil.\n\n## Site\n- [Página inicial](${SITE_ORIGIN}/)\n- [Áreas de atuação](${SITE_ORIGIN}/atuacao)\n${practice}\n\n## Documentos
 - [Política de Privacidade e Cookies](${SITE_ORIGIN}/politica-de-privacidade)
 - [Termos e Condições de Uso](${SITE_ORIGIN}/termos-de-uso)
@@ -213,7 +56,9 @@ function upsertLink(html, rel, href) {
   return regex.test(html) ? html.replace(regex, tag) : html.replace('</head>', `    ${tag}\n  </head>`);
 }
 
-function upsertJsonLd(html, json) {
+function upsertJsonLd(html, data) {
+  // "<" escapado para o JSON nunca fechar a tag <script> por engano.
+  const json = JSON.stringify(data).replaceAll('<', '\\u003c');
   const block = `<script id="felipe-structured-data" type="application/ld+json">${json}</script>`;
   const regex = /<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/i;
   return regex.test(html) ? html.replace(regex, block) : html.replace('</head>', `    ${block}\n  </head>`);
@@ -236,9 +81,20 @@ function renderNotFoundTemplate(template, appHtml) {
   return injectAppHtml(html, appHtml);
 }
 
+function setPreload(html, href) {
+  if (!href) return html;
+  const tag = `<link rel="preload" as="image" href="${href}" fetchpriority="high" />`;
+  return html.replace('</head>', `    ${tag}\n  </head>`);
+}
+
 function renderRouteTemplate(template, route, appHtml) {
-  const canonical = `${SITE_ORIGIN}${route.path === '/' ? '/' : route.path}`;
+  const canonical = canonicalUrl(route.path);
   let html = template;
+  html = setPreload(html, route.preloadImage);
+  if (route.datePublished) {
+    html = upsertMeta(html, 'article:published_time', route.datePublished, 'property');
+    html = upsertMeta(html, 'article:modified_time', route.dateModified || route.datePublished, 'property');
+  }
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeXml(route.title)}</title>`);
   html = upsertMeta(html, 'description', route.description);
   html = upsertMeta(html, 'robots', 'index,follow,max-image-preview:large');

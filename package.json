@@ -9,12 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
     "@vitejs/plugin-react": "^6.1.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "vite": "^8.2.2"
   },
-  "devDependencies": {},
   "engines": {
     "node": "24.x"
   }
